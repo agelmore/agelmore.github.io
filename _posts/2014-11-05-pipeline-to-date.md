@@ -58,8 +58,8 @@ Velvet is the assembler that Alneburg et al. used in their online example, so I 
 
 
 ```
-quicksubmit 'velveth velveth2_k32 71 All.fa.keep' --pm nodes=1:ppn=8,mem=48GB --jobname velvethk32 --walltime 999:00:00 --cput 999:00:00 
-quicksubmit 'velvetg velveth2_k32 -cov_cutoff auto' --pm nodes=1:ppn=8,mem=48GB --jobname velvetgk32 --walltime 999:00:00 --cput 999:00:00 
+velveth velveth2_k32 71 All.fa.keep
+velvetg velveth2_k32 -cov_cutoff auto
 
 cd $CONCOCT_SPECIES/run1/velveth_k41
 
