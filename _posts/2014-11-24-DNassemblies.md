@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Assembling after normalization"
-date:   2014-11-19
+date:   2014-11-24
 comments: true
 ---
 
