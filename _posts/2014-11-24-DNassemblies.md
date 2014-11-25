@@ -9,6 +9,13 @@ Interleaving and digital normalization finished, so I started Ray and Velvet ass
 
 Output from Digital normalization:
 
+{% highlight bash %}
+
+DONE with All_code_interleaved.fasta; kept 131641458 of 1488000000 or  8%
+output in All.code.normalized.fasta
+fp rate estimated to be 0.250
+
+{% endhighlight %} 
 
 ###Ray
 
