@@ -26,7 +26,7 @@ Working on this in other posts.
 
 First, cut up the contigs into chunks less than 10kb so that there isn't a bias towards mapping onto long contigs. 
 
-**To run concoct on axiom, I have to enter the concoct environment. I made an alias so I just type "concoctenv" before submitting my jobs.**
+**To run concoct on axiom, I have to enter the concoct environment that I created during installation. I made an alias so I just type "concoctenv" before submitting my jobs.**
 
 ```
 cd $CONCOCT_SPECIES/run1
