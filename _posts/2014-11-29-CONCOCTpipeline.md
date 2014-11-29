@@ -78,14 +78,14 @@ mv concoct_inputtable.tsv $CONCOCT_SPECIES/run1/concoct-input/
 
 Then cut the file to remove unneeded columns. 
 
-'''
+```
 cut -f1,3-26 concoct-input/concoct_inputtable.tsv > concoct-input/concoct_inputtableR.tsv
-'''
+```
 
 ##5. Run concoct to bin contigs
 
 Finally, run concoct! The -c parameter tells the clustering algorithm where to start, but isn't the absolute number of bins that will be made. However, this is a parameter that we could go back and play with later. All of the output gets put into the concoct-output file including a logfile that tells you how the run went
 
-'''
+```
 concoct -c 40 --coverage_file concoct-input/concoct_inputtableR.tsv --composition_file $CONCOCT_SPECIES/run1/assembler/assembler.congits_c10K.fa -b concoct-output/
-'''
+```
