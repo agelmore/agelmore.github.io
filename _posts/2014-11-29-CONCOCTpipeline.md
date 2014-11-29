@@ -7,7 +7,7 @@ comments: true
 
 CONCOCT was recently published in *Nature methods* by [Alneburg et al.](http://www-ncbi-nlm-nih-gov.proxy.lib.umich.edu/pubmed/?term=binning+metagenomic+contigs+by+coverage+and+composition) They introduce a new metagenomic assembly method that bins contigs based on read coverage and kmer frequency information. Here is a basic pipeline that I've put together with notes from the [read the docs](https://concoct.readthedocs.org/en/latest/).
 
-CONCOCT uses two pieces of information to bin contigs - coverage and composition. Coverage is found by mapping reads onto the contigs.  Composition is found by calculating the frequency of each kmer (usually k=4) in each contig. The coverage and composition vectors are combined and the contigs clustered based on the combined vector.
+This method uses two pieces of information to bin contigs - coverage and composition. Coverage is found by mapping reads onto the contigs.  Composition is found by calculating the frequency of each kmer (usually k=4) in each contig. The coverage and composition vectors are combined and the contigs clustered based on the combined vector.
 
 ##Outline
 
