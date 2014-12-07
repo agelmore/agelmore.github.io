@@ -41,6 +41,15 @@ cd SPAdes-3.1.1-Darwin/bin
 
 That's it. No installation required.
 
+Okay, actually that didn't work because it's meant for Mac OS and not axiom, so I followed the directions to download and compile the source code:
+
+~~~~
+wget http://spades.bioinf.spbau.ru/release3.1.1/SPAdes-3.1.1.tar.gz
+tar -xzf SPAdes-3.1.1.tar.gz
+cd SPAdes-3.1.1
+./spades_compile.sh
+~~~~
+
 The assembly command:
 
 ~~~~
