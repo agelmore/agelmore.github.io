@@ -9,7 +9,9 @@ Here are the assembly statistics for Velvet, Ray, and Megahit when using the int
 
 If you forgot, here's the command I used to do the DN:
 
-`python2.7 normalize-by-median.py -C 20 -k 21 -p -x 1e9 All_code_interleaved.fasta -o All.code.normalized.fasta`
+----
+python2.7 normalize-by-median.py -C 20 -k 21 -p -x 1e9 All_code_interleaved.fasta -o All.code.normalized.fasta
+----
 
 ###Velvet
 
@@ -32,7 +34,7 @@ Tail of logfile:
 Final graph has 366968 nodes and n50 of 9396, max 181525, total 325111290, using
  0/132585322 reads
  
-{% end highlight %}
+{% endhighlight %}
 
 ###Ray
 
