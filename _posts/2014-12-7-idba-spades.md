@@ -20,7 +20,13 @@ cd idba-1.1.1
 make
 ~~~~
 
+To run the assembly:
 
+~~~~
+$IDBA/idba -r fasta/All.code.normalized.fasta -o idba
+~~~~
+
+I'll add the output when it finishes.
 
 ###SPAdes
 
@@ -34,3 +40,12 @@ cd SPAdes-3.1.1-Darwin/bin
 ~~~~
 
 That's it. No installation required.
+
+The assembly command:
+
+~~~~
+python $SPADES/spades.py --12 fasta/All.code.normalized.fasta -o spades --only-assembler
+
+~~~~
+
+I'll add the output when it finishes.
