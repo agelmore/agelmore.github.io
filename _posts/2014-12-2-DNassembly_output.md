@@ -54,29 +54,26 @@ The assembly command:
 
 Tail of logfile:
 
-----
-
+~~~~
 Total length: 135275096, N50: 69105, Mean: 11396, number of contigs: 11870
 Maximum length: 727277
 Done! Time elapsed(sec.): 33.450353
 [Sun Nov 30 20:12:27 2014]: Merging to output final contigs..
 [Sun Nov 30 20:12:36 2014]: ALL DONE.
-
-----
-
+~~~~
 
 ###Summary statistics 
 
 How to calculate some stats:
 
 
-----
+~~~~
 grep -c '>' final.contigs.fa #find number of contigs
 
 awk '{/>/&&++a||b+=length()}END{print b/a}' final.contigs.fa #find average sequence length
 
 awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' contigs.fa > contigs.1000.fa; grep -c '>' contigs.1000.fa #find number of contigs > 1kb #find number of contigs greater than 1kb and save to a new file
-----
+~~~~
 
 To calculate [N50](https://github.com/kdiverson/seqTools/blob/master/calcN50.py) I stole a script from Kathy Iverson. 
 
