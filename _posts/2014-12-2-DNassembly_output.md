@@ -52,6 +52,10 @@ I'm having a lot of trouble getting this to work. Sometimes it starts over, and 
 
 The assembly command:
 
+~~~~
+python ./megahit -m 45e9 -r $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta --cpu-only -l 100 -o $CONCOCT_SPECIES/run1/megahit_DN
+~~~~
+
 Tail of logfile:
 
 ~~~~
@@ -61,6 +65,8 @@ Done! Time elapsed(sec.): 33.450353
 [Sun Nov 30 20:12:27 2014]: Merging to output final contigs..
 [Sun Nov 30 20:12:36 2014]: ALL DONE.
 ~~~~
+
+Took about 2.5 hours.
 
 ###Summary statistics 
 
@@ -78,9 +84,9 @@ awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' contigs.fa 
 To calculate [N50](https://github.com/kdiverson/seqTools/blob/master/calcN50.py) I stole a script from Kathy Iverson. 
 
 
-Assembler | Number of contigs | N50 | Average length | Contigs > 1kb | contig file name
+Assembler | Number of contigs | N50 | Average length | Contigs > 1kb | percent of reads used | contig file name
 -------- | -------- | -------- | -------- | --------
-Velvet | 254548 | 9396 | 1303.8 | 0 | velveth_k31_code/contigs.fa
+Velvet | 254548 | 9396 | 1303.8 | 0 | 96.5% | velveth_k31_code/contigs.fa
 Megahit | 11870 | 69241 | 11396 | 15167 | megahit_DN/final.contigs.fa
 
 
