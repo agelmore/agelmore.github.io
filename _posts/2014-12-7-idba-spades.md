@@ -50,6 +50,9 @@ cd SPAdes-3.1.1
 ./spades_compile.sh
 ~~~~
 
+It still won't run. The error says that I don't have the correct binaries. When I try to compile the source code, it says that I don't have the correct version of CMake. I guess I should figure out how to update that.
+
+
 The assembly command:
 
 ~~~~
