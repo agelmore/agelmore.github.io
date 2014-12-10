@@ -99,7 +99,23 @@ total length: 349.496466 Mb
 
 ###Iterative assembly
 
+Kathryn is so nice and pretty and ran an iterative assembly using velvet for me! If you're interested in how she does this, look [here](https://kdiverson.github.io/2014/12/03/iterative-assemblies.html).
 
+~~~~
+132585322 (100.00%) were unpaired; of these:
+4790404 (3.61%) aligned 0 times
+98633353 (74.39%) aligned exactly 1 time
+29161565 (21.99%) aligned >1 times
+N50: 10038
+N90: 100
+total contigs: 2097980
+average length: 282 bp
+trimmed average length: 281 bp
+greater than or equal to 100:  1437022
+shortest conting: 41 bp
+longest contig: 1617347 bp
+total length: 592.706371 Mb
+~~~~
 
 ###Summary statistics 
 
@@ -120,9 +136,9 @@ awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' contigs.fa 
 
 Assembler | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | contig file name
 :--------|:--------:|:--------:|:--------:|:------------:|--------:
-Velvet | 254548 | 9075 | 526 | 1303 | 0 | 96.5% | velveth_k31_code/contigs.fa
-Megahit | 29397 | 69241 | 9486 | 11888 | 15167 | x% | megahit_DN/final.contigs.fa
-
+Velvet | 254548 | 9075 | 526 | 1303 | 0 |    96.5% | velveth_k31_code/contigs.fa
+Megahit | 29397 | 69241 | 9486 | 11888 |    15167 | x% | megahit_DN/final.contigs.fa
+Iterative assembly | 2097980 | 10038 | 100 | 282 | ? | 96.4% 
 
 
 
