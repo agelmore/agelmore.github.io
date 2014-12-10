@@ -32,9 +32,24 @@ Tail of logfile:
 {% highlight bash %}
 
 Final graph has 366968 nodes and n50 of 9396, max 181525, total 325111290, using
- 0/132585322 reads
+ 127930417/132585322 reads
  
 {% endhighlight %}
+
+Assembly statistics:
+
+~~~~
+N50: 9075
+N90: 526
+total contigs: 254548
+average length: 1303 bp
+trimmed average length: 1303 bp
+greater than or equal to 100:  210168
+shortest conting: 61 bp
+longest contig: 181555 bp
+total length: 331.880719 Mb
+Percent reads used: 96.5%
+~~~~
 
 ###Ray
 
@@ -68,10 +83,25 @@ Done! Time elapsed(sec.): 33.450353
 
 Took about 2.5 hours.
 
+Stats:
+~~~~
+N50: 69241
+N90: 9486
+total contigs: 29397
+average length: 11888 bp
+trimmed average length: 11864 bp
+greater than or equal to 100:  29397
+shortest conting: 200 bp
+longest contig: 727277 bp
+total length: 349.496466 Mb
+~~~~
+
+
 ###Summary statistics 
 
-How to calculate some stats:
+How to calculate the stats:
 
+I used a script from Kathy (located here /mnt/EXT/Schloss-data/bin/contigStats.py and to calc N50 here /share/scratch/bin/calcN50N90.pl), but you can get the stats individually using these one-liners:
 
 ~~~~
 grep -c '>' final.contigs.fa #find number of contigs
@@ -79,17 +109,16 @@ grep -c '>' final.contigs.fa #find number of contigs
 awk '{/>/&&++a||b+=length()}END{print b/a}' final.contigs.fa #find average sequence length
 
 awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' contigs.fa > contigs.1000.fa; grep -c '>' contigs.1000.fa #find number of contigs > 1kb #find number of contigs greater than 1kb and save to a new file
+
 ~~~~
 
-To calculate [N50](https://github.com/kdiverson/seqTools/blob/master/calcN50.py) I stole a script from Kathy Iverson. 
 
 
-Assembler | Number of contigs | N50 | Average length | Contigs > 1kb | percent of reads used | contig file name
+Assembler | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | contig file name
 :-------- | :--------: | :--------: | :--------: | --------:
-Velvet | 254548 | 9396 | 1303.8 | 0 | 96.5% | velveth_k31_code/contigs.fa
-Megahit | 11870 | 69241 | 11396 | 15167 | megahit_DN/final.contigs.fa
+Velvet | 254548 | 9075 | 526 | 1303 | 0 | 96.5% | velveth_k31_code/contigs.fa
+Megahit | 29397 | 69241 | 9486 | 11888 | 15167 | x% | megahit_DN/final.contigs.fa
 
 
-Uh oh, 0 contigs greater than 1kb for velvet? That doesn't seem good. Let's see what the assemblers IDBA and SPAdes can do.
 
 
