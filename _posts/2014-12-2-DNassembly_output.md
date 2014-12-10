@@ -85,7 +85,7 @@ To calculate [N50](https://github.com/kdiverson/seqTools/blob/master/calcN50.py)
 
 
 Assembler | Number of contigs | N50 | Average length | Contigs > 1kb | percent of reads used | contig file name
--------- | -------- | -------- | -------- | --------
+:-------- | :--------: | :--------: | :--------: | --------:
 Velvet | 254548 | 9396 | 1303.8 | 0 | 96.5% | velveth_k31_code/contigs.fa
 Megahit | 11870 | 69241 | 11396 | 15167 | megahit_DN/final.contigs.fa
 
