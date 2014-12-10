@@ -135,7 +135,7 @@ awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' contigs.fa 
 
 
 Assembler | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | contig file name
-:--------|:--------:|:--------:|:--------:|:------------:|:------------:|--------:
+:--------|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
 Velvet | 254548 | 9075 | 526 | 1303 | 0 |    96.5% | velveth_k31_code/contigs.fa
 Megahit | 29397 | 69241 | 9486 | 11888 |    15167 | x% | megahit_DN/final.contigs.fa
 Iterative assembly | 2097980 | 10038 | 100 | 282 | ? | 96.4% 
