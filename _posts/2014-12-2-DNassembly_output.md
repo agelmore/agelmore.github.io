@@ -130,6 +130,8 @@ awk '{/>/&&++a||b+=length()}END{print b/a}' final.contigs.fa #find average seque
 
 awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' contigs.fa > contigs.1000.fa; grep -c '>' contigs.1000.fa #find number of contigs > 1kb #find number of contigs greater than 1kb and save to a new file
 
+bowtie2-build final.contigs.fa final.contigs.fa.bowtie
+bowtie2 -x final.contigs.fa.bowtie -f ../fasta/All.code.normalized.fasta #to find the number of reads that were used in the assembly
 ~~~~
 
 
