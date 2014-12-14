@@ -26,7 +26,22 @@ To run the assembly:
 $IDBA/idba -r fasta/All.code.normalized.fasta -o idba
 ~~~~
 
-I'll add the output when it finishes.
+It finished and created a contig.fa and a scaffold.fa file. The second uses linkage info from the paired-end reads. Here are the stats on the scaffolds from the logfile as well as the stats from Kathryn's script. Nice to see that they're the same.
+
+~~~~
+contigs: 121655 n50: 73061 max: 1064400 mean: 2899 total length: 352768328 n80: 
+23533
+
+N50: 73061
+N90: 8658
+total contigs: 121655
+average length: 2899 bp
+trimmed average length: 2891 bp
+greater than or equal to 100:  60948
+shortest conting: 50 bp
+longest contig: 1064400 bp
+total length: 352.768328 Mb
+~~~~
 
 ###SPAdes
 
@@ -34,30 +49,32 @@ I'll add the output when it finishes.
 
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/spades
-wget http://spades.bioinf.spbau.ru/release3.1.1/SPAdes-3.1.1-Darwin.tar.gz
-tar -zxf SPAdes-3.1.1-Darwin.tar.gz
-cd SPAdes-3.1.1-Darwin/bin
+wget http://spades.bioinf.spbau.ru/release3.1.1/SPAdes-3.1.1-Linux.tar.gz
+tar -zxf SPAdes-3.1.1-Linux.tar.gz
+cd SPAdes-3.1.1-Linux/bin
 ~~~~
 
 That's it. No installation required.
 
-Okay, actually that didn't work because it's meant for Mac OS and not axiom, so I followed the directions to download and compile the source code:
-
-~~~~
-wget http://spades.bioinf.spbau.ru/release3.1.1/SPAdes-3.1.1.tar.gz
-tar -xzf SPAdes-3.1.1.tar.gz
-cd SPAdes-3.1.1
-./spades_compile.sh
-~~~~
-
-It still won't run. The error says that I don't have the correct binaries. When I try to compile the source code, it says that I don't have the correct version of CMake. I guess I should figure out how to update that.
-
+Something cool: SPAdes has a --continue option that will pick up the assembly from the most recent checkpoint if it crashes for some reason while assembling.
 
 The assembly command:
 
 ~~~~
-python $SPADES/spades.py --12 fasta/All.code.normalized.fasta -o spades --only-assembler
-
+python $SPADES/spades.py --12 $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta -o $CONCOCT_SPECIES/run1/spades2 --only-assembler
 ~~~~
 
-I'll add the output when it finishes.
+
+
+###Updated stats
+
+Here is the same table with the idba and SPAdes assembly data included:
+
+Assembler | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
+:--------|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
+Velvet | 254548 | 9075 | 526 | 1303 | 0 |    96.5% | velveth_k31_code/contigs.fa
+Megahit | 29397 | 69241 | 9486 | 11888 |    15167 | x% | megahit_DN/final.contigs.fa
+Iterative assembly | 2097980 | 10038 | 100 | 282 | ? | 96.4% 
+IDBA | 121655 | 73061 | 8658 | 2899 |    12786 | x% | idba/scaffold.fa
+
+
