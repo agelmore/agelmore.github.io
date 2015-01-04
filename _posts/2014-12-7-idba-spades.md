@@ -1,11 +1,11 @@
 ---
 layout: post
 title:  "IDBA and SPAdes"
-date:   2014-12-7
+date:   2015-1-4
 comments: true
 ---
 
-I decided to try assembling with IDBA and SPAdes and comparing them to my velvet and megahit assemblies.
+I decided to try assembling with IDBA and SPAdes and comparing them to my velvet and megahit assemblies. Updated with complete assembly statistics.
 
 ###IDBA
 
@@ -32,6 +32,10 @@ It finished and created a contig.fa and a scaffold.fa file. The second uses link
 contigs: 121655 n50: 73061 max: 1064400 mean: 2899 total length: 352768328 n80: 
 23533
 
+1506871 (1.14%) aligned 0 times
+128796009 (97.14%) aligned exactly 1 time
+2282442 (1.72%) aligned >1 times
+98.86% overall alignment rate
 N50: 73061
 N90: 8658
 total contigs: 121655
@@ -61,7 +65,7 @@ Something cool: SPAdes has a --continue option that will pick up the assembly fr
 The assembly command:
 
 ~~~~
-python $SPADES/spades.py --12 $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta -o $CONCOCT_SPECIES/run1/spades2 --only-assembler
+python $SPADES/spades.py --12 $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta -o $CONCOCT_SPECIES/run1/spades2 --only-assembler --continue
 ~~~~
 
 
@@ -72,9 +76,9 @@ Here is the same table with the idba and SPAdes assembly data included:
 
 Assembler | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
-Velvet | 254548 | 9075 | 526 | 1303 | 0 |    96.5% | velveth_k31_code/contigs.fa
-Megahit | 29397 | 69241 | 9486 | 11888 |    15167 | x% | megahit_DN/final.contigs.fa
+Velvet | 254548 | 9075 | 526 | 1303 | 0 |    91.6% | velveth_k31_code/contigs.fa
+Megahit | 29397 | 69241 | 9486 | 11888 |    15167 | 99.84% | megahit_DN/final.contigs.fa
 Iterative assembly | 2097980 | 10038 | 100 | 282 | ? | 96.4% 
-IDBA | 121655 | 73061 | 8658 | 2899 |    12786 | x% | idba/scaffold.fa
+IDBA | 121655 | 73061 | 8658 | 2899 |    12786 | 98.86% | idba/scaffold.fa
 SPAdes | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 
