@@ -72,14 +72,14 @@ python $SPADES/spades.py --12 $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fa
 
 ###Updated stats
 
-Here is the same table with the idba and SPAdes assembly data included:
+Here is the same table including the CONCOCT paper data using Ray, idba and SPAdes assembly data:
 
 Assembler | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
 CONCOCT paper (Ray) | 41 | 13068 | 153630 | not shown | not shown |  37627 | 99% | 
 Velvet | 31 | 254548 | 9075 | 526 | 1303 | 0 |    91.6% | velveth_k31_code/contigs.fa
 Megahit | iterative (21-99, step 2)| 29397 | 69241 | 9486 | 11888 |    15167 | 99.84% | megahit_DN/final.contigs.fa
-Kathryn's Iterative assembly | iterative | 2097980 | 10038 | 100 | 282 | ? | 96.4% 
+Kathryn's Iterative assembly | iterative (49-21) | 2097980 | 10038 | 100 | 282 | 19079 | 96.4% 
 IDBA | iterative (20, 30, 40, 50) | 121655 | 73061 | 8658 | 2899 |    12786 | 98.86% | idba/scaffold.fa
 SPAdes | iterative (21,33,55) | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 
