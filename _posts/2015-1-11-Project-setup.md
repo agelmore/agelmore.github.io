@@ -26,15 +26,16 @@ To make the comparisons, I will need to obtain sequences of multiple *F. nucleat
 The HMP performed whole-genome shotgun sequencing on the microbiomes of 162 healthy individuals with 1253 total samples including 953 from stool and oral sites ([sequence files can be found here](http://www.hmpdacc.org/HMASM/#data)). I plan to pool together multiple samples to assemble and extract the desired genomes, but I still need to determine how many samples I will need to combine. I cannot extract a genome from a single sample, because Fuso is normally a relatively rare bug and algorithms for assembling a single genome from metagenomic data aren't very sensitive. However, the fastq files from the HMP are gigantic (~20Gb each!), so I won't be able to assemble all samples at once. When deciding how to pool the samples to create assemblies, there are many variables to consider. 
 
 Factors that will have to be used to separate pools:
-1. Body site - samples were taken at different body sites. To answer question 1, I will pool the same body sites between different individuals. To answer question 2, I will pool different body sites in the same individual.
 
-2. Subject ID - All subjects were sampled at 18 body sites, but not all samples were sequenced and passed the quality filtering step. Because of this there are some subjects who have no oral samples and some that have as many as 18.
+1. Body site - samples were taken at different body sites. To answer question 1, I will pool the same body sites between different individuals. 
+
+2. Subject ID - All subjects were sampled at 18 body sites, but not all samples were sequenced and passed the quality filtering step. Because of this there are some subjects who have no oral samples and some that have as many as 18. To answer question 2, I will pool different body sites in the same individual.
 
 3. Phase - the data was sequenced and released in two phases. I cannot pool together sequences from different phases. 
 
 4. Study day - data was collected on different days. Some individuals are sampled on different days. These cannot be pooled together. (**but can I pool together different individuals on different days?**)
 
-I am going to do a preliminary assembly with 14 samples that were taken on study day 1 from the tongue of 14 different individuals. If this assembly works, I will pool the samples I have into groups of about 14 based on body site to assemble.
+**I am going to do a preliminary assembly with 14 samples that were taken on study day 1 from the tongue of 14 different individuals. If this assembly works, I will pool the samples I have into groups of about 14 based on body site to assemble.**
 
 ##Making the data manageable
 
