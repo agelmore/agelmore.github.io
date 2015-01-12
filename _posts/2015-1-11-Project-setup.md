@@ -9,7 +9,7 @@ Brief background and basic outline for my project studying *Fusobacterium nuclea
 
 ##Background
 
-In our lab, we are interested in the role of the gut microbiome in the development and progression of colorectal cancer (CRC). Patients with CRC appear to have structurally distinct gut microbiomes; for example, these patients frequently harbor an enrichment of the commensal *Fusobacterium nucleatum* along with other shifts in structure ([Kostic et al., 2013](http://www.ncbi.nlm.nih.gov/pubmed/23954159), [Kostic et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/?term=Genomic+analysis+identifies+association+of+Fusobacterium+with+colorectal+carcinoma), [Castellarin et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/?term=Fusobacterium+nucleatum+infection+is+prevalent+in+human+colorectal+carcinoma)). *F. nucleatum* is best known for it's role in periodontitis ([Signat et al., 2011](http://www.ncbi.nlm.nih.gov/pubmed/21220789)), but it doesn't always cause disease. Surprisingly, it is very common in the oral cavity, but rare in the gut - we found it present in 100% of saliva samples, but only 13% of stool samples from the Human Microbiome Project (HMP). For this project, I am interested in the strain-level genomic variation in *F. nucleatum* that leads to discrepancies in biogeographic colonization.
+In our lab, we are interested in the role of the gut microbiome in the development and progression of colorectal cancer (CRC). Patients with CRC appear to have structurally distinct gut microbiomes; for example, these patients frequently harbor an enrichment of the commensal *Fusobacterium nucleatum* along with other shifts in structure ([Kostic et al., 2013](http://www.ncbi.nlm.nih.gov/pubmed/23954159); [Kostic et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/?term=Genomic+analysis+identifies+association+of+Fusobacterium+with+colorectal+carcinoma); [Castellarin et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/?term=Fusobacterium+nucleatum+infection+is+prevalent+in+human+colorectal+carcinoma)). *F. nucleatum* is best known for it's role in periodontitis ([Signat et al., 2011](http://www.ncbi.nlm.nih.gov/pubmed/21220789)), but it doesn't always cause disease. Surprisingly, it is very common in the oral cavity, but rare in the gut - we found it present in 100% of saliva samples, but only 13% of stool samples from the Human Microbiome Project (HMP). For this project, I am interested in the strain-level genomic variation in *F. nucleatum* that leads to discrepancies in biogeographic colonization.
 
 ##Questions
 
@@ -41,7 +41,7 @@ Factors that will have to be used to separate pools:
 
 1. Download samples from a single pool into working directory
 
-2. Quality trimming - not sure if I have to do this since the HMP went through a trimming step
+2. Quality trimming - **not sure if I have to do this since the HMP went through a trimming step**
 
 3. Rename sequences to include subj id, so samples can be separated later
 
@@ -51,7 +51,7 @@ Factors that will have to be used to separate pools:
 
 6. Digital normalization on paired-end reads and singleton reads
 
-7. Filter-abund.py?
+7. **Filter-abund.py?** 
 
 ##Assembly
 
