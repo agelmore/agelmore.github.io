@@ -75,6 +75,22 @@ fp rate estimated to be 0.757
 
 I'm not sure what to do with the paired-end reads and singles, so I started by lumping them together and assembling like they're all unpaired.
 
+File info for all the lumped samples from Day 1 tongue samples just so I can remember what they are. I'd like to keep this naming scheme pretty standard for my pipeline.
+
+File name | directory | paired? | normalized? | size | number of reads 
+:---------------|:--------:|:--------:|:--------:|:--------:|:------------:
+All.pe.2.fq | cat | yes | no | 217G |  
+All.D1.Tongue.sin.fq | cat | singles | no | 18G | 76037114
+All.D1.Tongue.normalized.cat.fq | normalize | both | yes | 50G | 234077640
+All.D1.Tongue.normalized.pe.fa | normalize | yes | yes | 24G | 188980571
+All.D1.Tongue.normalized.cat.fa | normalize | both | yes | 29G | 234077640
+
+
+
+
+** number of lines in a fastq file: cat file.fastq | echo $((`wc -l`/4))
+
+
 ##Megahit
 
 ~~~~
@@ -115,7 +131,7 @@ $IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.pe.fa -o $HMP/D1.tong
 
 Assembler | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
-Megahit (non-paired) | iterative (21-99, step 2) | 1181605 | 606 | 243 | 515 |  99223 | 99% | megahit/final.contig.fa
+Megahit (non-paired) | iterative (21-99, step 2) | 1181605 | 606 | 243 | 515 |  99223 | x% | megahit/final.contig.fa
 IDBA | iterative (20, 30, 40, 50) | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 
 
