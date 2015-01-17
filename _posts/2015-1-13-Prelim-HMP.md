@@ -104,12 +104,9 @@ contigs > 1kb: 99223
 
 ##IDBA
 
-I started IDBA with the pe file and the lumped pe and singles file. I also had to use the fq2fa script to change the file into a fasta file. 
+IDBA only works with paired-end reads, so I had to omit all the singletons. I wonder if there is a way to assemble with them as well, but I can't with the package I have. I also had to use the fq2fa script to change the file into a fasta file. 
 
 ~~~~
-$IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.normalized.cat.fa -o $HMP/D1.tongue/fasta/idba
-
-
 $IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.pe.fa -o $HMP/D1.tongue/fasta/idba
 
 ~~~~
@@ -119,7 +116,7 @@ $IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.pe.fa -o $HMP/D1.tong
 Assembler | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
 Megahit (non-paired) | iterative (21-99, step 2) | 1181605 | 606 | 243 | 515 |  99223 | 99% | megahit/final.contig.fa
-IDBA | iterative (20, 30, 40, 50) | 254548 | 9075 | 526 | 1303 | 0 |    91.6% | velveth_k31_code/contigs.fa
+IDBA | iterative (20, 30, 40, 50) | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 
 
 
