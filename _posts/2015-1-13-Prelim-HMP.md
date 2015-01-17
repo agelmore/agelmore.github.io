@@ -83,10 +83,28 @@ python ./megahit -m 45e9 -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.normali
 
 Can I assemble with paired reads? If so, what should I do with the singles?
 
+This assembly finished! And the assembly statistics (see [previous post](http://agelmore.github.io/2014/12/06/DNassembly_output.html) to see how I did this:
+
+bowtie2-build final.contigs.fa final.contigs.fa.bowtie
+bowtie2 final.contigs.fa.bowtie -q ../normalize/All.D1.Tongue.normalized.cat.fq -p 16 -S megahit.1.aligned.sam
+
+~~~~
+N50: 606
+N90: 243
+total contigs: 1181605
+average length: 515 bp
+trimmed average length: 515 bp
+greater than or equal to 100:  1181605
+shortest conting: 200 bp
+longest contig: 201960 bp
+total length: 609.704148 Mb
+contigs > 1kb: 99223
+~~~~
+
 
 ##IDBA
 
-I started IDBA with the pe file and the lumped pe and singles file.
+I started IDBA with the pe file and the lumped pe and singles file. I also had to use the fq2fa script to change the file into a fasta file. 
 
 ~~~~
 $IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.normalized.cat.fa -o $HMP/D1.tongue/fasta/idba
@@ -95,6 +113,13 @@ $IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.normalized.cat.fa -o 
 $IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.pe.fa -o $HMP/D1.tongue/fasta/idba
 
 ~~~~
+
+## Assembly comparison
+
+Assembler | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
+:---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
+Megahit (non-paired) | iterative (21-99, step 2) | 1181605 | 606 | 243 | 515 |  99223 | 99% | megahit/final.contig.fa
+IDBA | iterative (20, 30, 40, 50) | 254548 | 9075 | 526 | 1303 | 0 |    91.6% | velveth_k31_code/contigs.fa
 
 
 
