@@ -148,5 +148,24 @@ Megahit (non-paired) | iterative (21-99, step 2) | 1181605 | 606 | 243 | 515 |  
 IDBA | iterative (30, 40, 50) | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 
 
+##CONCOCT pipeline
 
+Adapted from [previous post](http://agelmore.github.io/2014/11/29/CONCOCTpipeline.html).
+
+~~~~
+cd $HMP/D1.tongue/fasta
+python $CONCOCT/scripts/cut_up_fasta.py -c 10000 -o 0 -m megahit/final.contigs.fa > megahit/megahit.contigs_c10K.fa
+~~~~
+
+Before I can map reads to the contigs, I have to lump the pe and sin files together for each sample in the cat folder.
+
+
+
+
+
+
+
+
+
+~~~~
 
