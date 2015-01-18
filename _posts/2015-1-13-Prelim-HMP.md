@@ -79,11 +79,12 @@ File info for all the lumped samples from Day 1 tongue samples just so I can rem
 
 File name | directory | paired? | normalized? | size | number of reads 
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:
-All.pe.2.fq | cat | yes | no | 217G |  
+All.pe.2.fq | cat | yes | no | 217G |  1006343072
 All.D1.Tongue.sin.fq | cat | singles | no | 18G | 76037114
 All.D1.Tongue.normalized.cat.fq | normalize | both | yes | 50G | 234077640
 All.D1.Tongue.normalized.pe.fa | normalize | yes | yes | 24G | 188980571
 All.D1.Tongue.normalized.cat.fa | normalize | both | yes | 29G | 234077640
+All.code.normalized.fasta | from CONCOCT mock | yes | yes | 15G | 
 
 
 
@@ -93,18 +94,19 @@ All.D1.Tongue.normalized.cat.fa | normalize | both | yes | 29G | 234077640
 
 ##Megahit
 
+Megahit doesn't use paired-end read information, so I can use the file with lumped together fastq reads.
+
 ~~~~
 python ./megahit -m 45e9 -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.normalized.cat.fq --cpu-only -l 100 -o $HMP/D1.tongue/fasta/megahit
 ~~~~
 
-Can I assemble with paired reads? If so, what should I do with the singles?
-
 This assembly finished! And the assembly statistics (see [previous post](http://agelmore.github.io/2014/12/06/DNassembly_output.html) to see how I did this:
 
-bowtie2-build final.contigs.fa final.contigs.fa.bowtie
-bowtie2 final.contigs.fa.bowtie -q ../normalize/All.D1.Tongue.normalized.cat.fq -p 16 -S megahit.1.aligned.sam
-
 ~~~~
+31880485 (13.62%) aligned 0 times
+111646306 (47.70%) aligned exactly 1 time
+90550849 (38.68%) aligned >1 times
+86.38% overall alignment rate
 N50: 606
 N90: 243
 total contigs: 1181605
@@ -116,6 +118,7 @@ longest contig: 201960 bp
 total length: 609.704148 Mb
 contigs > 1kb: 99223
 ~~~~
+ 
 
 
 ##IDBA
@@ -124,15 +127,25 @@ IDBA only works with paired-end reads, so I had to omit all the singletons. I wo
 
 ~~~~
 $IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.pe.fa -o $HMP/D1.tongue/fasta/idba
+~~~~
+
+This command exceeded the MEM usage hard limit. I tried again starting the iteration at a higher k value. The smaller the k, the larger the graph has to be.
 
 ~~~~
+$IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.normalized.pe.fa -o $HMP/D1.tongue/fasta/idba --mink 30
+~~~~
+
+
+
+
+
 
 ## Assembly comparison
 
 Assembler | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
-Megahit (non-paired) | iterative (21-99, step 2) | 1181605 | 606 | 243 | 515 |  99223 | x% | megahit/final.contig.fa
-IDBA | iterative (20, 30, 40, 50) | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
+Megahit (non-paired) | iterative (21-99, step 2) | 1181605 | 606 | 243 | 515 |  99223 | 86.38% | megahit/final.contig.fa
+IDBA | iterative (30, 40, 50) | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 
 
 
