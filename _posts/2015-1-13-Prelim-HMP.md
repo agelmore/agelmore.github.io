@@ -136,7 +136,7 @@ $IDBA/idba -r $HMP/D1.tongue/fasta/normalize/All.D1.Tongue.normalized.pe.fa -o $
 ~~~~
 
 
-
+Still can't assemble. The job gets deleted because it goes over the MEM usage hard limit. Will come back to this later and use the megahit assembly for now.
 
 
 
@@ -157,11 +157,15 @@ cd $HMP/D1.tongue/fasta
 python $CONCOCT/scripts/cut_up_fasta.py -c 10000 -o 0 -m megahit/final.contigs.fa > megahit/megahit.contigs_c10K.fa
 ~~~~
 
-Before I can map reads to the contigs, I have to lump the pe and sin files together for each sample in the cat folder.
+Before I can map reads to the contigs, I have to lump the pe and sin files together for each sample in the cat folder. To do that I made this quick one-liner for loop:
+
+~~~~
+for i in SRS015537 SRS016342 SRS016501 SRS016529 SRS016569 SRS017209; do zcat $i* > $i.cat.fq; done
+~~~~
 
 
 
-
+SRS013502 SRS013705 SRS013818 SRS014573 SRS015174 SRS015434 SRS015537 SRS016342 SRS016501 SRS016529 SRS016569 SRS017209
 
 
 
