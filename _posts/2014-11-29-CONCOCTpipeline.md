@@ -28,10 +28,10 @@ First, cut up the contigs into chunks less than 10kb so that there isn't a bias 
 
 **To run concoct on axiom, I have to enter the concoct environment that I created during installation. I made an alias so I just type "concoctenv" before submitting my jobs.**
 
-```
+~~~~
 cd $CONCOCT_SPECIES/run1
 python $CONCOCT/scripts/cut_up_fasta.py -c 10000 -o 0 -m assembler/final.contigs.fa > assembler/assembler.contigs_c10K.fa
-```
+~~~~
 
 Then, use bowtie2-build to make these contigs into a reference for the reads to be mapped.
 

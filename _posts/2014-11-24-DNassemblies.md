@@ -19,12 +19,11 @@ fp rate estimated to be 0.250
 
 ###Ray
 
-So now we can run Ray again with the same parameters as before. This time it will be able to assemble all the reads because the dataset is much smaller.
+So now we can run Ray again with the same parameters as before. This time it will be able to assemble all the reads because the dataset is much smaller. Also, now I'm running ray without the MPI.
 
 {% highlight bash %}
 
-mpdboot
-mpiexec -n 1 ./mnt/EXT/Schloss-data/amanda/ray/Ray-2.3.1/ray-build/Ray -k 32 -i $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta -o $CONCOCT_SPECIES/run1/ray
+./Ray -k 32 -i $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta -o $CONCOCT_SPECIES/run1/ray8
 
 {% endhighlight %}
 
@@ -35,8 +34,18 @@ mpiexec -n 1 ./mnt/EXT/Schloss-data/amanda/ray/Ray-2.3.1/ray-build/Ray -k 32 -i 
 
 {% highlight bash %}
 
-velveth velveth_k41_code 31 -shortpaired -fasta fasta/All.code.normalized.fasta
-velvetg velveth_k41_code -cov_cutoff auto
+velveth velveth_k31_code 31 -shortPaired -fasta fasta/All.code.normalized.fasta
+velvetg velveth_k31_code -cov_cutoff auto
+
+{% endhighlight %}
+
+###Megahit
+
+Might as well do the megahit assembly with the normalized reads as well. Titus says that we don't have to do DN with megahit, but the assembler didn't use all the reads last time because axiom ran out of memory. Since DN is basically removing redundant reads, we'll try and see if this works.
+
+{% highlight bash %}
+
+python ./megahit -m 45e9 -r $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta --cpu-only -l 100 -o $CONCOCT_SPECIES/run1/megahit_DN
 
 {% endhighlight %}
 

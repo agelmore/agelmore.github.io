@@ -65,7 +65,7 @@ Something cool: SPAdes has a --continue option that will pick up the assembly fr
 The assembly command:
 
 ~~~~
-python $SPADES/spades.py --12 $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta -o $CONCOCT_SPECIES/run1/spades2 --only-assembler --continue
+python $SPADES/spades.py --12 $CONCOCT_SPECIES/run1/fasta/All.code.normalized.fasta -o $CONCOCT_SPECIES/run1/spades2 --only-assembler --continue --memory 48
 ~~~~
 
 

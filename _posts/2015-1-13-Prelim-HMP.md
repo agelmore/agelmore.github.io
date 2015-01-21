@@ -17,6 +17,8 @@ I downloaded the following samples to axiom using wget:
 
 I wanted to interleave the paired-end reads files, but the files are too big to unzip all at once. I wrote this shell script to extract the files one by one, interleave read 1 and 2, move and zip the interleaved and singleton files to another directory, and then delete the unzipped directory.
 
+**In retrospect, I don't want to delete the separated read files because I will want them to map to the contigs later.**
+
 {% highlight bash %}
 
 #!/bin/bash
@@ -160,16 +162,27 @@ python $CONCOCT/scripts/cut_up_fasta.py -c 10000 -o 0 -m megahit/final.contigs.f
 Before I can map reads to the contigs, I have to lump the pe and sin files together for each sample in the cat folder. To do that I made this quick one-liner for loop:
 
 ~~~~
-for i in SRS015537 SRS016342 SRS016501 SRS016529 SRS016569 SRS017209; do zcat $i* > $i.cat.fq; done
+for i in SRS013502 SRS013705 SRS013818 SRS014573 SRS015174 SRS015434 SRS015537 SRS016342 SRS016501 SRS016529 SRS016569 SRS017209; do zcat $i* > $i.cat.fq; done
+
+gzip *.cat.fq
+~~~~
+
+Okay now map the reads to the contigs:
+final.contigs.fa.bowtie
+~~~~
+#!/bin/bash
+for f in $HMP/D1.tongue/fasta/cat/Sample*R1*.fasta.gz; do 
+  	gunzip -c $f > $(echo $f | sed s/".gz"/""/)
+	gunzip -c $(echo $f | sed s/"R1"/"R2"/) > $(echo $(echo $f | sed s/".gz"/""/) | sed s/"R1"/"R2"/)
+	mkdir -p $CONCOCT_SPECIES/map/$(basename $f .gz)
+	cd $CONCOCT_SPECIES/map/$(basename $f .gz)
+	$CONCOCT/scripts/map-bowtie2-markduplicates.sh -ct 1 -p '-f' $(echo $f | sed s/".gz"/""/) $(echo $(echo $f | sed s/".gz"/""/) | sed s/"R1"/"R2"/) pair $CONCOCT_SPECIES/run1/assembler/assembler.contigs_c10K.fa asm_assembler bowtie2_assembler
+	rm $(echo $f | sed s/".gz"/""/)
+	rm $(echo $(echo $f | sed s/".gz"/""/) | sed s/"R1"/"R2"/)
+	cd ../..
+done
 ~~~~
 
 
 
-SRS013502 SRS013705 SRS013818 SRS014573 SRS015174 SRS015434 SRS015537 SRS016342 SRS016501 SRS016529 SRS016569 SRS017209
-
-
-
-
-
-~~~~
 

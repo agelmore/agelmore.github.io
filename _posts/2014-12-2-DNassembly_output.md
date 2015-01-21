@@ -39,6 +39,10 @@ Final graph has 366968 nodes and n50 of 9396, max 181525, total 325111290, using
 Assembly statistics:
 
 ~~~~
+11134135 (8.40%) aligned 0 times
+120997026 (91.26%) aligned exactly 1 time
+454161 (0.34%) aligned >1 times
+91.60% overall alignment rate
 N50: 9075
 N90: 526
 total contigs: 254548
@@ -48,7 +52,6 @@ greater than or equal to 100:  210168
 shortest conting: 61 bp
 longest contig: 181555 bp
 total length: 331.880719 Mb
-Percent reads used: 96.5%
 ~~~~
 
 ###Ray
@@ -86,6 +89,10 @@ Took about 2.5 hours.
 Stats:
 
 ~~~~
+211147 (0.16%) aligned 0 times
+128572712 (96.97%) aligned exactly 1 time
+3801463 (2.87%) aligned >1 times
+99.84% overall alignment rate
 N50: 69241
 N90: 9486
 total contigs: 29397
@@ -128,18 +135,18 @@ grep -c '>' final.contigs.fa #find number of contigs
 
 awk '{/>/&&++a||b+=length()}END{print b/a}' final.contigs.fa #find average sequence length
 
-awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' contigs.fa > contigs.1000.fa; grep -c '>' contigs.1000.fa #find number of contigs > 1kb #find number of contigs greater than 1kb and save to a new file
+awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' final.contigs.fa > final.contigs.1000.fa; grep -c '>' final.contigs.1000.fa #find number of contigs > 1kb #find number of contigs greater than 1kb and save to a new file
 
-bowtie2-build final.contigs.fa final.contigs.fa.bowtie
-bowtie2 -x final.contigs.fa.bowtie -f ../fasta/All.code.normalized.fasta #to find the number of reads that were used in the assembly
+bowtie2-build scaffold.fa scaffold.fa.bowtie
+bowtie2 scaffold.fa.bowtie -f ../fasta/All.code.normalized.fasta -p 16 -S idba.aligned.sam #to find the number of reads that were used in the assembly
 ~~~~
 
 
 
 Assembler | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | contig file name
 :--------|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
-Velvet | 254548 | 9075 | 526 | 1303 | 0 |    96.5% | velveth_k31_code/contigs.fa
-Megahit | 29397 | 69241 | 9486 | 11888 |    15167 | x% | megahit_DN/final.contigs.fa
+Velvet | 254548 | 9075 | 526 | 1303 | 0 |    91.6% | velveth_k31_code/contigs.fa
+Megahit | 29397 | 69241 | 9486 | 11888 |    15167 | 99.84% | megahit_DN/final.contigs.fa
 Iterative assembly | 2097980 | 10038 | 100 | 282 | ? | 96.4% 
 
 
