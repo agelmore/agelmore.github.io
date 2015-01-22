@@ -147,7 +147,7 @@ Still can't assemble. The job gets deleted because it goes over the MEM usage ha
 Assembler | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
 Megahit (non-paired) | iterative (21-99, step 2) | 1181605 | 606 | 243 | 515 |  99223 | 86.38% | megahit/final.contig.fa
-IDBA | iterative (30, 40, 50) | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
+
 
 
 ##CONCOCT pipeline
@@ -167,21 +167,7 @@ for i in SRS013502 SRS013705 SRS013818 SRS014573 SRS015174 SRS015434 SRS015537 S
 gzip *.cat.fq
 ~~~~
 
-Okay now map the reads to the contigs:
-final.contigs.fa.bowtie
-~~~~
-#!/bin/bash
-for f in $HMP/D1.tongue/fasta/cat/Sample*R1*.fasta.gz; do 
-  	gunzip -c $f > $(echo $f | sed s/".gz"/""/)
-	gunzip -c $(echo $f | sed s/"R1"/"R2"/) > $(echo $(echo $f | sed s/".gz"/""/) | sed s/"R1"/"R2"/)
-	mkdir -p $CONCOCT_SPECIES/map/$(basename $f .gz)
-	cd $CONCOCT_SPECIES/map/$(basename $f .gz)
-	$CONCOCT/scripts/map-bowtie2-markduplicates.sh -ct 1 -p '-f' $(echo $f | sed s/".gz"/""/) $(echo $(echo $f | sed s/".gz"/""/) | sed s/"R1"/"R2"/) pair $CONCOCT_SPECIES/run1/assembler/assembler.contigs_c10K.fa asm_assembler bowtie2_assembler
-	rm $(echo $f | sed s/".gz"/""/)
-	rm $(echo $(echo $f | sed s/".gz"/""/) | sed s/"R1"/"R2"/)
-	cd ../..
-done
-~~~~
+Okay now map the reads to the contigs. Dang, I just realized a problem here. The CONCOCT script mark-duplicates requires the samples to have a forward and reverse read, but I just lumped the samples into a single file cated with the singletons. Also, I did the assembly with the singletons included. Pat and I agree that I should start over using just the paired-end reads instead of the singletons. Since the singletons are usually only <10% of the total reads, it isn't a huge amount of information lost.
 
 
 
