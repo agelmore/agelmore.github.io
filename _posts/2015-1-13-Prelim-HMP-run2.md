@@ -42,6 +42,18 @@ done
 
 {% endhighlight %}
 
+###Digital normalization
+
+~~~~
+khmerEnv
+cd $HMP/D1.tongue/run2
+mkdir DN
+cd DN
+python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-median.py -C 20 -k 21 -x 1e9 ../cat/All.D1.tongue.run2.cat.fq -s All.D1.Tongue.run2.savetable -o All.D1.Tongue.run2.norm.fq
+~~~~
+
+
+
 
 
 
