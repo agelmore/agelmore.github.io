@@ -8,6 +8,7 @@ comments: true
 As I was running the first preliminary assembly, I came across a couple of problems with which files I was using. I'm going to start over with a few more samples and fix those problems with this pipeline.
 
 First of all, what to change:
+
 1. Don't use the singletons file in the megahit assembly. Megahit can't use paired-end read information, but it makes things easier later if I ignore these.
 
 2. Don't need to do DN on the singletons.
@@ -50,6 +51,15 @@ cd $HMP/D1.tongue/run2
 mkdir DN
 cd DN
 python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-median.py -C 20 -k 21 -x 1e9 ../cat/All.D1.tongue.run2.cat.fq -s All.D1.Tongue.run2.savetable -o All.D1.Tongue.run2.norm.fq
+~~~~
+
+###Megahit
+
+~~~~
+cd $HMP/D1.tongue/run2
+mkdir megahit
+cd megahit
+python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/DN/All.D1.Tongue.run2.norm.fq --cpu-only -l 100 -o $HMP/D1.tongue/run2/megahit
 ~~~~
 
 
