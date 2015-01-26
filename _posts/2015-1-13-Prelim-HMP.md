@@ -86,7 +86,7 @@ All.D1.Tongue.sin.fq | cat | singles | no | 18G | 76037114
 All.D1.Tongue.normalized.cat.fq | normalize | both | yes | 50G | 234077640
 All.D1.Tongue.normalized.pe.fa | normalize | yes | yes | 24G | 188980571
 All.D1.Tongue.normalized.cat.fa | normalize | both | yes | 29G | 234077640
-All.code.normalized.fasta | from CONCOCT mock | yes | yes | 15G | 
+All.code.normalized.fasta | from CONCOCT mock | yes | yes | 15G | 132585322
 
 
 
