@@ -26,17 +26,19 @@ I used a few more samples this time so that I had a total of 20. They are still 
 
 ###Managing the data
 
+~~~~
+tar zxvf SRS*
+~~~~
+
+
 {% highlight bash %}
 
 #!/bin/bash
 
-khmerEnv
-for i in $HMP/D1.tongue/run2/wget/*.tar.bz2; do
-	tar jxvf $i
-	base=(basename $i .tar.bz2)
-	if [ -d $base ]; then cd $base; fi
-	cat $i.denovo_duplicates_marked.trimmed.1.fastq $i.denovo_duplicates_marked.trimmed.2.fastq >> $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fq
-	echo $base >> $HMP/D1.tongue/run2/cat/progress.txt
+for i in $HMP/D1.tongue/run2/wget/SRS*; do
+	cd $i
+	cat *.denovo_duplicates_marked.trimmed.1.fastq *.denovo_duplicates_marked.trimmed.2.fastq >> $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fq
+	echo $i >> $HMP/D1.tongue/run2/cat/progress.txt
 	gzip *q
 	cd $HMP/D1.tongue/run2/wget
 done
@@ -58,12 +60,73 @@ python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-medi
 ~~~~
 cd $HMP/D1.tongue/run2
 mkdir megahit
-cd megahit
+cp /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit ../../HMP/D1.tongue/run2/megahit/
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/megahit/
 python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/DN/All.D1.Tongue.run2.norm.fq --cpu-only -l 100 -o $HMP/D1.tongue/run2/megahit
+~~~~
+
+###Assembly stats
+
+~~~~
+python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/megahit/final.contigs.fa
+
+perl /share/scratch/bin/calcN50N90.pl $HMP/D1.tongue/run2/megahit/final.contigs.fa
+
+bowtie2-build $HMP/D1.tongue/run2/megahit/final.contigs.fa $HMP/D1.tongue/run2/megahit/final.contigs.fa.bowtie
+bowtie2 final.contigs.fa.bowtie -q ../DN/All.D1.Tongue.run2.norm.fq -p 16 -S megahit.aligned.sam 
+
+
+cd $HMP/D1.tongue/run2/megahit/; awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' final.contigs.fa > final.contigs.1000.fa; grep -c '>' final.contigs.1000.fa 
+~~~~
+
+Output:
+
+~~~~
+N50: 587
+N90: 24
+total contigs: 1403622
+average length: 507 bp
+trimmed average length: 507 bp
+greater than or equal to 100:  1403622
+shortest conting: 200 bp
+longest contig: 259539 bp
+total length: 712.681025 Mb
+contigs > 1kb: 111168
 ~~~~
 
 
 
+Assembler | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
+:---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
+Megahit (non-paired) | iterative (21-99, step 2) | 1403622 | 587 | 24 | 507 |  111168 | ?% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
+
+###CONCOCT pipeline
+
+~~~~
+concoctenv
+cd $HMP/D1.tongue/run2
+python $CONCOCT/scripts/cut_up_fasta.py -c 10000 -o 0 -m megahit/final.contigs.fa > megahit/megahit.contigs_c10K.fa
+
+bowtie2-build megahit/megahit.contigs_c10K.fa megahit/megahit.contigs_c10K_bowtie.fa
+~~~~
+
+Map reads to contigs. Saved in bash script called map.reads.sh
+
+{% highlight bash %}
+
+#!/bin/bash
+
+for f in $HMP/D1.tongue/run2/wget/SRS*; do 
+  	cd $f;
+  	gunzip -c *;
+  	mkdir -p $HMP/D1.tongue/run2/concoct/map/$(basename $f);
+    cd $HMP/D1.tongue/run2/concoct/map/$(basename $f);
+    bash $CONCOCT/scripts/map-bowtie2-markduplicates.sh -ct 1 -p '-q' $f/*.1.fastq $f/*.2.fastq pair $HMP/D1.tongue/run2/megahit/megahit.contigs_c10K_bowtie.fa asm bowtie2;
+    rm $f/*.fastq
+done
+
+
+{% endhighlight %}
 
 
 
