@@ -122,15 +122,30 @@ Map reads to contigs. Saved in bash script called map.reads.sh
 
 for f in $HMP/D1.tongue/run2/wget/SRS*; do 
   	cd $f;
-  	gunzip -c *;
+  	gunzip *;
   	mkdir -p $HMP/D1.tongue/run2/concoct/map/$(basename $f);
     cd $HMP/D1.tongue/run2/concoct/map/$(basename $f);
-    bash $CONCOCT/scripts/map-bowtie2-markduplicates.sh -ct 1 -p '-q' $f/*.1.fastq $f/*.2.fastq pair $HMP/D1.tongue/run2/megahit/megahit.contigs_c10K_bowtie.fa asm bowtie2;
-    rm $f/*.fastq
+    $CONCOCT/scripts/map-bowtie2-markduplicates.sh -ct 1 -p '-q' $f/$(basename $f).denovo_duplicates_marked.trimmed.1.fastq $f/$(basename $f).denovo_duplicates_marked.trimmed.2.fastq pair $HMP/D1.tongue/run2/megahit/megahit.contigs_c10K.fa asm bowtie2;
+    gzip $f/*.fastq
 done
 
 
 {% endhighlight %}
 
+Okay that was taking a lot time so I submitted it again with each sample as a separate job. I'm sure I can do this later by making a file that will submit jobs in a for loop. I bet Kathryn has showed me how to do that before. For now I submitted them all manually.
+
+{% highlight bash %}
+
+#!/bin/bash
+
+f=$HMP/D1.tongue/run2/wget/SRS
+cd $f;
+gunzip *;
+mkdir -p $HMP/D1.tongue/run2/concoct/map/$(basename $f);cd $HMP/D1.tongue/run2/concoct/map/$(basename $f);
+$CONCOCT/scripts/map-bowtie2-markduplicates.sh -ct 1 -p '-q' $f/$(basename $f).denovo_duplicates_marked.trimmed.1.fastq $f/$(basename $f).denovo_duplicates_marked.trimmed.2.fastq pair $HMP/D1.tongue/run2/megahit/megahit.contigs_c10K.fa asm bowtie2;
+gzip $f/*.fastq
+
+
+{% endhighlight %}
 
 
