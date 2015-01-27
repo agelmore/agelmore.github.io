@@ -82,6 +82,10 @@ cd $HMP/D1.tongue/run2/megahit/; awk '!/^>/ {next} {getline s} length(s) >= 1000
 Output:
 
 ~~~~
+35870276 (15.44%) aligned 0 times
+    113973643 (49.06%) aligned exactly 1 time
+    82467092 (35.50%) aligned >1 times
+84.56% overall alignment rate
 N50: 587
 N90: 24
 total contigs: 1403622
@@ -98,7 +102,7 @@ contigs > 1kb: 111168
 
 Assembler | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
-Megahit (non-paired) | iterative (21-99, step 2) | 1403622 | 587 | 24 | 507 |  111168 | ?% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
+Megahit (non-paired) | iterative (21-99, step 2) | 1403622 | 587 | 24 | 507 |  111168 | 84.56% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
 
 ###CONCOCT pipeline
 
