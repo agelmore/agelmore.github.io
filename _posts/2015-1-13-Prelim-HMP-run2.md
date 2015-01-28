@@ -132,7 +132,7 @@ done
 
 {% endhighlight %}
 
-Okay that was taking a lot time so I submitted it again with each sample as a separate job. I'm sure I can do this later by making a file that will submit jobs in a for loop. I bet Kathryn has showed me how to do that before. For now I submitted them all manually.
+Okay that was taking a lot time so I submitted it again with each sample as a separate job. I'm sure I can do this later by making a file that will submit jobs in a for loop. I bet Kathryn has showed me how to do that before. For now I created individual sh files and submitted them all manually.
 
 {% highlight bash %}
 
@@ -148,4 +148,35 @@ gzip $f/*.fastq
 
 {% endhighlight %}
 
+Generate coverage table:
+
+~~~~
+cd $HMP/D1.tongue/run2/concoct/map
+python $CONCOCT/scripts/gen_input_table.py --isbedfiles --samplenames <(for s in SRS*; do echo $s | cut -f1; done) ../../megahit/megahit.contigs_c10K.fa SRS*/bowtie2/asm_pair-smds.coverage > concoct_inputtable.tsv
+mkdir $HMP/D1.tongue/run2/concoct/concoct-input
+mv concoct_inputtable.tsv $HMP/D1.tongue/run2/concoct/concoct-input
+
+~~~~
+
+Generate linkage table:
+
+~~~~
+cd $HMP/D1.tongue/run2/concoct/map
+python $CONCOCT/scripts/bam_to_linkage.py -m 8 --regionlength 500 --fullsearch --samplenames <(for s in SRS*; do echo $s | cut -f1; done) ../../megahit/megahit.contigs_c10K.fa SRS*/bowtie2/asm_pair-smds.bam > concoct_linkage.tsv
+mv concoct_linkage.tsv $HMP/D1.tongue/run2/concoct/concoct-input
+
+~~~~
+
+Cut table:
+
+~~~~
+cd $HMP/D1.tongue/run2/concoct
+cut -f1,3-26 concoct-input/concoct_inputtable.tsv > concoct-input/concoct_inputtableR.tsv
+~~~~
+
+Run CONCOCT:
+
+~~~~
+concoct -c 40 --coverage_file concoct-input/concoct_inputtableR.tsv --composition_file $HMP/D1.tongue/run2/megahit/megahit.contigs_c10K.fa -b concoct-output/
+~~~~
 
