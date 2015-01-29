@@ -180,3 +180,27 @@ Run CONCOCT:
 concoct -c 40 --coverage_file concoct-input/concoct_inputtableR.tsv --composition_file $HMP/D1.tongue/run2/megahit/megahit.contigs_c10K.fa -b concoct-output/
 ~~~~
 
+###Check for Fuso
+
+While I'm waiting for the CONCOCT pipeline, I'm just going to blast the megahit assembly against a fuso complete genome I got from ncbi. 
+
+~~~~
+bowtie2-build NC_003454.fna NC_003454.fna
+
+bowtie2 /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/blast/NC_003454.fna -f $HMP/D1.tongue/run2/megahit/megahit.contigs_c10K.fa -p 16 -S megahit.aligned.sam.contigstoref
+~~~~
+
+And some of the contigs aligned! Here is the alignment for the cut up contigs (these are the ones used for concoct. 7714 contigs aligned perfectly to the genome. 
+
+~~~~
+1404252 reads; of these:
+  1404252 (100.00%) were unpaired; of these:
+    1396432 (99.44%) aligned 0 times
+    7714 (0.55%) aligned exactly 1 time
+    106 (0.01%) aligned >1 times
+0.56% overall alignment rate
+~~~~
+
+
+
+
