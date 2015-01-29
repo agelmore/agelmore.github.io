@@ -5,7 +5,7 @@ date:   2015-1-28
 comments: true
 ---
 
-While I'm waiting for the CONOCOCT pipeline to run on axiom, I thought I would do a couple BLAST alignments of the megahit assembly to some Fuso genomes that I downloaded a while ago.
+While I'm waiting for the CONCOCT pipeline to run on axiom, I thought I would do a couple BLAST alignments of the megahit assembly to some Fuso genomes that I downloaded a while ago.
 
 The NCBI has over 1000 full bacteria genomes that have been properly annotated. They can be downloaded FTP from ftp://ftp.ncbi.nih.gov/genomes/Bacteria/. I pulled out all of the 4 Fuso genomes as well as all of the Fuso draft sequences. 
 
