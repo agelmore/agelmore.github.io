@@ -184,7 +184,17 @@ concoct -c 40 --coverage_file concoct-input/concoct_inputtableR.tsv --compositio
 
 While I'm waiting for the CONCOCT pipeline, I'm just going to blast the megahit assembly against a fuso complete genome I got from ncbi. 
 
+Make the reference genome into a database and then blast with contigs as query:
 
+~~~~
+makeblastdb -in NC_003454.fna -dbtype nucl -out NC_003454.fna.db
 
+blastn -db NC_003454.fna.db -query /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/megahit/megahit.contigs_c10K.fa -out blast.1 -evalue 1e-5 -outfmt 6 -num_threads 16
+~~~~
 
+There were **20601** contigs that matched above the 1e-5 evalue cutoff. That is **1.47%** of the contigs. 
 
+I did another blast with all 4 of the complete Fuso genomes on ncbi and a third with the reference as all of the complete genomes and the draft genomes on ncbi. 
+
+4 complete: 68637 matches (4.89%)
+All plus draft: 185193 matches (13.19%)
