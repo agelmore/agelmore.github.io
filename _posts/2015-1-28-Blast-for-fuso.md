@@ -7,7 +7,7 @@ comments: true
 
 While I'm waiting for the CONCOCT pipeline to run on axiom, I thought I would do a couple BLAST alignments of the megahit assembly to some Fuso genomes that I downloaded a while ago.
 
-The NCBI has over 1000 full bacteria genomes that have been properly annotated. They can be downloaded FTP from ftp://ftp.ncbi.nih.gov/genomes/Bacteria/. I pulled out all of the 4 Fuso genomes as well as all of the Fuso draft sequences. 
+The NCBI has over 1000 full bacteria genomes that have been properly annotated. They can be downloaded FTP from ftp://ftp.ncbi.nih.gov/genomes/Bacteria/. I pulled out all of the 4 Fuso genomes as well as all of the Fusobacterium draft sequences (including those that are not nucleatum). 
 
 First I combined all of these references into a single file. Then I made the reference genome into a database and then blast with contigs as query. I used the option "max_target_seqs" so that each contig would only be mapped once. This will avoid contigs that map to multiple Fuso genomes (such as 16S):
 
