@@ -148,11 +148,13 @@ gzip $f/*.fastq
 
 {% endhighlight %}
 
+For some reason the script didn't work for all of the samples. A few of them didn't make the smds.coverage files, but did make the sam files. I removed those samples to figure that out later, and went on to make the coverage table with just 13 samples. 
+
 Generate coverage table:
 
 ~~~~
 cd $HMP/D1.tongue/run2/concoct/map
-python $CONCOCT/scripts/gen_input_table.py --isbedfiles --samplenames <(for s in SRS*; do echo $s | cut -f1; done) ../../megahit/megahit.contigs_c10K.fa SRS*/bowtie2/asm_pair-smds.coverage > concoct_inputtable.tsv
+python $CONCOCT/scripts/gen_input_table.py --isbedfiles --samplenames <(for s in SRS*; do echo $s; done) ../../megahit/megahit.contigs_c10K.fa SRS*/bowtie2/asm_pair-smds.coverage > concoct_inputtable.tsv
 mkdir $HMP/D1.tongue/run2/concoct/concoct-input
 mv concoct_inputtable.tsv $HMP/D1.tongue/run2/concoct/concoct-input
 
@@ -162,7 +164,7 @@ Generate linkage table:
 
 ~~~~
 cd $HMP/D1.tongue/run2/concoct/map
-python $CONCOCT/scripts/bam_to_linkage.py -m 8 --regionlength 500 --fullsearch --samplenames <(for s in SRS*; do echo $s | cut -f1; done) ../../megahit/megahit.contigs_c10K.fa SRS*/bowtie2/asm_pair-smds.bam > concoct_linkage.tsv
+python $CONCOCT/scripts/bam_to_linkage.py -m 8 --regionlength 500 --fullsearch --samplenames <(for s in SRS*; do echo $s; done) ../../megahit/megahit.contigs_c10K.fa SRS*/bowtie2/asm_pair-smds.bam > concoct_linkage.tsv
 mv concoct_linkage.tsv $HMP/D1.tongue/run2/concoct/concoct-input
 
 ~~~~
@@ -179,5 +181,11 @@ Run CONCOCT:
 ~~~~
 concoct -c 40 --coverage_file concoct-input/concoct_inputtableR.tsv --composition_file $HMP/D1.tongue/run2/megahit/megahit.contigs_c10K.fa -b concoct-output/
 ~~~~
+
+Concoct finished in less than a day. I ran the ClusterPlot.R script that comes with the CONCOCT software and generated a scatterplot. It doesn't look like much.
+
+
+I combined the file with the cluster numbers (clustering_gt1000.csv) with the blast output (blast.fuso.all) which should be able to tell me where the contigs that had fuso clustered to. This file only has 3580 contigs, probably because I didn't use all the samples that I had done the assembly with when I ran concoct. Looking for unique clusters in this file (`cat blast.concoct.merged.txt | cut -f 2 | sort | uniq`) showed that almost every cluster was found in these contigs. Something is wrong here. 
+
 
 
