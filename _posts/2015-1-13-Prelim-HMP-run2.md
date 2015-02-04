@@ -184,7 +184,7 @@ concoct -c 40 --coverage_file concoct-input/concoct_inputtableR.tsv --compositio
 
 Concoct finished in less than a day. I ran the ClusterPlot.R script that comes with the CONCOCT software and generated a scatterplot. It doesn't look like much.
 
-{% include image.html url="https://github.com/SchlossLab/FusoAssemblies/blob/master/figures/ClusterPlot.png" %}
+![ClusterPlot]({{ site.url }}/images/ClusterPlot.png)
 
 I combined the file with the cluster numbers (clustering_gt1000.csv) with the blast output (blast.fuso.all) which should be able to tell me where the contigs that had fuso clustered to. This file only has 3580 contigs, probably because I didn't use all the samples that I had done the assembly with when I ran concoct. Looking for unique clusters in this file (`cat blast.concoct.merged.txt | cut -f 2 | sort | uniq`) showed that almost every cluster was found in these contigs. Something is wrong here. 
 
