@@ -148,7 +148,7 @@ gzip $f/*.fastq
 
 {% endhighlight %}
 
-For some reason the script didn't work for all of the samples. A few of them didn't make the smds.coverage files, but did make the sam files. I removed those samples to figure that out later, and went on to make the coverage table with just 13 samples. 
+**For some reason the script didn't work for all of the samples. A few of them didn't make the smds.coverage files, but did make the sam files. I removed those samples to figure that out later, and went on to make the coverage table with just 13 samples.**
 
 Generate coverage table:
 
