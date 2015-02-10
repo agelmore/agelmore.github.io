@@ -7,9 +7,10 @@ comments: true
 
 I made a quick pipeline to see how many Fuso reads were used in the megahit assembly. Basically, I made a list of contigs that mapped to Fuso using blast, used a script to pull out those contigs from the assembly file, and then ran bowtie2 to find the percent reads mapping. I did this with the complete list of Fuso and with the Fuso contigs > 1kb. 
 
-Output: 
+*Output:*
 
 5.17% total reads map to fuso contigs
+
 1.12% total reads map to fuso contigs greater than 1kb
 
 ~~~~
