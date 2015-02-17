@@ -53,7 +53,7 @@ concoct -c 40 --coverage_file concoct-input/concoct_inputtableR.tsv --compositio
 
 This plot shows how all of the contigs cluster into the bins on a PCA plot. To see how the blasted Fuso contigs clustered, I created a histogram of the frequency of fuso contigs in different CONOCCT bins. 
 
-![Cluster Histogram]({{ site.url }}/images/ClusterPlot1kb.png)
+![Cluster Histogram]({{ site.url }}/images/clusterhistogram.png)
 
 This actually worked pretty well! 17, 21, and 25 had the most Fuso contigs. Next, I will re-assemble those 3 clusters and see if I can get some longer Fuso contigs that I can separate into strains.
 
