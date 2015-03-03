@@ -66,4 +66,10 @@ Rscript $CONCOCT/scripts/COGPlot.R -s clustering_gt1000_scg.tsv -o clustering_gt
 
 ![Single-copy core genes heat map]({{ site.url }}/images/clustering_gt1000_scg.png)
 
-Not all of the clusters are pure or have all the cogs present, but clusters 21 and 17 which had the most Fuso contigs are pretty good! 21 looks like it might have two strains in it because there are double copies of most of the core cogs. I am going to combine these two clusters and reassemble next. 
+Not all of the clusters are pure or have all the cogs present, but clusters 21 and 17 which had the most Fuso contigs are pretty good! 21 looks like it might have two strains in it because there are double copies of most of the core cogs. 
+
+##What's next
+
+* combine clusters 17 and 21 - reassemble
+* TAXAassign to do taxonomic classification on the clusters
+* Validate.pl script to calculate recall and precision statistics
