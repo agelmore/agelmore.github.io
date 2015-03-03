@@ -5,9 +5,18 @@ date:   2015-2-28
 comments: true
 ---
 
-The CONCOCT pipeline has a script to evaluate the purity of clusters by using single-copy core genes. The idea is that if each cluster is a pure genome, then it will contain one and only one copy of core genes (i.e. 16s). 
+The CONCOCT pipeline has a script to evaluate the purity of clusters by using single-copy core genes. The idea is that if each cluster is a pure genome, then it will contain one and only one copy of core housekeeping genes. 
 
-The pipeline has you annotate and translate your contigs using prodigal, use the script RPSBLAST.sh to cog annotate the genes, 
+The single-copy COGs to use were determined in the CONCOCT paper by choosing COGs that were present at a frequency of less than 1.03 in at least 97% of the species on NCBI. Therefore, a complete and pure genome should have one copy of each of the 36 COGs. 
+
+###The pipeline:
+
+* prodigal - annotate and translate your contigs 
+* RPSBLAST.sh - blast the genes against cog database
+* COG_table.py - count number of core COGs per cluster
+* COGPlot.R - create heatmap in R
+
+Sounds easy, right?
 
 Downloaded [prodigal](http://prodigal.ornl.gov/downloads.php) and ran the gene annotations on the megahit assembly of contigs greater than 1000bp. 
 
@@ -38,7 +47,7 @@ Next we use the CONCOCT script COG_table.py. This script requires the file `scg_
 python $CONCOCT/scripts/COG_table.py -b annotations/cog-annotations/megahit.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c concoct-output/clustering_gt1000.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > evaluation-output/2clustering_gt1000_scg.tsv
 ~~~~
 
-It worked and created the cog table, but it says that none of the contigs matched the COGs at all! I realized the problem is in the name of my contigs. Prodigal adds a _ character to the end of each contig when it cut the contigs into genes. The COG_table.py program knows to separate the contig names from the gene name using the _ symbol, but my contig names already contain that separator. I need to go back to before I run prodigal and rename all the contigs. I will also need to rename them in the cluster file. Ugg.  
+It worked and created the cog table, but it shows 0 for all COG totals... I realized the problem is in the name of my contigs. Prodigal adds a _ character to the end of each contig when it cut the contigs into genes. The COG_table.py program knows to separate the contig names from the gene name using the _ symbol, but my contig names already contain that separator. I need to go back to before I run prodigal and rename all the contigs. I will also need to rename them in the cluster file. Ugg.  
 
 
 ~~~~
