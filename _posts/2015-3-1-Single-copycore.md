@@ -51,8 +51,8 @@ sed -i 's/_/-/g' clustering_gt1000.csv
 
 $CONCOCT/scripts/RPSBLAST.sh -f megahit.1000.contigs_c10K.faa -p -c 8 -r 1
 
-python $CONCOCT/scripts/COG_table.py -b megahit.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c clustering_gt1000.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > clustering_gt1000_scg.tsv
+python $CONCOCT/scripts/COG_table.py -b megahit.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c clustering_gt1000.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv --separator '_6' > clustering_gt1000_scg.tsv
 
 ~~~~
 
-Still didn't work.
+I had to make the separator _6 because prodigal adds two _ symbols. I need to check that all the contigs have this symbol, otherwise I'll need to change it again. 
