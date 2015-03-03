@@ -59,5 +59,12 @@ python $CONCOCT/scripts/COG_table.py -b megahit.cogtable.out -m $CONCOCT/scgs/sc
 
 It worked!!!
 
+Graph the output:
 
+~~~~
+Rscript $CONCOCT/scripts/COGPlot.R -s clustering_gt1000_scg.tsv -o clustering_gt1000_scg.pdf
+~~~~
+
+
+![Single-copy core genes heat map]({{ site.url }}/images/clustering_gt1000_scg.png)
 
