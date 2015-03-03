@@ -36,14 +36,23 @@ This script took a little while. The output was put in a file called megahit.out
 Next we use the CONCOCT script COG_table.py. This script requires the file `scg_cogs_min0.97_max1.03_unique_genera.txt` which contains the single-copy cog ids to use and the file `$CONCOCT/scgs/cdd_to_cog.tsv` which matches cog ids to their conserved domain database number. 
 
 ~~~~
-python $CONCOCT/scripts/COG_table.py -b annotations/cog-annotations/megahit.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c concoct-output/clustering_gt1000.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv --scovs-threshold 0 -p 0 --separator ',' > evaluation-output/2clustering_gt1000_scg.tsv
+python $CONCOCT/scripts/COG_table.py -b annotations/cog-annotations/megahit.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c concoct-output/clustering_gt1000.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > evaluation-output/2clustering_gt1000_scg.tsv
 ~~~~
 
 It worked and created the cog table, but it says that none of the contigs matched the COGs at all! I realized the problem is in the name of my contigs. Prodigal adds a "_" character to the end of each contig when it cut the contigs into genes. The COG_table.py program knows to separate the contig names from the gene name using the "_" symbol, but my contig names already contain that separator. I need to go back to before I run prodigal and rename all the contigs. I will also need to rename them in the cluster file. Ugg.  
 
 
 
+~~~~
+sed -i 's/_/-/g' megahit.1000.contigs_c10K.fa 
+sed -i 's/_/-/g' clustering_gt1000.csv 
 
+./prodigal -a $HMP/D1.tongue/run2/concoct/1kb/cogtable/megahit.1000.contigs_c10K.faa -i $HMP/D1.tongue/run2/concoct/1kb/cogtable/megahit.1000.contigs_c10K.fa -f gff -p meta -o $HMP/D1.tongue/run2/concoct/1kb/cogtable/megahit.1000.contigs_c10K.gff 
 
+$CONCOCT/scripts/RPSBLAST.sh -f megahit.1000.contigs_c10K.faa -p -c 8 -r 1
 
+python $CONCOCT/scripts/COG_table.py -b megahit.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c clustering_gt1000.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > clustering_gt1000_scg.tsv
 
+~~~~
+
+Still didn't work.
