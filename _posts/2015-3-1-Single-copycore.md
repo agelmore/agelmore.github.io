@@ -39,7 +39,7 @@ Next we use the CONCOCT script COG_table.py. This script requires the file `scg_
 python $CONCOCT/scripts/COG_table.py -b annotations/cog-annotations/megahit.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c concoct-output/clustering_gt1000.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > evaluation-output/2clustering_gt1000_scg.tsv
 ~~~~
 
-It worked and created the cog table, but it says that none of the contigs matched the COGs at all! I realized the problem is in the name of my contigs. Prodigal adds a "_" character to the end of each contig when it cut the contigs into genes. The COG_table.py program knows to separate the contig names from the gene name using the "_" symbol, but my contig names already contain that separator. I need to go back to before I run prodigal and rename all the contigs. I will also need to rename them in the cluster file. Ugg.  
+It worked and created the cog table, but it says that none of the contigs matched the COGs at all! I realized the problem is in the name of my contigs. Prodigal adds a _ character to the end of each contig when it cut the contigs into genes. The COG_table.py program knows to separate the contig names from the gene name using the _ symbol, but my contig names already contain that separator. I need to go back to before I run prodigal and rename all the contigs. I will also need to rename them in the cluster file. Ugg.  
 
 
 
