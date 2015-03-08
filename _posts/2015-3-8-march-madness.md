@@ -8,6 +8,7 @@ comments: true
 Pat challenged the lab to read as many papers as we can in the month of March. Here are the summaries that I also posted to the github page. 
 
 Wickham, H. Tidy data. *J. Stat. Software.* 2014 August; 59(10):1-23.
+http://www.ncbi.nlm.nih.gov/pubmed/25231862
 
 Overall: 7
 
