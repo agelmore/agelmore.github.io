@@ -27,6 +27,7 @@ mothur '#get.seqs(accnos=cluster.17.21, fasta=megahit.1000.contigs_c10K.fa)'
 mv megahit.1000.contigs_c10K.pick.fa cluster.17.21.fa
 ~~~~
 
+#Read mapping
 
 Run bowtie to generate a sam file of all the reads used to create these contigs
 
@@ -87,7 +88,7 @@ for i in range(len(seqid)):
 fastq.close()
 ~~~~
 
-#Assemble!:
+#Assemble!
 
 This fastq file has 10200603 reads which is about 1% of the total reads from the 20 samples. 
 
