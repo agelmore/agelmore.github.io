@@ -36,6 +36,7 @@ bowtie2 cluster.17.21 -q $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fq -p 16
 ~~~~
 
 Outfile statistics:
+
 ~~~~
 1622964606 reads; of these:
   1622964606 (100.00%) were unpaired; of these:
@@ -46,11 +47,12 @@ Outfile statistics:
 ~~~~
 
 This took me a couple tries to figure out how to do this. There is probably a better way, but this worked. 
+
 ~~~~
 #make BAM file
 samtools view -bT cluster.17.21 cluster.17.21.sam > cluster.17.21.bam
 
-#Use the -F4 option. The -F option removes the specified FLAG. The 4 flag is unmapped reads. 
+#use the -F4 option. The -F option removes the specified FLAG. The 4 flag is unmapped reads. 
 samtools view -F4 cluster.17.21.bam > cluster.17.21.mapped.sam.2
 
 #cut out name, sequence, and quality from sam file
