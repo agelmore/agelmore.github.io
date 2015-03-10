@@ -60,6 +60,7 @@ cut -f1,10,11 cluster.17.21.mapped.sam > cluster.17.21.mapped.cut.sam
 ~~~~
 
 Make into fastq format using python script samtofastq.py 
+
 	-is there a samtool or picard to do this? - SamToFastq threw an error that it couldn't parse the sam file after running the F4 option
 
 ~~~~
