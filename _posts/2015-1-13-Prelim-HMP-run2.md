@@ -27,7 +27,7 @@ I used a few more samples this time so that I had a total of 20. They are still 
 ###Managing the data
 
 ~~~~
-tar zxvf SRS*
+tar jxvf SRS*
 ~~~~
 
 

@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Blasting for Fuso"
-date:   2015-1-28
+title:  "Blasting for Fuso - updated"
+date:   2015-2-5
 comments: true
 ---
 
@@ -18,3 +18,5 @@ blastn -db Fuso.all.db.make -query /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tong
 ~~~~
 
 There were **40015** contigs that matched above the 1e-5 evalue cutoff. That is **2.85%** of the 1403622 contigs. 
+
+I wanted to see how long these contigs were so I made a little histogram of all the lengths.
