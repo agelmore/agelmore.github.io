@@ -98,8 +98,39 @@ This fastq file has 10200603 reads which is about 1% of the total reads from the
 python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.mapped.cut.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit
 ~~~~
 
-The first time it finished with an error that the reads are longer than 100bp. That's weird because I assembled the first time with the read length at 100...but now some are 101bp? Well, anyways it's assembling. Hopefully it finishes tomorrow. 
+The first time it finished with an error that the reads are longer than 100bp. That's weird because I assembled the first time with the read length at 100...but now some are 101bp? 
 
+#Statistics
+
+~~~~
+python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
+
+perl /share/scratch/bin/calcN50N90.pl $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
+
+cd $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/; awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' final.contigs.fa > final.contigs.1000.fa; grep -c '>' final.contigs.1000.fa 
+~~~~
+
+Output:
+
+~~~~
+total contigs: 22972
+average length: 669 bp
+trimmed average length: 668 bp
+greater than or equal to 100:  22972
+shortest conting: 200 bp
+longest contig: 25994 bp
+total length: 15.379674 Mb
+N50: 1082
+N90: 271
+Contigs > 1kb: 4149
+~~~~
+
+Compared to original assembly:
+
+Assembly | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
+:---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
+Primary (all reads) | iterative (21-99, step 2) | 1403622 | 587 | 24 | 507 |  111168 | 84.56% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
+Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 1082 | 271 | 669 |  4149 | 84.56% | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 
 
 
