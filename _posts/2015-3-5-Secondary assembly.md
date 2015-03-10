@@ -130,7 +130,7 @@ Compared to original assembly:
 Assembly | kmer length | Number of contigs | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
 Primary (all reads) | iterative (21-99, step 2) | 1403622 | 587 | 24 | 507 |  111168 | 84.56% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
-Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 1082 | 271 | 669 |  4149 | 84.56% | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
+Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 
 
 
