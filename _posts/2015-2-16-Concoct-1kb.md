@@ -53,6 +53,30 @@ concoct -c 40 --coverage_file concoct-input/concoct_inputtableR.tsv --compositio
 
 This plot shows how all of the contigs cluster into the bins on a PCA plot. To see how the blasted Fuso contigs clustered, I created a histogram of the frequency of fuso contigs in different CONOCCT bins. 
 
+R code to make histogram:
+~~~~
+x<- read.table("/users/amanda/documents/Schloss/Fuso/Assemblies/D1 tongue/run2/blast.fuso.lengths")
+
+y<- read.table("/users/amanda/documents/Schloss/Fuso/Assemblies/D1 tongue/run2/blast.concoct.merged.1kb.txt", header=T)
+
+g<- read.table("/users/amanda/documents/Schloss/Fuso/Assemblies/D1 tongue/run2/blast.fuso.1000", header=FALSE, col.names=c("contig","ref","pid","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"))
+
+m <- merge(y,g,by='contig')
+
+lengths<-  read.table("/users/amanda/documents/Schloss/Fuso/Assemblies/D1 tongue/run2/contiglengths", header=T)
+
+m.len <- cbind(y,lengths)
+colnames(m.len) <- c('contig','cluster','len')
+
+factor(m.len$contig)
+
+sums<-aggregate(m.len$len, by=list(m.len$cluster), FUN=sum)
+barplot(sums)
+
+hist(y$cluster, breaks=40, main="Frequency of Blasted Fuso contigs in CONCOCT clusters", xlab="Bin number")
+
+~~~~
+
 ![Cluster Histogram]({{ site.url }}/images/clusterhistogram.png)
 
 This actually worked pretty well! 17, 21, and 25 had the most Fuso contigs. Next, I will re-assemble those 3 clusters and see if I can get some longer Fuso contigs that I can separate into strains.
