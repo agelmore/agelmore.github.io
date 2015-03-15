@@ -12,7 +12,7 @@ Now that I have identified two pure (ish) clusters of contigs that contain Fusob
 Here are the files I have to work with:
 
 File name | contents | format | location
-:---------------|:--------:|:--------:|--------:
+:---------------|:-------------------:|:--------:|--------:
 clustering_gt1000.csv | CONCOCT output, contigs with cluster number | csv (contig,cluster) | $HMP/D1.tongue/run2/concoct/1kb/concoct-output
 megahit.1000.contigs_c10K.fa | primary assembly filtered for 1kb contigs | fasta | $HMP/D1.tongue/run2/concoct/1kb/assembly2
 All.D1.tongue.run2.cat.fq | All reads, 20 samples | fastq | $HMP/D1.tongue/run2/cat/
