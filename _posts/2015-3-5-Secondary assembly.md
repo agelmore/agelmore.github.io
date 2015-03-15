@@ -113,6 +113,8 @@ The first time it finished with an error that the reads are longer than 100bp. T
 
 #Statistics
 
+I performed the same statistics on the contigs in cluster 17 and 21 after the primary and secondary assembly. 
+
 ~~~~
 python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 
@@ -136,12 +138,13 @@ N90: 271
 Contigs > 1kb: 4149
 ~~~~
 
-Compared to original assembly:
+
+Assembly comparisons:
 
 Assembly | kmer length | Number of contigs | Longest contig length | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
-Primary (all reads) | iterative (21-99, step 2) | 1403622 | 259539 | 587 | 24 | 507 |  111168 | 84.56% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
-Primary (cluster 17 +21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
+Primary (all contigs) | iterative (21-99, step 2) | 1403622 | 259539 | 587 | 24 | 507 |  111168 | 84.56% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
+Primary (cluster 17 +21, filtered>1kb) | iterative (21-99, step 2) | 4728 | 18779 | 2491 | 1194 | 2250 |  4728 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.fa
 Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 
 
