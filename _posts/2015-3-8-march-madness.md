@@ -40,13 +40,37 @@ Innovation: 9
 
 Who should read: @kdiverson, 
 
-Tags: genomics, statistics, data cleaning
+Tags: genomics, metagenomic assembly, microbiome development 
 
 This paper from the Banfield lab is a great example of constructing complete genomes from metagenomic data. The goal was to extract complete genomes from time series samples from a relatively simple community - the infant gut. They developed a novel pipeline which took into account coverage and composition data. First, they assembled the metagenomic reads into contigs and extended the assembly by iteratively assembling based on coverage. This method makes the assumption that strains at a similar abundance level will have the same read coverage throughout the genome. Second, they separated the contigs into bins based on tetranucleotide composition using ESOM. From this binning step they generated 8 almost completely genomes and 9 draft genomes as well as 3 viral genomes. 
 
 This article demonstrates a few benefits of assembling full genomes compared to using metagenomic data for community gene profiling or only sequencing 16S data. By constructing full length genomes from time-series samples, changes in abundance of specific strains could be monitored over the time course. This is a benefit to using metagenomic data instead of 16S, because here there is higher strain resolution, but 16S might not show strain differences. Also, in this experiment they were able to assemble viral genomes, which cannot be assessed with 16S sequencing. Finally, they were able to do comparative genomics between two strains of Propionibacterium. By comparing full length genomes, they could identify genes associated with metabolic advantages and persistence in the gut. 
 
 Sharon et al. demonstrate an innovative method to extract full length genomes from metagenomic data. The supplementary methods are fairly detailed, but unfortunately not easily reproduced because they did not publish scripts or software. Their method is pretty similar to CONCOCT which also take into account coverage and composition data, and it might be interesting to compare the methods using samples with more complexity than the infant gut. 
+
+
+##The interplay between microbiome dynamics and pathogen dynamics in a murine model of Clostridium difficile Infection.
+Reeves AE, Theriot CM, Bergin IL, Huffnagle GB, Schloss PD, Young VB.
+Gut Microbes. 2011 May-Jun;2(3):145-58. Epub 2011 May 1.
+http://www.ncbi.nlm.nih.gov/pubmed/21804357
+
+Overall: 8
+
+Importance: 8
+
+Innovation: 7
+
+Who should read: C.diff people
+
+Tags: C. difficile, colonization resistance
+
+This paper from our microbiome group at Michigan does a good job demonstrating that colonization resistance to C. difficile is dependent on the ecology of the gut microbial communities. The authors treated mice with different antibiotic coctails and challenged with different doses of C. difficile. Depending on the antibiotic used and the dose of C. difficile, the mice had differences in infection and severity of disease. Mice that were treated with antibiotics and recovered from CDI had a microbiome similar to untreated animals, while animals that had severe colitis developed a more dysbiotic community enriched in Proteobacteria. Additionally, there was a dose dependent effect on mortality in mice treated with cefoperazone, suggesting that the indigenous community can recover and outcompete C. difficile at a low abundance. Therefore, the authors propose a balance between the ability of the microbiome to recover from antibiotics and the rate of C. difficile expansion in the dysbiotic community. 
+
+I like that this paper is very clear in demonstrating a mechanism (colonization resistance), instead of getting bogged down in details of different bugs or communities. The experiments are hypothesis driven with carefully controlled variables. It is  interesting that some mice get sick and some clear the infection when treated with the same antibiotics. I noticed that some of the mice that didn't get sick (CDI well), still had a fair amount of cellular infiltrate in the colon. I wonder if that was just leftover from infection, or if it is a result of the antibiotic treatment. 
+
+
+
+
 
 
 
