@@ -80,8 +80,11 @@ is there a samtool or picard to do this? SamToFastq threw an error that it could
 from __future__ import print_function
 import sys
 
-tab=open('cluster.17.21.mapped.cut.sam','r') #fastq sequences separated by tab
-fastq=open('cluster.17.21.mapped.cut.fastq','wt') #fastq format
+file1=sys.argv[1] #sequence id, fastq sequences, and quality scores separated by tab
+file2=sys.argv[2]  #fastq format
+
+tab=open(file1,'r') 
+fastq=open(file2,'wt')
 
 seqid=[] #list of sequence ID
 seq=[]   #list of read sequence
@@ -149,6 +152,8 @@ Primary (all contigs) | iterative (21-99, step 2) | 1403622 | 259539 | 587 | 24 
 Primary (cluster 17 +21, filtered>1kb) | iterative (21-99, step 2) | 4728 | 18779 | 2491 | 1194 | 2250 |  4728 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.fa
 Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 Secondary (cluster 17+21), filtered>1kb | iterative (21-99, step 2) | 4149 | 25994 | 2040 | 1145 | 1969 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
+
+
 
 
 
