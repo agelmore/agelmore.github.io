@@ -58,14 +58,14 @@ Outfile statistics:
 0.63% overall alignment rate
 ~~~~
 
-This took me a couple tries to figure out how to do this. There is probably a better way, but this worked. 
+Pull out the aligned reads from the SAM file.  
 
 ~~~~
 #make BAM file
 samtools view -bT cluster.17.21 cluster.17.21.sam > cluster.17.21.bam
 
 #use the -F4 option. The -F option removes the specified FLAG. The 4 flag is unmapped reads. 
-samtools view -F4 cluster.17.21.bam > cluster.17.21.mapped.sam.2
+samtools view -F4 cluster.17.21.bam > cluster.17.21.mapped.sam
 
 #cut out name, sequence, and quality from sam file
 cut -f1,10,11 cluster.17.21.mapped.sam > cluster.17.21.mapped.cut.sam
@@ -73,7 +73,7 @@ cut -f1,10,11 cluster.17.21.mapped.sam > cluster.17.21.mapped.cut.sam
 
 Make into fastq format using python script samtofastq.py 
 
-is there a samtool or picard to do this? SamToFastq threw an error that it couldn't parse the sam file after running the F4 option
+is there a samtool or picard to do this? The picard tool SamToFastq threw an error that it couldn't parse the sam file after running the F4 option
 
 ~~~~
 #!/usr/bin/python
@@ -102,6 +102,12 @@ for i in range(len(seqid)):
 fastq.close()
 ~~~~
 
+Run script:
+
+~~~~
+python samtofastq.py cluster.17.21.mapped.cut.sam cluster.17.21.mapped.cut.fastq
+~~~~
+
 #Assemble!
 
 This fastq file has 10200603 reads which is about 1% of the total reads from the 20 samples. 
@@ -124,8 +130,6 @@ cd $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/; awk '!/^>/ {next} {getlin
 python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
 
 perl /share/scratch/bin/calcN50N90.pl $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
-
-
 ~~~~
 
 Output:
@@ -152,6 +156,7 @@ Primary (all contigs) | iterative (21-99, step 2) | 1403622 | 259539 | 587 | 24 
 Primary (cluster 17 +21, filtered>1kb) | iterative (21-99, step 2) | 4728 | 18779 | 2491 | 1194 | 2250 |  4728 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.fa
 Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 Secondary (cluster 17+21), filtered>1kb | iterative (21-99, step 2) | 4149 | 25994 | 2040 | 1145 | 1969 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
+
 
 
 
