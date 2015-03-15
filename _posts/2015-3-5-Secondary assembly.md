@@ -113,28 +113,30 @@ The first time it finished with an error that the reads are longer than 100bp. T
 
 #Statistics
 
-I performed the same statistics on the contigs in cluster 17 and 21 after the primary and secondary assembly. 
+I performed the same statistics on the contigs in cluster 17 and 21 after the primary and secondary assembly. Because the primary assembly had been filtered to greater than 1kb, I did the same for the secondary assembly. 
 
 ~~~~
-python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
-
-perl /share/scratch/bin/calcN50N90.pl $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
-
 cd $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/; awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' final.contigs.fa > final.contigs.1000.fa; grep -c '>' final.contigs.1000.fa 
+
+python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
+
+perl /share/scratch/bin/calcN50N90.pl $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
+
+
 ~~~~
 
 Output:
 
 ~~~~
-total contigs: 22972
-average length: 669 bp
-trimmed average length: 668 bp
-greater than or equal to 100:  22972
-shortest conting: 200 bp
+total contigs: 4149
+average length: 1969 bp
+trimmed average length: 1963 bp
+greater than or equal to 100:  4149
+shortest conting: 1000 bp
 longest contig: 25994 bp
-total length: 15.379674 Mb
-N50: 1082
-N90: 271
+total length: 8.170891 Mb
+N50: 2040
+N90: 1145
 Contigs > 1kb: 4149
 ~~~~
 
@@ -146,6 +148,7 @@ Assembly | kmer length | Number of contigs | Longest contig length | N50 | N90 |
 Primary (all contigs) | iterative (21-99, step 2) | 1403622 | 259539 | 587 | 24 | 507 |  111168 | 84.56% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
 Primary (cluster 17 +21, filtered>1kb) | iterative (21-99, step 2) | 4728 | 18779 | 2491 | 1194 | 2250 |  4728 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.fa
 Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
+Secondary (cluster 17+21), filtered>1kb | iterative (21-99, step 2) | 4149 | 25994 | 2040 | 1145 | 1969 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
 
 
 
