@@ -5,7 +5,18 @@ date:   2015-3-9
 comments: true
 ---
 
-Now that I have identified two pure (ish) clusters that contain Fusobacterium, I am going to reassemble the reads used to make those contigs and (hopefully) get some long Fuso contigs out. 
+Now that I have identified two pure (ish) clusters of contigs that contain Fusobacterium, I am going to reassemble the reads used to make those contigs and (hopefully) get a better assembly with some long Fuso contigs. 
+
+#Files
+
+Here are the files I have to work with:
+
+File name | contents | format | location
+:---------------|:--------:|:--------:|--------:
+clustering_gt1000.csv | CONCOCT output, contigs with cluster number | csv (contig,cluster) | $HMP/D1.tongue/run2/concoct/1kb/concoct-output
+megahit.1000.contigs_c10K.fa | primary assembly filtered for 1kb contigs | fasta | $HMP/D1.tongue/run2/concoct/1kb/assembly2
+All.D1.tongue.run2.cat.fq | All reads, 20 samples | fastq | $HMP/D1.tongue/run2/cat/
+
 
 #Cluster contig files
 
@@ -62,7 +73,7 @@ cut -f1,10,11 cluster.17.21.mapped.sam > cluster.17.21.mapped.cut.sam
 
 Make into fastq format using python script samtofastq.py 
 
-	-is there a samtool or picard to do this? - SamToFastq threw an error that it couldn't parse the sam file after running the F4 option
+is there a samtool or picard to do this? SamToFastq threw an error that it couldn't parse the sam file after running the F4 option
 
 ~~~~
 #!/usr/bin/python
@@ -130,6 +141,7 @@ Compared to original assembly:
 Assembly | kmer length | Number of contigs | Longest contig length | N50 | N90 | Average length | Contigs > 1kb | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
 Primary (all reads) | iterative (21-99, step 2) | 1403622 | 259539 | 587 | 24 | 507 |  111168 | 84.56% | $HMP/D1.tongue/run2/megahit/final.contigs.fa
+Primary (cluster 17 +21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 
 
