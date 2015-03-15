@@ -112,10 +112,29 @@ python samtofastq.py cluster.17.21.mapped.cut.sam cluster.17.21.mapped.cut.fastq
 
 This fastq file has 10200603 reads which is about 1% of the total reads from the 20 samples. 
 
-*Should I do digital normalization first? The fastq file is only 2.3G, but it might be good to normalize?*
+I did the assembly twice, once with digital normalization and once without.
 
 ~~~~
+khmerEnv
+cd $HMP/D1.tongue/run2/concoct/1kb/assembly2
+mkdir DN
+cd DN
+python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-median.py -C 20 -k 21 -x 1e9 ../cluster.17.21.mapped.cut.fastq -s cluster1721.D1.Tongue.run2.savetable -o cluster.17.21.mapped.cut.normalized.fastq
+~~~~
+
+~~~~
+3543725 of 7868458 or 45%
+output in cluster.17.21.mapped.cut.normalized.fastq
+~~~~
+
+And then the assembly:
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
+
 python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.mapped.cut.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit
+
+python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.mapped.cut.normalized.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized
 ~~~~
 
 The first time it finished with an error that the reads are longer than 100bp. That's weird because I assembled the first time with the read length at 100...but now some are 101bp? 
@@ -156,6 +175,7 @@ Primary (all contigs) | iterative (21-99, step 2) | 1403622 | 259539 | 587 | 24 
 Primary (cluster 17 +21, filtered>1kb) | iterative (21-99, step 2) | 4728 | 18779 | 2491 | 1194 | 2250 |  4728 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.fa
 Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 Secondary (cluster 17+21), filtered>1kb | iterative (21-99, step 2) | 4149 | 25994 | 2040 | 1145 | 1969 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
+Secondary (cluster17+21), with khmer | iterative (21-99, step 2) | 4149 | 25994 | 2040 | 1145 | 1969 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
 
 
 #BLAST for Fuso
@@ -163,13 +183,23 @@ Secondary (cluster 17+21), filtered>1kb | iterative (21-99, step 2) | 4149 | 259
 I already have a reference database that has all the Fuso genomes (full and draft) on ncbi in a [previous post](http://agelmore.github.io/2015/02/05/Blast-for-fuso.html). 
 
 ~~~~
-blastn -db $HMP/D1.tongue/run2/blast/Fuso.all.db.make -query $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa -out HMP/D1.tongue/run2/concoct/1kb/blast/ -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
+blastn -db $HMP/D1.tongue/run2/blast/Fuso.all.db.make -query $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa -out $HMP/D1.tongue/run2/concoct/1kb/blast/cluster.17.21.blast.fuso.1000.out -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
+~~~~
+
+Output columns are `qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore`
+   
+There were 25 contigs that blasted to the reference database. I pulled these contigs out of the fasta file. 
+
+~~~~
+cut -f1 cluster.17.21.blast.fuso.out > cluster.17.21.blast.contigs
+mothur '#get.seqs(accnos=cluster.17.21.blast.contigs, fasta=../assembly2/megahit/final.contigs.1000.fa)'
+mv ../assembly2/megahit/final.contigs.1000.pick.fa cluster.17.21.blast.fa
 ~~~~
 
 
 #Summary
 
-In this pipeline, I did a secondary assembly of the reads used to create contigs in clusters 17 and 21 which had the most contigs that blasted to Fusobacterium. The idea was that by assembling using mostly Fuso reads, I would be able to create longer and more complete contigs. The pipeline did 
+In this pipeline, I did a secondary assembly of the reads used to create contigs in clusters 17 and 21 which had the most contigs that blasted to Fusobacterium. The idea was that by assembling using mostly Fuso reads, I would be able to create longer and more complete contigs. The pipeline did make some longer contigs than the primary assembly had, but the contigs no longer blasted to the Fuso database like the original clustered contigs did. 
 
 
 
