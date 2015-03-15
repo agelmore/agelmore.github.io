@@ -158,7 +158,18 @@ Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 2
 Secondary (cluster 17+21), filtered>1kb | iterative (21-99, step 2) | 4149 | 25994 | 2040 | 1145 | 1969 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
 
 
+#BLAST for Fuso
 
+I already have a reference database that has all the Fuso genomes (full and draft) on ncbi in a [previous post](http://agelmore.github.io/2015/02/05/Blast-for-fuso.html). 
+
+~~~~
+blastn -db $HMP/D1.tongue/run2/blast/Fuso.all.db.make -query $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa -out HMP/D1.tongue/run2/concoct/1kb/blast/ -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
+~~~~
+
+
+#Summary
+
+In this pipeline, I did a secondary assembly of the reads used to create contigs in clusters 17 and 21 which had the most contigs that blasted to Fusobacterium. The idea was that by assembling using mostly Fuso reads, I would be able to create longer and more complete contigs. The pipeline did 
 
 
 
