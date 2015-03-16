@@ -147,11 +147,11 @@ python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN/cluster
 I performed the same statistics on the contigs in cluster 17 and 21 after the primary and secondary assembly. Because the primary assembly had been filtered to greater than 1kb, I did the same for the secondary assembly. 
 
 ~~~~
-cd $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/; awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' final.contigs.fa > final.contigs.1000.fa; grep -c '>' final.contigs.1000.fa 
+cd $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized/; awk '!/^>/ {next} {getline s} length(s) >= 1000 { print $0 "\n" s }' final.contigs.fa > final.contigs.1000.fa; grep -c '>' final.contigs.1000.fa 
 
-python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
+python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized/final.contigs.1000.fa
 
-perl /share/scratch/bin/calcN50N90.pl $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
+perl /share/scratch/bin/calcN50N90.pl $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized/final.contigs.1000.fa
 ~~~~
 
 
@@ -163,25 +163,28 @@ Primary (all contigs) | iterative (21-99, step 2) | 1403622 | 259539 | 587 | 24 
 Primary (cluster 17 +21, filtered>1kb) | iterative (21-99, step 2) | 4728 | 18779 | 2491 | 1194 | 2250 |  4728 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.fa
 Secondary (cluster 17+21) | iterative (21-99, step 2) | 22972 | 25994 | 1082 | 271 | 669 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.fa
 Secondary (cluster 17+21), filtered>1kb | iterative (21-99, step 2) | 4149 | 25994 | 2040 | 1145 | 1969 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
-Secondary (cluster17+21), with khmer | iterative (21-99, step 2) | 4149 | 25994 | 2040 | 1145 | 1969 |  4149 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
+Secondary (cluster17+21), with khmer, filtered>1kb | iterative (21-99, step 2) | 4166 | 31570 | 2311 | 1172 | 2140 |  4166 |  | $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
 
 
 #BLAST for Fuso
 
 I already have a reference database that has all the Fuso genomes (full and draft) on ncbi in a [previous post](http://agelmore.github.io/2015/02/05/Blast-for-fuso.html). 
 
+I did this with the khmer normalized assembly because this appeared to be the best assembly.
+
 ~~~~
-blastn -db $HMP/D1.tongue/run2/blast/Fuso.all.db.make -query $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa -out $HMP/D1.tongue/run2/concoct/1kb/blast/cluster.17.21.blast.fuso.1000.out -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
+blastn -db $HMP/D1.tongue/run2/blast/Fuso.all.db.make -query $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized/final.contigs.1000.fa -out $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN/blast/cluster.17.21.blast.fuso.1000.out -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
 ~~~~
 
 Output columns are `qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore`
    
-There were 25 contigs that blasted to the reference database. I pulled these contigs out of the fasta file. 
+There were 28 contigs that blasted to the reference database. I pulled these contigs out of the fasta file. 
 
 ~~~~
-cut -f1 cluster.17.21.blast.fuso.out > cluster.17.21.blast.contigs
-mothur '#get.seqs(accnos=cluster.17.21.blast.contigs, fasta=../assembly2/megahit/final.contigs.1000.fa)'
-mv ../assembly2/megahit/final.contigs.1000.pick.fa cluster.17.21.blast.fa
+cd $HMP/D1.tongue/run2/concoct/1kb/DN/blast/
+cut -f1 cluster.17.21.blast.fuso.1000.out > cluster.17.21.blast.norm.contigs
+mothur '#get.seqs(accnos=cluster.17.21.blast.norm.contigs, fasta=../../megahit/normalized/final.contigs.1000.fa)'
+mv ../../megahit/normalized/final.contigs.1000.pick.fa cluster.17.21.blast.norm.fa
 ~~~~
 
 
