@@ -73,8 +73,6 @@ cut -f1,10,11 cluster.17.21.mapped.sam > cluster.17.21.mapped.cut.sam
 
 Make into fastq format using python script samtofastq.py 
 
-is there a samtool or picard to do this? The picard tool SamToFastq threw an error that it couldn't parse the sam file after running the F4 option
-
 ~~~~
 #!/usr/bin/python
 from __future__ import print_function
@@ -108,6 +106,13 @@ Run script:
 python samtofastq.py cluster.17.21.mapped.cut.sam cluster.17.21.mapped.cut.fastq
 ~~~~
 
+Or just use Miss Kathy "Smarty-Pants" Iverson's awk one-liner:
+
+~~~~
+awk '{print "@"$1"\n"$2"\n""\+"$3}' cluster.17.21.mapped.cut.sam cluster.17.21.mapped.cut.fastq
+~~~~
+
+
 #Assemble!
 
 This fastq file has 10200603 reads which is about 1% of the total reads from the 20 samples. 
@@ -134,7 +139,7 @@ cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
 python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.mapped.cut.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit
 
-python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17.21.mapped.cut.normalized.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized
+python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN/cluster.17.21.mapped.cut.normalized.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized
 ~~~~
 
 The first time it finished with an error that the reads are longer than 100bp. That's weird because I assembled the first time with the read length at 100...but now some are 101bp? 
@@ -149,21 +154,6 @@ cd $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/; awk '!/^>/ {next} {getlin
 python /mnt/EXT/Schloss-data/bin/contigStats.py $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
 
 perl /share/scratch/bin/calcN50N90.pl $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/final.contigs.1000.fa
-~~~~
-
-Output:
-
-~~~~
-total contigs: 4149
-average length: 1969 bp
-trimmed average length: 1963 bp
-greater than or equal to 100:  4149
-shortest conting: 1000 bp
-longest contig: 25994 bp
-total length: 8.170891 Mb
-N50: 2040
-N90: 1145
-Contigs > 1kb: 4149
 ~~~~
 
 
