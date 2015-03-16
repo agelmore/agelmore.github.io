@@ -142,8 +142,6 @@ python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.17
 python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN/cluster.17.21.mapped.cut.normalized.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized
 ~~~~
 
-The first time it finished with an error that the reads are longer than 100bp. That's weird because I assembled the first time with the read length at 100...but now some are 101bp? 
-
 #Statistics
 
 I performed the same statistics on the contigs in cluster 17 and 21 after the primary and secondary assembly. Because the primary assembly had been filtered to greater than 1kb, I did the same for the secondary assembly. 
