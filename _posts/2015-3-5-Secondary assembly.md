@@ -21,6 +21,8 @@ All.D1.tongue.run2.cat.fq | All reads, 20 samples | fastq | $HMP/D1.tongue/run2/
 #Cluster contig files
 
 Pull out contigs into separate files for each cluster.
+**Why 17 and 21? Put head of the file, what is it?
+**Make an if statement in the awk command to skip the cut step.
 
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/concoct/1kb/assembly2
@@ -109,7 +111,7 @@ python samtofastq.py cluster.17.21.mapped.cut.sam cluster.17.21.mapped.cut.fastq
 Or just use Miss Kathy "Smarty-Pants" Iverson's awk one-liner:
 
 ~~~~
-awk '{print "@"$1"\n"$2"\n""\+"$3}' cluster.17.21.mapped.cut.sam cluster.17.21.mapped.cut.fastq
+awk '{print "@"$1"\n"$2"\n""\+"$3}' cluster.17.21.mapped.cut.sam > cluster.17.21.mapped.cut.fastq
 ~~~~
 
 
