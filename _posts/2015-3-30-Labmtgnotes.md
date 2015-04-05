@@ -63,7 +63,7 @@ samtools view -F4 cluster.18.22.bam > cluster.18.22.mapped.sam
 #cut out name, sequence, and quality from sam file
 cut -f1,10,11 cluster.18.22.mapped.sam > cluster.18.22.mapped.cut.sam
 
-awk '{print "@"$1"\n"$2"\n""\+"$3}' cluster.18.22.mapped.cut.sam > cluster.18.22.mapped.cut.fastq
+awk '{print "@"$1"\n"$2"\n""\+""\n"$3}' cluster.18.22.mapped.cut.sam > cluster.18.22.mapped.cut.fastq
 
 khmerEnv
 cd $HMP/D1.tongue/run2/concoct/1kb/assembly2
@@ -73,6 +73,29 @@ python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-medi
 
 cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
-python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN.18.22/cluster.18.22.mapped.cut.normalized.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized/18.22
+python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN.18.22/cluster.18.22.mapped.cut.normalized.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized/18.22.2
+
+~~~~
+
+
+It keeps failing on the assembly. No idea why. Here is the tail of the outfile:
+
+~~~~
+[Sun Apr  5 15:08:23 2015]: Extracting iterative edges from k = 41 to 51
+[Sun Apr  5 15:08:23 2015]: Building graph for k = 51
+[Sun Apr  5 15:08:23 2015]: Assembling contigs from SdBG for k = 51
+[Sun Apr  5 15:08:24 2015]: Extracting iterative edges from k = 51 to 61
+[Sun Apr  5 15:08:24 2015]: Building graph for k = 61
+[Sun Apr  5 15:08:24 2015]: Assembling contigs from SdBG for k = 61
+[Sun Apr  5 15:08:24 2015]: Extracting iterative edges from k = 61 to 71
+[Sun Apr  5 15:08:24 2015]: Building graph for k = 71
+[Sun Apr  5 15:08:24 2015]: Assembling contigs from SdBG for k = 71
+[Sun Apr  5 15:08:24 2015]: Extracting iterative edges from k = 71 to 79
+[Sun Apr  5 15:08:24 2015]: Building graph for k = 79
+Error occurs when running "builder build" for k = 79
+[Exit code -8]
+Number of CPU threads 16
+qsub working directory absolute is
+/mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
 ~~~~
