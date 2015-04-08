@@ -22,6 +22,7 @@ cd
 This is a little tricker since they're a lot of them. I made a text file that has the location of all the draft genomes on the NCBI site called FASTA_location. 
 
 { % gist b8a98a9745241f8ab7e1 % }
+
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/extract/draft
 
