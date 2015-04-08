@@ -25,3 +25,4 @@ This is a little tricker since they're a lot of them. I made a text file that ha
 cd /mnt/EXT/Schloss-data/amanda/Fuso/extract/draft
 
 wget -i FASTA_location
+~~~~
