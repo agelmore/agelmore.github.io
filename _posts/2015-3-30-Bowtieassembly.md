@@ -96,11 +96,20 @@ blastn -db /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fusodb.bowtie2 -qu
 
 ~~~~
 
+Extract the sequences out of blast output:
 
+~~~~
+cut -f1 blast.fusodb > blast.fusodb.reads
+mothur '#get.seqs(accnos=blast.fusodb.reads, fasta=/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fa)'
+mv All.D1.tongue.run2.cat.pick.fa blast.fusodb.reads.fa
 
+~~~~
 
+###Assembly
 
+Once the alignments finish I can assemble each of the extracted fasta files separately.
 
+~~~~
 khmerEnv
 cd $HMP/D1.tongue/run2/concoct/1kb/assembly2
 mkdir DN.18.22
@@ -113,7 +122,7 @@ python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN.18.22/c
 
 
 
-
+~~~~
 
 
 
