@@ -43,6 +43,74 @@ cd /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database
 cat fusodb.fa ../draft/draftdb.fa > fusodb.complete.fa
 ~~~~
 
+###Index databases
+
+Might as well index these databases for bowtie2 and blastn right now.
+
+~~~~
+bowtie2-build fusodb.complete.fa fusodb.bowtie2
+makeblastdb -in fusodb.complete.fa -dbtype nucl -out fusodb.blast
+
+~~~~
+
+#Extract reads
+
+Now I'm ready to extract reads that map to any of the Fuso genomes. I have all the reads from the 20 tongue samples that I've been using for practice in a file called `$HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fq`. I'm going to map those reads to the database using bowtie2 and blastn (We'll see which is better. I'm thinking bowtie will be). 
+
+###Bowtie2
+
+Let's start with bowtie2.
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie
+
+bowtie2 /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fusodb.bowtie2 -q $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fq -p 16 -S bowtie.fusodb.sam 
+
+~~~~
+
+Now to extract the mapped reads out of the sam file. 
+
+~~~~
+#make BAM file
+samtools view -bT /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fusodb.bowtie2 bowtie.fusodb.sam > bowtie.fusodb.bam
+
+#use the -F4 option. The -F option removes the specified FLAG. The 4 flag is unmapped reads. 
+samtools view -F4 bowtie.fusodb.bam > bowtie.fusodb.mapped.bam
+
+#cut out name, sequence, and quality from sam file
+cut -f1,10,11 bowtie.fusodb.mapped.bam > bowtie.fusodb.mapped.cut.bam
+
+awk '{print "@"$1"\n"$2"\n""\+""\n"$3}' bowtie.fusodb.mapped.cut.bam > bowtie.fusodb.mapped.cut.fastq
+~~~~
+
+###Blast
+
+And map with Blast, too. I set the max_target_seqs parameter so that reads won't hit to more than one genome (which will probably happen a lot). Unfortunately, BLAST requires FASTA so I'll have to convert that first.
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast
+
+awk '{print \">\" substr(\$0,2);getline;print;getline;getline}' All.D1.tongue.run2.cat.fq > All.D1.tongue.run2.cat.fa  #I have an alias fq2fa for this in my bash_profile
+
+blastn -db /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fusodb.bowtie2 -query $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fa -out blast.fusodb -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
+
+~~~~
+
+
+
+
+
+
+khmerEnv
+cd $HMP/D1.tongue/run2/concoct/1kb/assembly2
+mkdir DN.18.22
+cd DN.18.22
+python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-median.py -C 20 -k 21 -x 1e9 ../cluster.18.22.mapped.cut.fastq -s cluster1822.D1.Tongue.run2.savetable -o cluster.18.22.mapped.cut.normalized.fastq
+
+cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
+
+python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN.18.22/cluster.18.22.mapped.cut.normalized.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized/18.22.2
+
 
 
 
