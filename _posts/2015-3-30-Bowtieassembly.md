@@ -87,14 +87,14 @@ awk '{print "@"$1"\n"$2"\n""\+""\n"$3}' bowtie.fusodb.mapped.cut.bam > bowtie.fu
 
 ~~~~
 khmerEnv
-cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie
 mkdir DN
 cd DN
 python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-median.py -C 20 -k 21 -x 1e9 ../bowtie.fusodb.mapped.cut.fastq -s bowtie.fusodb.mapped.cut.savetable -o bowtie.fusodb.mapped.cut.normalized.fastq
 
 cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
-python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/DN/bowtie.fusodb.mapped.cut.normalized.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/megahit
+python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/bowtie.fusodb.mapped.cut.normalized.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit
 
 
 
@@ -124,5 +124,22 @@ mv All.D1.tongue.run2.cat.pick.fa blast.fusodb.reads.fa
 
 ~~~~
 
+###Blast assembly
+
+
+~~~~
+khmerEnv
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast
+mkdir DN
+cd DN
+python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-median.py -C 20 -k 21 -x 1e9 ../blast.fusodb.reads.fa -s blast.fusodb.reads.savetable -o blast.fusodb.reads.normalized.fasta
+
+cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
+
+python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/DN/blast.fusodb.reads.normalized.fasta --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/megahit
+
+
+
+~~~~
 
 
