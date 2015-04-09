@@ -83,6 +83,25 @@ cut -f1,10,11 bowtie.fusodb.mapped.bam > bowtie.fusodb.mapped.cut.bam
 awk '{print "@"$1"\n"$2"\n""\+""\n"$3}' bowtie.fusodb.mapped.cut.bam > bowtie.fusodb.mapped.cut.fastq
 ~~~~
 
+###Assembly
+
+~~~~
+khmerEnv
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast
+mkdir DN
+cd DN
+python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-median.py -C 20 -k 21 -x 1e9 ../bowtie.fusodb.mapped.cut.fastq -s bowtie.fusodb.mapped.cut.savetable -o bowtie.fusodb.mapped.cut.normalized.fastq
+
+cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
+
+python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/DN/bowtie.fusodb.mapped.cut.normalized.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/megahit
+
+
+
+~~~~
+
+
+
 ###Blast
 
 And map with Blast, too. I set the max_target_seqs parameter so that reads won't hit to more than one genome (which will probably happen a lot). Unfortunately, BLAST requires FASTA so I'll have to convert that first.
@@ -92,7 +111,7 @@ cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast
 
 awk '{print \">\" substr(\$0,2);getline;print;getline;getline}' All.D1.tongue.run2.cat.fq > All.D1.tongue.run2.cat.fa  #I have an alias fq2fa for this in my bash_profile
 
-blastn -db /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fusodb.bowtie2 -query $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fa -out blast.fusodb -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
+blastn -db /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fusodb.blast -query $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fa -out blast.fusodb -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
 
 ~~~~
 
@@ -102,25 +121,6 @@ Extract the sequences out of blast output:
 cut -f1 blast.fusodb > blast.fusodb.reads
 mothur '#get.seqs(accnos=blast.fusodb.reads, fasta=/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fa)'
 mv All.D1.tongue.run2.cat.pick.fa blast.fusodb.reads.fa
-
-~~~~
-
-###Assembly
-
-Once the alignments finish I can assemble each of the extracted fasta files separately.
-
-~~~~
-khmerEnv
-cd $HMP/D1.tongue/run2/concoct/1kb/assembly2
-mkdir DN.18.22
-cd DN.18.22
-python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-median.py -C 20 -k 21 -x 1e9 ../cluster.18.22.mapped.cut.fastq -s cluster1822.D1.Tongue.run2.savetable -o cluster.18.22.mapped.cut.normalized.fastq
-
-cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
-
-python ./megahit -m 45e9 -r $HMP/D1.tongue/run2/concoct/1kb/assembly2/DN.18.22/cluster.18.22.mapped.cut.normalized.fastq --cpu-only -l 101 -o $HMP/D1.tongue/run2/concoct/1kb/assembly2/megahit/normalized/18.22.2
-
-
 
 ~~~~
 
