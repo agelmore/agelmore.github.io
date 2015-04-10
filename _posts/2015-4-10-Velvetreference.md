@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Velvet reference assembly"
-date:   2015-3-30
+date:   2015-4-10
 comments: true
 ---
 The assembler [Velvet](http://www.ebi.ac.uk/~zerbino/velvet/Columbus_manual.pdf) has the option of including a reference sequence to aid in the assembly. Thought I might as well give it a try. 
