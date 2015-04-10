@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bowtie assembly"
+title:  "Bowtie/Blast assembly"
 date:   2015-3-30
 comments: true
 ---
@@ -141,5 +141,6 @@ python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/refe
 
 
 ~~~~
+
 
 
