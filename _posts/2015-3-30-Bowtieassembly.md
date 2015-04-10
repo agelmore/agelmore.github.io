@@ -83,6 +83,16 @@ cut -f1,10,11 bowtie.fusodb.mapped.bam > bowtie.fusodb.mapped.cut.bam
 awk '{print "@"$1"\n"$2"\n""\+""\n"$3}' bowtie.fusodb.mapped.cut.bam > bowtie.fusodb.mapped.cut.fastq
 ~~~~
 
+Final read count after bowtie filtering: 
+
+~~~~
+cat bowtie.fusodb.mapped.cut.fastq | echo $((`wc -l`/4))
+
+cat All.D1.tongue.run2.cat.fq | echo $((`wc -l`/4))
+~~~~
+
+`75566622` reads filtered out of `1006343072` in original file which is 7.5%. 
+
 ###Assembly
 
 ~~~~
