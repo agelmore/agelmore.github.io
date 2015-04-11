@@ -106,11 +106,29 @@ cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
 python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/bowtie.fusodb.mapped.cut.normalized.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit
 
-
-
 ~~~~
 
+Finished! Assembly stats:
 
+~~~~
+N50: 457
+N90: 236
+total contigs: 43760
+average length: 429 bp
+trimmed average length: 428 bp
+greater than or equal to 100:  43760
+shortest conting: 200 bp
+longest contig: 8669 bp
+total length: 18.780803 Mb
+4865248 reads; of these:
+  4865248 (100.00%) were unpaired; of these:
+    289783 (5.96%) aligned 0 times
+    1397484 (28.72%) aligned exactly 1 time
+    3177981 (65.32%) aligned >1 times
+94.04% overall alignment rate
+~~~~
+
+Pretty good assembly I'd say! I'm going to run it through the single copy core genes analysis to see if it's a single genome...
 
 ###Blast
 
