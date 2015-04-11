@@ -106,6 +106,11 @@ cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
 python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/bowtie.fusodb.mapped.cut.normalized.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit
 
+##Try the assembly without DN too
+
+python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/bowtie.fusodb.mapped.cut.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit
+
+
 ~~~~
 
 Finished! Assembly stats:
@@ -142,6 +147,8 @@ awk '{print \">\" substr(\$0,2);getline;print;getline;getline}' All.D1.tongue.ru
 blastn -db /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fusodb.blast -query $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fa -out blast.fusodb -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
 
 ~~~~
+
+Jeez louise it's still running 54 hours later! Just twiddling my thumbs and waiting....
 
 Extract the sequences out of blast output:
 
