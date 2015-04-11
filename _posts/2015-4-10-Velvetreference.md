@@ -43,25 +43,21 @@ velveth k21 21 -reference /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fus
 The assembly didn't work. Here's the logfile:
 
 ~~~~
+
 [0.000000] Reading FastA file /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database
 /fuso.single.fna;
-[5.576443] 1 sequences found
-[5.576448] Done
-[5.721275] Reading FastQ file /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/ru
-n2/DN/All.D1.Tongue.run2.norm.fq;
-[996.303636] 232311011 sequences found
-[996.303639] Done
-[996.303639] Reference mapping counters
-[996.303640] Name	Read mappings
-[996.303640] gi|19703352|ref|NC_003454.1|	0
-[996.303640] WARNING: None of your read mappings recognized the reference sequen
-ce!
-[996.303641] Double check that the names are identical between reference fasta h
-eaders and SAM/BAM sequences.
-[1003.752174] Reading read set file k21/Sequences;
-[1403.315588] 232311012 sequences found
-[1403.319024] Read 1 of length 32793, longer than limit 32767
-[1403.319027] You should modify recompile with the LONGSEQUENCES option (cf. man
+[9.401484] 1 sequences found
+[9.401492] Done
+[9.402172] Reading SAM file velvet.fusodb.sam
+[2844.523330] 232311011 reads found.
+[2844.523333] Done
+[2844.523335] Reference mapping counters
+[2844.523337] Name	Read mappings
+[2844.523337] gi|19703352|ref|NC_003454.1|	900570
+[2844.643837] Reading read set file k21/Sequences;
+[4138.882268] 232311012 sequences found
+[4138.884069] Read 1 of length 32793, longer than limit 32767
+[4138.884074] You should modify recompile with the LONGSEQUENCES option (cf. man
 ual)
 qsub working directory absolute is
 /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/velvet
