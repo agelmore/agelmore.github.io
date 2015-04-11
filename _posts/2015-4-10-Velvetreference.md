@@ -63,7 +63,7 @@ qsub working directory absolute is
 /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/velvet
 ~~~~
 
-
+Looks like the problem is that the reference genome is vastly too long. It's 2174500 bp and it looks like the limit is 32767bp. It says I can recompile velvet with the LONGSEQUENCES option. Maybe this function is really meant to assemble certain genes or parts of the genome and not the whole thing. 
 
 
 
