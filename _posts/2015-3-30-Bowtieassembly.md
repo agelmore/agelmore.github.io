@@ -133,7 +133,9 @@ total length: 18.780803 Mb
 94.04% overall alignment rate
 ~~~~
 
-Pretty good assembly I'd say! I'm going to run it through the single copy core genes analysis to see if it's a single genome. (In a [new blog post](), this one is getting long)
+###Summary and direction
+
+Pretty good assembly I'd say! The contigs aren't super long, but the total assembly is long enough for there to be multiple Fuso genomes in there. I'm going to run it through the single copy core genes analysis to see if it's a single genome or multiple. (In a [new blog post](), this one is getting long). Then, maybe I'll try running it through CONCOCT to separate out any strains/species.
 
 ###Blast
 
