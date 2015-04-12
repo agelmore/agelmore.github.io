@@ -53,7 +53,6 @@ mv megahit.1000.contigs_c10K.pick.fa cluster.18.22.fa
 bowtie2-build cluster.18.22.fa cluster.18.22
 bowtie2 cluster.18.22 -q $HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fq -p 16 -S cluster.18.22.sam 
 
-****
 #make BAM file
 samtools view -bT cluster.18.22 cluster.18.22.sam > cluster.18.22.bam
 
