@@ -161,6 +161,11 @@ mv All.D1.tongue.run2.cat.pick.fa blast.fusodb.reads.fa
 
 ~~~~
 
+
+***Put some file summary here***
+
+
+
 ###Blast assembly
 
 
@@ -173,8 +178,11 @@ python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-medi
 
 cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
-python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/DN/blast.fusodb.reads.normalized.fasta --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/megahit
+with normalize
+python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/DN/blast.fusodb.reads.normalized.fasta --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/megahit/DN
 
+#without normalize
+python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/blast.fusodb.reads.fasta --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/megahit
 
 
 ~~~~
