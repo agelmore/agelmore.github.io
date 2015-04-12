@@ -100,5 +100,5 @@ Logfile:
 [0.066656] Exiting...
 ~~~~
 
-So the ffn file isn't that useful because some of the genes are overlapping!!
+So the ffn file isn't that useful because some of the genes are overlapping!! Abandoning ship for now.
 
