@@ -88,5 +88,17 @@ velveth k21_genes 21 -reference /mnt/EXT/Schloss-data/amanda/Fuso/extract/Databa
 
 ~~~~
 
+Logfile:
 
+~~~~
+
+[0.000000] Reading FastA file /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database
+/fuso.single.genes.fasta;
+[0.066652] Overlapping reference coordinates:
+[0.066654] gi|19703352|ref|NC_003454.1|:0-1104
+[0.066655] gi|19703352|ref|NC_003454.1|:0-77
+[0.066656] Exiting...
+~~~~
+
+So the ffn file isn't that useful because some of the genes are overlapping!!
 
