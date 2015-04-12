@@ -65,7 +65,28 @@ qsub working directory absolute is
 
 Looks like the problem is that the reference genome is vastly too long. It's 2174500 bp and it looks like the limit is 32767bp. It says I can recompile velvet with the LONGSEQUENCES option. Maybe this function is really meant to assemble certain genes or parts of the genome and not the whole thing. 
 
+###Gene reference
 
+Because velvet can't handle the really long reference, I hoped to find a version of the genome that's been chopped up into genes. It exists in the form of a .ffn file on the NCBI ftp side. This file includes only the protein coding region of the genome segments. A quick analysis of this file shows that it's about .2Mbp shorter than the whole genome and is chopped into 1983 genes which are an average of 1kb long and the longest is 9kb which is below the 32 kb limit for velvet. 
+
+Let's run the pipeline again:
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/extract/FusoATCC
+
+cp *.ffn ../Database
+cd ../Database
+mv NC_003454.ffn fuso.single.genes.fasta
+bowtie2-build fuso.single.genes.fasta fuso.single.genes
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/velvet
+
+bowtie2 /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.genes -q /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/DN/All.D1.Tongue.run2.norm.fq -p 16 -S velvet.fusogenes.sam  
+
+
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/velvet
+
+velveth k21_genes 21 -reference /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.genes.fasta -short -sam velvet.fusogenes.sam
+
+~~~~
 
 
 
