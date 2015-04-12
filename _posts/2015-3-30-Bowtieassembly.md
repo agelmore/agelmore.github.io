@@ -133,7 +133,7 @@ total length: 18.780803 Mb
 94.04% overall alignment rate
 ~~~~
 
-Pretty good assembly I'd say! I'm going to run it through the single copy core genes analysis to see if it's a single genome...
+Pretty good assembly I'd say! I'm going to run it through the single copy core genes analysis to see if it's a single genome. (In a [new blog post](), this one is getting long)
 
 ###Blast
 
@@ -148,7 +148,7 @@ blastn -db /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fusodb.blast -quer
 
 ~~~~
 
-Jeez louise it's still running 54 hours later! Just twiddling my thumbs and waiting....
+Finished after 3 days!
 
 Extract the sequences out of blast output:
 
