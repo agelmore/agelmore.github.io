@@ -156,7 +156,7 @@ Extract the sequences out of blast output:
 
 ~~~~
 cut -f1 blast.fusodb > blast.fusodb.reads
-mothur '#get.seqs(accnos=blast.fusodb.reads, fasta=/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fa)'
+/share/scratch/schloss/mothur/mothur '#get.seqs(accnos=blast.fusodb.reads, fasta=/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/cat/All.D1.tongue.run2.cat.fa)'
 mv All.D1.tongue.run2.cat.pick.fa blast.fusodb.reads.fa
 
 ~~~~
