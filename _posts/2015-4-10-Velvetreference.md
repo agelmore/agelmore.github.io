@@ -70,6 +70,7 @@ Looks like the problem is that the reference genome is vastly too long. It's 217
 Because velvet can't handle the really long reference, I hoped to find a version of the genome that's been chopped up into genes. It exists in the form of a .ffn file on the NCBI [ftp site](ftp://ftp.ncbi.nih.gov/genomes/Bacteria/Fusobacterium_nucleatum_ATCC_25586_uid57885/). This file includes only the protein coding region of the genome segments. A quick analysis of this file shows that it's about .2Mbp shorter than the whole genome and is chopped into 1983 genes which are an average of 1kb long and the longest is 9kb which is below the 32 kb limit for velvet. 
 
 Let's run the pipeline again:
+
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/extract/FusoATCC
 
