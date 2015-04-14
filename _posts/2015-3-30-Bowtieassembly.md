@@ -161,10 +161,7 @@ mv All.D1.tongue.run2.cat.pick.fa blast.fusodb.reads.fa
 
 ~~~~
 
-
-***Put some file summary here***
-
-
+`78527266` reads filtered out of `1006343072` in original file which is 7.8%.
 
 ###Blast assembly
 
@@ -187,5 +184,21 @@ python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/refe
 
 ~~~~
 
+###Assembly stats
+
+~~~~
+total contigs: 43870
+average length: 416 bp
+trimmed average length: 415 bp
+greater than or equal to 100:  43870
+shortest conting: 200 bp
+longest contig: 8537 bp
+total length: 18.254674 Mb
+N50: 438
+N90: 234
+
+
+
+~~~~
 
 
