@@ -70,7 +70,21 @@ python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-medi
 
 cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
-python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.18.22.mapped.cut.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/concoct/1kb/assembly2/redo/megahitnoDN
+python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/concoct/1kb/assembly2/cluster.18.22.mapped.cut.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/run2/concoct/1kb/assembly2/redo/megahitnoDN2
+
+~~~~
+
+This assembly is terrible. I'm so confused why this one is worse than cluster 17+21 because there were more reads in these clusters...
+
+~~~~
+total contigs: 1226
+average length: 315 bp
+trimmed average length: 314 bp
+greater than or equal to 100:  1226
+shortest conting: 200 bp
+longest contig: 1487 bp
+total length: 0.386902 Mb
+
 
 ~~~~
 
