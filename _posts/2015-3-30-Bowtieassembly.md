@@ -197,8 +197,42 @@ total length: 18.254674 Mb
 N50: 438
 N90: 234
 
+~~~~
 
+#How about a quick velvet assembly?
+
+Pat suggested to try assembling both extracted files with velvet to see if I can get a better assembly. Let's see...
+
+###Bowtie:
 
 ~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie
+
+velveth velvet_k31 31 -shortPaired -fastq /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/bowtie.fusodb.mapped.cut.normalized.fastq
+velvetg velvet_k31 -cov_cutoff auto -read_trkg yes
+
+~~~~
+
+###Blast:
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast
+
+velveth velvet_k31 31 -shortPaired -fasta /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/blast/DN/blast.fusodb.reads.normalized.fasta
+velvetg velvet_k31 -cov_cutoff auto -read_trkg yes
+
+~~~~
+
+#Assembly comparison
+
+When they finish I'll add the velvet assemblies
+
+
+Assembler | Aligner | kmer length | DN? |  Number of contigs | N50 | N90 | Average length |Total length | percent of reads used | assembly file name
+:---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
+Megahit (non-paired) | Bowtie | iterative (21-99, step 2) | yes | 43760 | 457 | 236 | 429 |  18.78 Mb | 94.04% | $HMP/D1.tongue/reference/bowtie/megahit/DN/final.contigs.fa
+Megahit (non-paired) | Blast | iterative (21-99, step 2) | yes | 43870 | 416 | 438 | 234 |  18.25 Mb | x% | $HMP/D1.tongue/reference/blast/megahit/DN/final.contigs.fa
+Megahit (non-paired) | Bowtie | iterative (21-99, step 2) | yes | 84167 | 343 | 333 | 218 |  28.92 Mb | x% | $HMP/D1.tongue/reference/blast/megahit/final.contigs.fa
+
 
 
