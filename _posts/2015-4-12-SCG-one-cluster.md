@@ -33,6 +33,9 @@ Prodigal creates two files. The .gff file has gene annotations for genes on the 
 concoctenv
 cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit/SCG
 $CONCOCT/scripts/RPSBLAST.sh -f ref.bowtie.megahit.faa -p -c 8 -r 1 
+
+#have to do more editing so the script will work
+sed -e 's/_/-/2' ref.out > ref.cogtable.out
 ~~~~
 
 Now, generate the table using CONCOCT script COG_table.py
@@ -40,7 +43,7 @@ Now, generate the table using CONCOCT script COG_table.py
 ~~~~
 
 
-python $CONCOCT/scripts/COG_table.py -b ref.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c cluster1.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > ref.bowtie.megahit_scg.tsv
+python $CONCOCT/scripts/COG_table.py -b ref.cogtable.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c cluster1.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > ref.bowtie.megahit_scg.tsv
 ~~~~
 
 
