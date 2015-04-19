@@ -41,3 +41,5 @@ samtools sort bowtie.single.bam bowtie.single.sorted.bam
 bedtools genomecov -bg -i bowtie.single.sorted.bam -g /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna.fai > bowtie.single.bg
 
 ~~~~
+
+It's all running on axiom. When it's finished I'll figure out how to plot the bedgraph output in R.
