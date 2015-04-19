@@ -41,8 +41,6 @@ sed -e 's/_/-/2' ref.out > ref.cogtable.out
 Now, generate the table using CONCOCT script COG_table.py
 
 ~~~~
-
-
 python $CONCOCT/scripts/COG_table.py -b ref.cogtable.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c cluster1.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > ref.bowtie.megahit_scg.tsv
 ~~~~
 
