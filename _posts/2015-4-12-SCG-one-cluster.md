@@ -53,3 +53,4 @@ Rscript $CONCOCT/scripts/COGPlot.R -s ref.bowtie.megahit_scg.tsv -o ref.bowtie.m
 
 ![Single-copy core genes]({{ site.url }}/images/ref.bowtie.megahit_scg.png)
 
+I got the script to work. Doesn't look like we have a single complete genome here. I wonder what COG0200 is since there are so many repeats. 
