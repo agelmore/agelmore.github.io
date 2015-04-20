@@ -51,5 +51,5 @@ Graph the output:
 Rscript $CONCOCT/scripts/COGPlot.R -s ref.bowtie.megahit_scg.tsv -o ref.bowtie.megahit_scg.pdf
 ~~~~
 
-![Single-copy core genes heat map]({{ site.url }}/images/ref.bowtie.megahit_scg.png)
+![Single-copy core genes]({{ site.url }}/images/ref.bowtie.megahit_scg.png)
 
