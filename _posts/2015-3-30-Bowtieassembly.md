@@ -228,11 +228,13 @@ velvetg velvet_k31 -cov_cutoff auto -read_trkg yes
 When they finish I'll add the velvet assemblies
 
 
-Assembler | Aligner | kmer length | DN? |  Number of contigs | N50 | N90 | Average length |Total length | percent of reads used | assembly file name
+Assembler | Aligner | kmer length | DN? |  Number of contigs | N50 | N90 | Average length | Total length | Longest contig | percent of reads used | assembly file name
 :---------------|:--------:|:--------:|:--------:|:--------:|:------------:|:------------:|:------------:|--------:
-Megahit (non-paired) | Bowtie | iterative (21-99, step 2) | yes | 43760 | 457 | 236 | 429 |  18.78 Mb | 94.04% | $HMP/D1.tongue/reference/bowtie/megahit/DN/final.contigs.fa
-Megahit (non-paired) | Blast | iterative (21-99, step 2) | yes | 43870 | 416 | 438 | 234 |  18.25 Mb | x% | $HMP/D1.tongue/reference/blast/megahit/DN/final.contigs.fa
-Megahit (non-paired) | Bowtie | iterative (21-99, step 2) | yes | 84167 | 343 | 333 | 218 |  28.92 Mb | x% | $HMP/D1.tongue/reference/blast/megahit/final.contigs.fa
+Megahit | Bowtie | iterative (21-99, step 2) | yes | 43760 | 457 | 236 | 429 |  18.78 Mb | 9230 | 94.04% | $HMP/D1.tongue/reference/bowtie/DN/megahit/final.contigs.fa
+Megahit | Blast | iterative (21-99, step 2) | yes | 43870 | 416 | 438 | 234 |  18.25 Mb | 8537 | x% | $HMP/D1.tongue/reference/blast/megahit/DN/final.contigs.fa
+Megahit | Bowtie | iterative (21-99, step 2) | no | 84167 | 343 | 333 | 218 |  28.92 Mb | 9230 | x% | $HMP/D1.tongue/reference/blast/megahit/final.contigs.fa
+Velvet | Bowtie | k31 | yes | 166356 | 94 | 61 | 95 |  15.9 Mb | 8014 | x% | $HMP/D1.tongue/reference/bowtie/velvet_k31/contigs.fa
+Velvet | Blast | k31 | yes | 186498 | 93 | 61 | 93 |  17.4 Mb | 7778 | x% | $HMP/D1.tongue/reference/bowtie/velvet_k31/contigs.fa
 
 
 
