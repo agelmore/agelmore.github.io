@@ -51,7 +51,10 @@ plot(x$V2,x$V3, main="Coverage of bowtie extracted read assembly on F. nucleatum
 
 ~~~~
 
+Here is the coverage map of the reads from the tongue samples that aligned to the Fuso database. I did not run these reads through digital normalization or an assembler. 
 
 ![Coverage map]({{ site.url }}/images/bowtie.single.coveragemap.png)
 
+
+Looks like pretty even coverage except for those two spots. Next I want to see what happens to the coverage after digital normalization (which I pretty much have to use in order to assemble with big files). 
 
