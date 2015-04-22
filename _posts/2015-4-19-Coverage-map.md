@@ -56,5 +56,5 @@ Here is the coverage map of the reads from the tongue samples that aligned to th
 ![Coverage map]({{ site.url }}/images/bowtie.single.coveragemap.png)
 
 
-Looks like pretty even coverage except for those two spots. Next I want to see what happens to the coverage after digital normalization (which I pretty much have to use in order to assemble with big files). 
+Looks like pretty even coverage except for those two spots. Next I want to see what happens to the coverage after digital normalization (which I pretty much have to use in order to assemble with big files). Also, should figure out what those high coverage spots are.
 
