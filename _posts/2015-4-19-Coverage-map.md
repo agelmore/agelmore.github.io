@@ -37,9 +37,21 @@ samtools faidx /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fn
 #sort the bam file
 samtools sort bowtie.single.bam bowtie.single.sorted.bam
 
-#run genomeCoverageBed. The bg option will produce a BEDGRAPH output file where the coverage of each position is listed. 
-bedtools genomecov -bg -i bowtie.single.sorted.bam -g /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna.fai > bowtie.single.bg
+#run genomeCoverageBed. The d option produces the coverage at each base. Alternatively, the bg option will produce a BEDGRAPH output file where the coverage of each range is listed. 
+bedtools genomecov -d -ibam bowtie.single.sorted.bam.bam -g /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna.fai > bowtie.single.density
 
 ~~~~
 
-It's all running on axiom. When it's finished I'll figure out how to plot the bedgraph output in R.
+It finished. I pulled the file to my computer to make a plot in R.
+
+~~~~
+setwd("~/Documents/Schloss/Fuso/Assemblies/D1 tongue/bedgraph")
+x<- read.table(file='bowtie.single.density')
+plot(x$V2,x$V3, main="Coverage of bowtie extracted read assembly on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l')
+
+~~~~
+
+
+![Coverage map]({{ site.url }}/images/bowtie.single.coveragemap.png)
+
+
