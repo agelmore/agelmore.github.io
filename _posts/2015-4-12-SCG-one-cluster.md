@@ -64,9 +64,9 @@ cp /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna fuso.contr
 #change symbols to help things later
 sed -i 's/_/-/g' fuso.control.fa 
 
-#create file with contig ids and cluster#1. 
-grep '>' fuso.control.fa | sed 's/>//g' | sed 's/$/,1/' > fuso.control.csv 
-
+#create file with contig ids and cluster#1. It's just one sequence
+nano fuso.control.csv 
+gi|19703352|ref|NC-003454.1|,1
 
 #now run prodigal
 cd /mnt/EXT/Schloss-data/amanda/prodigal/prodigal.v2_50
@@ -76,7 +76,7 @@ cd /mnt/EXT/Schloss-data/amanda/prodigal/prodigal.v2_50
 concoctenv
 cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit/SCG
 $CONCOCT/scripts/RPSBLAST.sh -f fuso.control.faa -p -c 8 -r 1 
-***
+
 #have to do more editing so the script will work
 sed -e 's/_/-/2' fuso.out > fuso.control.cogtable.out
 
@@ -84,3 +84,9 @@ python $CONCOCT/scripts/COG_table.py -b fuso.control.cogtable.out -m $CONCOCT/sc
 
 Rscript $CONCOCT/scripts/COGPlot.R -s fuso.control_scg.tsv -o fuso.control_scg.pdf
 ~~~~
+
+
+![Single-copy core genes control]({{ site.url }}/images/fuso.control_scg.png)
+
+
+
