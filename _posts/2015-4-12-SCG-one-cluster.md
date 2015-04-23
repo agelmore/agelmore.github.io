@@ -53,4 +53,8 @@ Rscript $CONCOCT/scripts/COGPlot.R -s ref.bowtie.megahit_scg.tsv -o ref.bowtie.m
 
 ![Single-copy core genes]({{ site.url }}/images/ref.bowtie.megahit_scg.png)
 
-I got the script to work. Doesn't look like we have a single complete genome here. I wonder what COG0200 is since there are so many repeats. 
+I got the script to work. Doesn't look like we have a single complete genome here. The two that have a lot of repeats are ribosomal genes which could be repeats in the same strain or different strain. Unfortunately, some of the missing cogs should be in Fusobacterium. I'm going to do the pipeline on a completely sequenced genome to see how many COGs are present in a genome we know is complete and Fuso.
+
+##SCG control on completed Fuso genome
+
+
