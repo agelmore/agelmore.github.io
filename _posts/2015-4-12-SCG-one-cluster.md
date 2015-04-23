@@ -57,4 +57,30 @@ I got the script to work. Doesn't look like we have a single complete genome her
 
 ##SCG control on completed Fuso genome
 
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit/SCG
+cp /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna fuso.control.fa
 
+#change symbols to help things later
+sed -i 's/_/-/g' fuso.control.fa 
+
+#create file with contig ids and cluster#1. 
+grep '>' fuso.control.fa | sed 's/>//g' | sed 's/$/,1/' > fuso.control.csv 
+
+
+#now run prodigal
+cd /mnt/EXT/Schloss-data/amanda/prodigal/prodigal.v2_50
+
+./prodigal -a /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit/SCG/fuso.control.faa -i /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit/SCG/fuso.control.fa -f gff -p meta -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit/SCG/fuso.control.gff 
+
+concoctenv
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit/SCG
+$CONCOCT/scripts/RPSBLAST.sh -f fuso.control.faa -p -c 8 -r 1 
+***
+#have to do more editing so the script will work
+sed -e 's/_/-/2' fuso.out > fuso.control.cogtable.out
+
+python $CONCOCT/scripts/COG_table.py -b fuso.control.cogtable.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c fuso.control.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > fuso.control_scg.tsv
+
+Rscript $CONCOCT/scripts/COGPlot.R -s fuso.control_scg.tsv -o fuso.control_scg.pdf
+~~~~
