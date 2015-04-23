@@ -89,4 +89,4 @@ Rscript $CONCOCT/scripts/COGPlot.R -s fuso.control_scg.tsv -o fuso.control_scg.p
 ![Single-copy core genes control]({{ site.url }}/images/fuso.control_scg.png)
 
 
-
+This pipeline seems to be a pretty good control to see how complete my assembly is! The complete Fuso genome from NCBI had almost all of the COGs except for COG0198 and COG0504.
