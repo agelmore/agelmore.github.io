@@ -130,5 +130,5 @@ dev.off()
 
 ![Coverage map reads extracted from full database and assembled]({{ site.url }}/images/coverage.megahit.png)
 
-
+Well look at that! There seems to be pretty even coverage over the whole genome! I'm confused though why this doesn't match up with the SCG analysis which showed that some COGs were missing while some were in duplicate. According to this, everything should be in duplicate 3-6 times. 
 
