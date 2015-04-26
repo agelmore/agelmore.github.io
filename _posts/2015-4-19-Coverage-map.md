@@ -79,7 +79,7 @@ Then in R:
 setwd("/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps")
 png('coverage.beforeDN.png')
 x<- read.table(file='bowtie.coverage.beforeDN.sorted.density')
-plot(x$V2,x$V3, main="Coverage of bowtie extracted read assembly on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l', file='coverage.beforeDN.png')
+plot(x$V2,x$V3, main="Coverage of bowtie extracted reads on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l', file='coverage.beforeDN.png')
 dev.off()
 ~~~~
 
@@ -91,7 +91,27 @@ sftp agelmore@axiom.ccmb.med.umich.edu
 get /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps/coverage.beforeDN.png
 ~~~~
 
+It makes sense that this graph looks really similar to the one above. The only difference is that the reads here were extracted from the whole fuso database and then I graphed the ones that aligned to this single genome. Before they were extracted from the single genome. 
+
 ![Coverage map reads extracted from full database]({{ site.url }}/images/coverage.beforeDN.png)
+
+###Coverage after digital normalization
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN
+
+bowtie2 /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single -q /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/bowtie.fusodb.mapped.cut.normalized.fastq -p 16 -S bowtie.coverage.afterDN.sam; samtools view -Sb bowtie.coverage.afterDN.sam > bowtie.coverage.afterDN.bam; samtools sort bowtie.coverage.afterDN.bam bowtie.coverage.afterDN.sorted; bedtools genomecov -d -ibam bowtie.coverage.afterDN.sorted.bam -g /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna.fai > ../maps/bowtie.coverage.afterDN.sorted.density 
+
+setwd("/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps")
+png('coverage.afterDN.png')
+x<- read.table(file='bowtie.coverage.afterDN.sorted.density')
+plot(x$V2,x$V3, main="Coverage of bowtie extracted and normalized reads on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l', file='coverage.afterDN.png')
+dev.off()
+~~~~
+
+Cool! You can really see that the normalization works. The coverage decreases to about 200 per basepair and it seems to even out a bit.
+
+![Coverage map reads extracted from full database and normalized]({{ site.url }}/images/coverage.afterDN.png)
 
 
 
