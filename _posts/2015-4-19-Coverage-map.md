@@ -47,13 +47,13 @@ It finished. I pulled the file to my computer to make a plot in R.
 ~~~~
 setwd("~/Documents/Schloss/Fuso/Assemblies/D1 tongue/bedgraph")
 x<- read.table(file='bowtie.single.density')
-plot(x$V2,x$V3, main="Coverage of bowtie extracted read assembly on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l')
+plot(x$V2,x$V3, main="Coverage of bowtie extracted reads on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l')
 
 ~~~~
 
-Here is the coverage map of the reads from the tongue samples that aligned to the Fuso database. I did not run these reads through digital normalization or an assembler. 
+Here is the coverage map of the reads from the tongue samples that aligned to the Fuso database. **I did not run these reads through digital normalization or an assembler**. 
 
-![Coverage map]({{ site.url }}/images/bowtie.single.coveragemap.png)
+![Coverage map reads extracted from single]({{ site.url }}/images/bowtie.single.coveragemap.png)
 
 
 Looks like pretty even coverage except for those two spots. Next I want to see what happens to the coverage after digital normalization (which I pretty much have to use in order to assemble with big files). Also, should figure out what those high coverage spots are.
@@ -63,7 +63,43 @@ Looks like pretty even coverage except for those two spots. Next I want to see w
 I will use the megahit assembly of normalized extracted reads from the full fuso db. Because these are extracted from the full database, it's very possible that there will be contigs that don't map to the F. nucleatum genome. However, I'm going to see what the coverage looks like for just nucelatum. Also, I'll make a before and after assembly coverage map to see what the change is.
 
 
-### 
+###Coverage after extraction
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie
+
+samtools view -Sb bowtie.single.sam > bowtie.single.bam
+
+samtools sort bowtie.fusodb.bam bowtie.fusodb.sorted.bam
+
+bedtools genomecov -d -ibam bowtie.fusodb.sorted.bam.bam -g /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna.fai > maps/bowtie.fusodb.density
+~~~~
+
+Then in R:
+
+~~~~
+setwd("/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps")
+png('coverage.beforeDN.png')
+x<- read.table(file='bowtie.single.density')
+plot(x$V2,x$V3, main="Coverage of bowtie extracted read assembly on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l', file='coverage.beforeDN.png')
+dev.off()
+~~~~
+
+Pull to local blog:
+
+~~~~
+cd /Users/Amanda/Documents/Schloss/agelmore.github.io/images
+sftp agelmore@axiom.ccmb.med.umich.edu
+get /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps/coverage.beforeDN.png
+~~~~
+
+![Coverage map reads extracted from full database]({{ site.url }}/images/coverage.beforeDN.png)
+
+
+###Coverage after Digital normalization
+
+
+
 
 
 
