@@ -58,3 +58,12 @@ Here is the coverage map of the reads from the tongue samples that aligned to th
 
 Looks like pretty even coverage except for those two spots. Next I want to see what happens to the coverage after digital normalization (which I pretty much have to use in order to assemble with big files). Also, should figure out what those high coverage spots are.
 
+#Coverage map of assembled contigs on single F. nucleatum
+
+I will use the megahit assembly of normalized extracted reads from the full fuso db. Because these are extracted from the full database, it's very possible that there will be contigs that don't map to the F. nucleatum genome. However, I'm going to see what the coverage looks like for just nucelatum. Also, I'll make a before and after assembly coverage map to see what the change is.
+
+
+### 
+
+
+
