@@ -111,7 +111,7 @@ dev.off()
 
 ![Coverage map reads extracted from full database and normalized]({{ site.url }}/images/coverage.afterDN.png)
 
-Cool! You can really see that the normalization works. The coverage decreases to about 200 per basepair and it seems to even out a bit.
+Cool! You can really see that the normalization works. The coverage decreases to about 200 per basepair and it seems to even out a bit. Also interesting that those two spots around .75Mbp and 1.1Mbp - **I need to check what those are**.
 
 
 
