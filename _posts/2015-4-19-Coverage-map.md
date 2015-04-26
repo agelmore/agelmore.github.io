@@ -113,7 +113,22 @@ dev.off()
 
 Cool! You can really see that the normalization works. The coverage decreases to about 200 per basepair and it seems to even out a bit. Also interesting that those two spots around .75Mbp and 1.1Mbp - **I need to check what those are**.
 
+###Coverage after assembly
 
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/megahit2
+
+bowtie2 /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single -f /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/megahit2/final.contigs.fa -p 16 -S bowtie.coverage.megahit.sam; samtools view -Sb bowtie.coverage.megahit.sam > bowtie.coverage.megahit.bam; samtools sort bowtie.coverage.megahit.bam bowtie.coverage.megahit.sorted; bedtools genomecov -d -ibam bowtie.coverage.megahit.sorted.bam -g /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna.fai > ../../maps/bowtie.coverage.megahit.sorted.density 
+
+setwd("/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps")
+png('coverage.megahit.png')
+x<- read.table(file='bowtie.coverage.megahit.sorted.density')
+plot(x$V2,x$V3, main="Coverage of bowtie extracted assembly on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l', file='coverage.megahit.png')
+dev.off()
+
+~~~~
+
+![Coverage map reads extracted from full database and assembled]({{ site.url }}/images/coverage.megahit.png)
 
 
 
