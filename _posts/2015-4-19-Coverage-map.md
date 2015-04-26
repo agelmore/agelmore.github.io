@@ -65,14 +65,12 @@ I will use the megahit assembly of normalized extracted reads from the full fuso
 
 ###Coverage after extraction
 
+I have already extracted from the full Fuso database, but I want to visualize the coverage against a single genome (F. nucleatum). So I need to take my extracted fastq file and align it to the single genome, then make the coverage map. I can pipe this so I don't have to submit multiple commands.
+
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie
 
-samtools view -Sb bowtie.single.sam > bowtie.single.bam
-
-samtools sort bowtie.fusodb.bam bowtie.fusodb.sorted.bam
-
-bedtools genomecov -d -ibam bowtie.fusodb.sorted.bam.bam -g /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna.fai > maps/bowtie.fusodb.density
+bowtie2 /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single -q /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/bowtie.fusodb.mapped.cut.fastq -p 16 -S bowtie.coverage.beforeDN.sam; samtools view -Sb bowtie.coverage.beforeDN.sam > bowtie.coverage.beforeDN.bam; samtools sort bowtie.coverage.beforeDN.bam bowtie.coverage.beforeDN.sorted; bedtools genomecov -d -ibam bowtie.coverage.beforeDN.sorted.bam -g /mnt/EXT/Schloss-data/amanda/Fuso/extract/Database/fuso.single.fna.fai > maps/bowtie.coverage.beforeDN.sorted.density 
 ~~~~
 
 Then in R:
@@ -80,7 +78,7 @@ Then in R:
 ~~~~
 setwd("/mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps")
 png('coverage.beforeDN.png')
-x<- read.table(file='bowtie.single.density')
+x<- read.table(file='bowtie.coverage.beforeDN.sorted.density')
 plot(x$V2,x$V3, main="Coverage of bowtie extracted read assembly on F. nucleatum", xlab="location in genome", ylab='base coverage', type='l', file='coverage.beforeDN.png')
 dev.off()
 ~~~~
@@ -96,7 +94,6 @@ get /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps/covera
 ![Coverage map reads extracted from full database]({{ site.url }}/images/coverage.beforeDN.png)
 
 
-###Coverage after Digital normalization
 
 
 
