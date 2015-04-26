@@ -91,9 +91,9 @@ sftp agelmore@axiom.ccmb.med.umich.edu
 get /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps/coverage.beforeDN.png
 ~~~~
 
-It makes sense that this graph looks really similar to the one above. The only difference is that the reads here were extracted from the whole fuso database and then I graphed the ones that aligned to this single genome. Before they were extracted from the single genome. 
-
 ![Coverage map reads extracted from full database]({{ site.url }}/images/coverage.beforeDN.png)
+
+It makes sense that this graph looks really similar to the one above. The only difference is that the reads here were extracted from the whole fuso database and then I graphed the ones that aligned to this single genome. Before they were extracted from the single genome. 
 
 ###Coverage after digital normalization
 
@@ -109,12 +109,9 @@ plot(x$V2,x$V3, main="Coverage of bowtie extracted and normalized reads on F. nu
 dev.off()
 ~~~~
 
-Cool! You can really see that the normalization works. The coverage decreases to about 200 per basepair and it seems to even out a bit.
-
 ![Coverage map reads extracted from full database and normalized]({{ site.url }}/images/coverage.afterDN.png)
 
-
-
+Cool! You can really see that the normalization works. The coverage decreases to about 200 per basepair and it seems to even out a bit.
 
 
 
