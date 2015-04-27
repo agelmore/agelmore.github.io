@@ -124,7 +124,7 @@ The exact regions of high coverage are: `730610 to 734223` and `1072550 to 10765
 
 Region 1 (730610 to 734223) contains an outer membrane receptor protein and a hypothetical protein. Region 2 (1072550 to 1076577) contains Ankryin repeat domain protein probably used in signal transduction. Not really sure why these don't disappear after digital normalization.
 
-I also noticed that the coverage here is a lot higher than would be expected. I wondered if that's because reads are hitting more than one genome and being added to the extraction file more than one, causing me to acquire multiple copies of each read. I read the bowtie manual and it looks like I should be using the --best and --strata options in my extraction. I think this is similar to --max-targer-seqs in BLAST. 
+I also noticed that the coverage here is a lot higher than would be expected. I wondered if that's because reads are hitting more than one genome and being added to the extraction file more than one, causing me to acquire multiple copies of each read. I read the bowtie manual and it looks like the default is -k 1 which means that it will only list one alignment for each read. So I need another explanation for why the coverage is so high...
 
 ###Coverage after assembly
 
