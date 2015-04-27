@@ -111,7 +111,19 @@ dev.off()
 
 ![Coverage map reads extracted from full database and normalized]({{ site.url }}/images/coverage.afterDN.png)
 
-Cool! You can really see that the normalization works. The coverage decreases to about 200 per basepair and it seems to even out a bit. Also interesting that those two spots around .75Mbp and 1.1Mbp - **I need to check what those are**.
+Cool! You can really see that the normalization works. The coverage decreases to about 200 per basepair and it seems to even out a bit. Also interesting that those two spots around .75Mbp and 1.1Mbp.
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/maps
+
+#cut lines with high coverage
+awk '$3>400' bowtie.coverage.afterDN.sorted.density > afterDN.high.density
+~~~~
+
+The exact regions of high coverage are: `730610 to 734223` and `1072550 to 1076577`. I looked these up on [IMG](https://img.jgi.doe.gov/cgi-bin/w/main.cgi?section=TaxonCircMaps&page=circMaps&taxon_oid=2606217376&pidt=12143.1430164945)
+
+Region 1 (730610 to 734223) contains an outer membrane receptor protein and a hypothetical protein. Region 2 (1072550 to 1076577) contains Ankryin repeat domain protein probably used in signal transduction. Not really sure why these don't disappear after digital normalization.
+
 
 ###Coverage after assembly
 
