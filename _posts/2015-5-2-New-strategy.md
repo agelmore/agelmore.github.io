@@ -7,7 +7,7 @@ comments: true
 
 I gave chalk talk for lab meeting last Tuesday, and we decided I should take a new direction with my project, outlined here. 
 
-#Assembly-based strategy
+#Old Assembly-based strategy
 
 Until this point I've been pursuing an assembly strategy. I hoped that I would be able to assemble the metagenomic reads well enough that I could separate contigs into different strains. Once I had created fully assembled genomes, I would be able to compare genes and abundance at different body sites by mapping to the strains that I had assembled.  I spent a lot of time learning about different assemblers, normalization, de novo assembly, and reference-based assembly. In the end, I created my best assembly using a reference based approach: bowtie extracted reads, digital normalization, megahit assembly. 
 
@@ -19,7 +19,7 @@ The problem is that even my best effort at an assembly really isn't that good. P
 
 3. **Some strains may have regions of the genome that are identical.** When assembling, reads from different strains may be combined into a single assembled contig(s). When I use CONCOCT or other software (ESOM) that can separate the assembled contigs, contigs that are shared between strains will be clustered together. Therefore, sequence similarity will make it impossible to use this method to separate strains and assemble complete genomes. 
 
-#Pangenome read variant calling
+#New Pangenome read variant calling
 
 My new strategy is to look at variation in Fusobacterium genes using abundance of read variants. 
 
