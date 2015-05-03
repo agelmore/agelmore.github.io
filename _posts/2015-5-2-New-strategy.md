@@ -21,7 +21,7 @@ The problem is that even my best effort at an assembly really isn't that good. P
 
 #New Pangenome read variant calling
 
-My new strategy is to look at variation in Fusobacterium genes using abundance of read variants. 
+My new strategy is to look at variation in Fusobacterium genes using abundance of read variants. In a way, this strategy is similar to my previous plan, but using published genomes instead of my own assembly. Before I planned to assemble full strains and map reads to my assembly to find variation; now I will map reads to genes from published genomes to find variation. 
 
 Features of this strategy:
 
@@ -29,7 +29,7 @@ Features of this strategy:
 
 2. **Map reads to Pangenome**. Using Bowtie2.
 
-3. **Read variant calling**. Using samtools variant calling, I will see which genes have the highest read variation. I will also look at read coverage on each gene. Low variation genes with high abundance are genes that are identical between strains/species. Low variation genes with low abundance may be unique genes found in only some strains/species. We are most interested in high variation genes with high abundance because these are genes that are probably under selection pressure in different strains. 
+3. **Read variant calling and copy number**. Using samtools variant calling, I will see which genes have the highest read variation. I will also look at read coverage on each gene. Low variation genes with high abundance are genes that are identical between strains/species. Low variation genes with low abundance may be unique genes found in only some strains/species. We are most interested in high variation genes with high abundance because these are genes that are probably under selection pressure in different strains. 
 
 4. **Gene variation across body sites, individuals, and disease states**. Once I have developed a pipeline for looking at variation in the pangenome in different samples, I will be able to quickly run different samples to compare gene variation.
 
@@ -40,9 +40,9 @@ As I'm brainstorming I thought of a few possible issues with my new strategy.
 
 1. **How do I make sure the mapped reads aren't other bugs (not Fuso) with similar sequences?** If my Fuso pangenome contains genes that are very similar to genes in other species, I might find those genes to have artificially high read abundance/variation. In a recent paper by [Greenblum et al.](http://www-ncbi-nlm-nih-gov.proxy.lib.umich.edu/pubmed/25640238), reads were aligned to reference genomes to survey gene copy number. They performed simulation-based analyses to validate that reads originating from a certain gene mapped to the correct gene in the correct genome. The simulated 75bp reads and mapped them to their 260 reference genome database (which had been clustered into genome clusters based on sequence similarity of marker genes). They got an error rate of about 11.8% (including synthetic reads that mapped to the wrong gene/genome or didn't map at all). They greatly decreased this error rate by removing some reference genomes from the database. They also identified the optimal maximum edit distance (MED) in the alignment at 5. A more strict alignment excluded reads with sequence errors or small amounts of variation; a more lenient alignment increased false positives. **I will need to a similar simulation analysis to find the best MED and identify genes that have a high false positive rate to remove from the analysis.**
 
-
 2. **Novel genes not present in database**. There is a possibility that there are Fusobacterium reads in my samples that correspond to novel genes that have not been sequenced. Unfortunately, with this pipeline those genes will be overlooked. Assembly would be the only way to find novel genes. Because it is much easier to assemble single genome sequences, in the future I can sequence cultured isolates in the lab to find new genes. I can add these to my pangenome. 
 
+3. **Control for read depth**. One of my readouts of the pipeline is read depth as a measure of gene copy number. Before I can make this correlation, I need to test my samples for even coverage (within and between samples). I will normalize so that differences sequencing depth between samples is not an issue. 
 
 
 
