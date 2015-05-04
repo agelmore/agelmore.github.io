@@ -14,3 +14,18 @@ I will be using the software package [GET_HOMOLOGUES](http://www.ncbi.nlm.nih.go
 
 The software package is open-source, automatic, customizable, and can handle large jobs. All the scripts are written in perl, yay. Basically, genes input in FASTA format are BLASTed against each other. Based on BLAST hits, genes are clustered into orthologous groups using one of three popular clustering algorithms: COGtriangles, Bidirectional Best hit, and OrthoMCL (recommended by Evan Snitkin). The final result is a fasta file with all the pangenomic genes (other formats and statistics optional). The paper also showed that the pipeline works for draft genomes, which is good because I have a lot of them.
 
+##Install
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/get_homologues
+
+wget http://maya.ccg.unam.mx/soft/get_homologues-x86_64-20150306.tgz
+tar xvfz get_homologues-x86_64-20150306.tgz
+./install.pl
+
+#test it
+./get_homologues.pl -d sample_buch_fasta 
+~~~~
+
+Worked! It makes me nervous when things are that easy. Will try with my Fuso genomes tomorrow.
+
