@@ -27,7 +27,7 @@ tar xvfz get_homologues-x86_64-20150306.tgz
 ./get_homologues.pl -d sample_buch_fasta 
 ~~~~
 
-##Format FASTA
+##Format input
 
 The best way to input files into GET_HOMOLOGUES is by putting all of the sequences in a single folder in FASTA format. Each genome is in a separate file. This way, if more genomes are added later (or if we sequence some in lab), they can be easily added to the pangenome. 
 
@@ -141,7 +141,7 @@ I ran the script again with the option to use the OrthoMCL algorithm. It used sl
 The number of taxa that have a sequence is set to default to the number of total genomes. This makes it so that every genome must have the homologues sequence for it to count as a cluster. This creates a *core* genome. What I am interested in is a *pan* genome which contains the core genes *and* the novel genes. To do this you have to set the number of taxa parameter (-t) to 0. 
 
 ~~~~
-get_homologues.pl -d faa -t 0 -M -A
+get_homologues.pl -d faa -t 0 -M 
 ~~~~
 
 With these options it created the clusters of homologues genes (paralogs and orthologs) and then added the singletons that didn't have any match.
@@ -187,9 +187,11 @@ ome/faa_homologues/tmp/all_ortho.mcl)
 
 So now there are 2838 clusters that can be present in 1, 2, or 3 genomes as well as genes that are present multiple times in the same genome. The folder `faa_homologues/NC003454_f0_0taxa_algOMCL_e0_` contains the amino acid sequences for each of them separately, but what I want is a single file with a single sequence for each cluster. Also, I need them to be in fasta format.
 
+I got distracted trying to figure out what these extra scripts do:
+
 ##compare_cluster.pl
 
-Now we use the GET_HOMOLOGUES script *compare_cluster.pl* which will intersect the cluster files and find a consensus sequence.
+The GET_HOMOLOGUES script *compare_cluster.pl*  will intersect the cluster files and make some graphs. It will create parsimony trees to look at divergence of different genes.
 
 ~~~~
 compare_clusters.pl -o faa_compare -d faa_homologues/NC003454_f0_0taxa_algOMCL_e0_ -t 0 -m -T
@@ -202,12 +204,62 @@ Summary of options:
 -m	: produces intersection pangenomic matrix
 -T	: produces parsimony based pangenomic tree
 
-Actually I don't think this script is very useful to me. It's usually used when combining genomes from different samples to see if there is gene overlap. I could have used this for comparative genomics if I were able to assemble full genomes from my metagenomic samples. 
+I don't think this script is very useful to me. It's usually used when combining genomes from different samples to see if there is gene overlap. I could have used this for comparative genomics if I were able to assemble full genomes from my metagenomic samples. 
 
 ##parse pangenome
 
-This script is supposed to parse the genes into core and shell genes (genes present in all genomes vs. genes present in one or two. 
+This script is supposed to parse the genes into core and shell genes (genes present in all genomes vs. genes present in one or two. Might be cool to visualize which genes are shared between the genomes I'm using and which are rare. 
 
 ~~~~
 parse_pangenome_matrix.pl -m faa_homologues/NC003454_f0_0taxa_algOMCL_e0_Avg_identity.tab -s
 ~~~~
+
+Can't get it to work. I could do this summary pretty easily myself though by using information from the `NC003454_f0_0taxa_algOMCL_e0_.cluster_list` file which tells me how many genomes contain genes from each cluster.
+
+#Create pangenome
+
+I would like to generate some sort of consensus sequence for clusters that have multiple genes, but for now I'm just going to pick one of them and use that as a representative sequence for the cluster. They all should have similar sequences, so hopefully any orthologs will align to the representative later when I'm aligning reads. 
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_homologues/NC003454_f0_0taxa_algOMCL_e0_
+
+for f in *.faa; do head -n2 $f | cat >> pan.complete.first.faa; done
+~~~~
+
+#Create nucleotide pangenome
+
+Run again with the .ffn files from ncbi. These are the same as the .faa but as DNA sequences instead of protein. 
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn
+
+wget -i ../wget/complete_all_ffn.txt
+
+get_homologues.pl -d ffn -t 0 -M 
+
+~~~~
+
+Outfile:
+
+~~~~
+
+# /mnt/EXT/Schloss-data/amanda/get_homologues/get_homologues-x86_64-20150306/get
+_homologues.pl -i 0 -d ffn -o 0 -e 0 -f 0 -r 0 -t 0 -c 0 -I 0 -m local -n 2 -M 1
+ -G 0 -P 0 -C 75 -S 1 -E 1e-05 -F 1.5 -N 0 -B 50 -b 0 -s 0 -D 0 -g 0 -a '0' -x 0
+ -R 0 -A 0
+
+# results_directory=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_homologues
+# parameters: MAXEVALUEBLASTSEARCH=0.01 MAXPFAMSEQS=250 BATCHSIZE=100 KEEPSCNDHS
+PS=0
+
+# checking input files...
+
+# 0 genomes, 0 sequences
+
+Illegal division by zero at /mnt/EXT/Schloss-data/amanda/get_homologues/get_homo
+logues-x86_64-20150306/get_homologues.pl line 919.
+~~~~
+
+
+
+
