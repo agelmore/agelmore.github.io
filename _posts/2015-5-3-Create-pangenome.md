@@ -260,6 +260,29 @@ Illegal division by zero at /mnt/EXT/Schloss-data/amanda/get_homologues/get_homo
 logues-x86_64-20150306/get_homologues.pl line 919.
 ~~~~
 
+Hmmm doesn't work. I'll come back to that.
 
+#Add draft genomes
 
+Ncbi has a ton of Fusobacterium draft genomes. Get_homologues makes it easy to add more genomes to the input folder, so I'll just put them in there. I have to cat the draft scaffolds to a single file for each sample.
 
+I put the address for all the drafts in a file called wget/draft_fuso.txt
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/draft
+
+wget -i ../wget/draft_fuso.txt
+
+#unzip all the files and put in a folder
+for f in *.tgz; do name=${f:0:7}; mkdir $name; quicksubmit "tar zxf $f -C $name" $quickpara; done
+
+#move the zipped files to the same place
+mkdir zipped
+mv *.tgz zipped
+
+#combine draft files into one per species
+for i in NZ*; do cd $i; quicksubmit "cat *.faa >> ../../faa/$i.faa"; cd ..; done
+
+#rerun get_homologues
+get_homologues.pl -d faa -t 0 -M
+~~~~
