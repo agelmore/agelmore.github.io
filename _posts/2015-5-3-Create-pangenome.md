@@ -277,7 +277,7 @@ And the outfile for the number of clusters and runtime:
 # RAM use: 1332.7 MB
 ~~~~
 
-Lets look at some stats of the clusters:
+Lets look at some stats of the clusters. (Apparently you can do this with one of the get_homologues scripts but I can't get them to work.)
 
 ~~~~
 for f in {1..100}; do grep -c "size=$f " NZACET_f0_0taxa_algOMCL_e0_.cluster_list >> genespercluster.txt; done
@@ -291,7 +291,7 @@ plot(x$size, x$V1, type="h", log="y", main="Genes per cluster", xlab="number of 
 
 ![Coverage map reads extracted from full database and assembled]({{ site.url }}/images/Genespercluster.png)
 
-Here's a plot showing how the genes clustered together. **Notice the Y axis is on a log scale so I could see the separation better.** There are a lot of clusters that only have a single gene, suggesting novel genes or high divergence (so that they didn't blast to eachother). Most of the clusters have fewer than 33 genes (one per taxa), but some have many more which means they are paralogs with multiple copies in the same genome. I checked in to see what genes are in the clusters with high gene copy number. 
+Here's a plot showing how the genes clustered together. **Notice the Y axis is on a log scale so I could see the separation better.**  Most of the clusters have fewer than 33 genes (one per taxa), but some have many more which means they are paralogs with multiple copies in the same genome. I checked in to see what genes are in the clusters with high gene copy number. 
 
 ~~~~
 awk '$3== "size=94" {print}' NZACET_f0_0taxa_algOMCL_e0_.cluster_list
@@ -300,8 +300,12 @@ awk '$3== "size=94" {print}' NZACET_f0_0taxa_algOMCL_e0_.cluster_list
 cluster 58_NP_602381.1 size=94 taxa=24 file: 58_NP_602381.1.faa dnafile: void
 ~~~~
 
-According to the annotations, it looks like these sequences are a bunch of outer membrane proteins and/or autotransporters. That makes sense that those would be paralogs. Cool!
+According to the annotations, it looks like these sequences are a bunch of outer membrane proteins and/or autotransporters. The cluster that has 64 copies are all "translation elongation factor G" and with 62 are mostly "tRNA modification enzyme". That makes sense that those would be paralogs. Cool!
 
+**There are a lot of clusters that only have a single gene**, suggesting novel genes or high divergence (so that they didn't blast to eachother). I wonder if these are an artifact of the get_homologues method. Because I used so many draft genomes, it's possible that there are a bunch of incomplete genes which come up as unique, but aren't really. **How am I going to check that?** There are 15405 clusters total and 8889 of those are singletons. If I remove the singletons I have 6519 clusters, which is pretty similar to the number of clusters that they found in the GET_HOMOLOGUES papers when using 50 Strep genomes.
 
+I'm running the program again with the option -t 1 which will remove singletons:
 
-
+~~~~
+get_homologues.pl -d faa -t 1 -M
+~~~~
