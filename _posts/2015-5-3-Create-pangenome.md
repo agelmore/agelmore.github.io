@@ -277,6 +277,31 @@ And the outfile for the number of clusters and runtime:
 # RAM use: 1332.7 MB
 ~~~~
 
+Lets look at some stats of the clusters:
+
+~~~~
+for f in {1..100}; do grep -c "size=$f " NZACET_f0_0taxa_algOMCL_e0_.cluster_list >> genespercluster.txt; done
+
+#in R
+x<- read.delim(file="genespercluster.txt", header=F)
+x$size=rownames(x)
+plot(x$size, x$V1, type="h", log="y", main="Genes per cluster", xlab="number of gene copies", ylab='number of clusters')
+~~~~
+
+
 ![Coverage map reads extracted from full database and assembled]({{ site.url }}/images/Genespercluster.png)
 
-Here's a plot showing how the genes clustered together. There are a lot of clusters that only have a single gene, suggesting novel genes or high divergence (so that they didn't blast to eachother). Most of the clusters have fewer than 33 genes (one per taxa), but some have many more which means they are paralogs with multiple copies in the same genome. I checked in
+Here's a plot showing how the genes clustered together. **Notice the Y axis is on a log scale so I could see the separation better.** There are a lot of clusters that only have a single gene, suggesting novel genes or high divergence (so that they didn't blast to eachother). Most of the clusters have fewer than 33 genes (one per taxa), but some have many more which means they are paralogs with multiple copies in the same genome. I checked in to see what genes are in the clusters with high gene copy number. 
+
+~~~~
+awk '$3== "size=94" {print}' NZACET_f0_0taxa_algOMCL_e0_.cluster_list
+
+#output
+cluster 58_NP_602381.1 size=94 taxa=24 file: 58_NP_602381.1.faa dnafile: void
+~~~~
+
+According to the annotations, it looks like these sequences are a bunch of outer membrane proteins and/or autotransporters. That makes sense that those would be paralogs. Cool!
+
+
+
+
