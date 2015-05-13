@@ -300,9 +300,9 @@ awk '$3== "size=94" {print}' NZACET_f0_0taxa_algOMCL_e0_.cluster_list
 cluster 58_NP_602381.1 size=94 taxa=24 file: 58_NP_602381.1.faa dnafile: void
 ~~~~
 
-According to the annotations, it looks like these sequences are a bunch of outer membrane proteins and/or autotransporters. The cluster that has 64 copies are all "translation elongation factor G" and with 62 are mostly "tRNA modification enzyme". That makes sense that those would be paralogs. Cool!
+According to the annotations, it looks like this cluster is a bunch of outer membrane proteins and/or autotransporters. The cluster that has 64 copies are all "translation elongation factor G" and with 62 are mostly "tRNA modification enzyme". That makes sense that those would be paralogs. Cool!
 
-**There are a lot of clusters that only have a single gene**, suggesting novel genes or high divergence (so that they didn't blast to eachother). I wonder if these are an artifact of the get_homologues method. Because I used so many draft genomes, it's possible that there are a bunch of incomplete genes which come up as unique, but aren't really. **How am I going to check that?** There are 15405 clusters total and 8889 of those are singletons. If I remove the singletons I have 6519 clusters, which is pretty similar to the number of clusters that they found in the GET_HOMOLOGUES papers when using 50 Strep genomes.
+**There are a lot of clusters that only have a single gene**, suggesting novel genes, high divergence (so that they didn't blast to eachother), or incomplete genes. I wonder if these are an artifact of the get_homologues method. Because I used so many draft genomes, it's possible that there are a bunch of incomplete genes which come up as unique, but aren't really. **How am I going to check that?** There are 15405 clusters total and 8889 of those are singletons. If I remove the singletons I have 6519 clusters, which is pretty similar to the number of clusters that they found in the GET_HOMOLOGUES papers when using 50 Strep genomes. I think it might be best to just remove the singletons. I'll miss any genes that are completely novel, but it will get rid of the incomplete gene error.
 
 I'm running the program again with the option -t 1 which will remove singletons:
 
