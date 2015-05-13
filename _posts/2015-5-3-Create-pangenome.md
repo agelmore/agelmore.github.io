@@ -63,73 +63,6 @@ The script took about 10 minutes.
 
 Outfile:
 
-~~~~
-# results_directory=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_homologues
-# parameters: MAXEVALUEBLASTSEARCH=0.01 MAXPFAMSEQS=250 BATCHSIZE=100 KEEPSCNDHSPS=0
-
-# checking input files...
-# NC_003454.faa 1983
-# NC_021281.faa 2107
-# NC_022196.faa 2151
-
-# 3 genomes, 6241 sequences
-
-# taxa considered = 3 sequences = 6241 residues = 1987852 MIN_BITSCORE_SIM = 17.9
-
-# mask=NC003454_f0_alltaxa_algBDBH_e0_ (_algBDBH)
-
-# running makeblastdb with /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_homologues/NC_003454.faa.fasta
-
-# running makeblastdb with /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_homologues/NC_021281.faa.fasta
-
-# running makeblastdb with /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_homologues/NC_022196.faa.fasta
-
-# running BLAST searches ...
-# done
-
-# concatenating and sorting blast results...
-# sorting _NC_003454.faa results (0.9MB)
-# sorting _NC_021281.faa results (0.9MB)
-# sorting _NC_022196.faa results (0.95MB)
-# done
-
-
-# parsing blast result! (/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_homologues/tmp/all.blast , 2.7MB)
-# parsing file finished
-
-# creating indexes, this might take some time (lines=5.88e+04) ...
-
-# construct_taxa_indexes: number of taxa found = 3
-# number of file addresses = 5.9e+04 number of BLAST queries  = 6.2e+03
-
-# clustering orthologous sequences
-
-# clustering inparalogues in NC_003454.faa (reference)
-# 81 sequences
-
-# clustering inparalogues in NC_021281.faa
-# 94 sequences
-
-# finding BDBHs between NC_003454.faa and NC_021281.faa
-# 1533 sequences
-
-# clustering inparalogues in NC_022196.faa
-# 70 sequences
-
-# finding BDBHs between NC_003454.faa and NC_022196.faa
-# 1594 sequences
-
-# looking for valid ORF clusters (n_of_taxa=3)...
-
-
-# number_of_clusters = 1469
-# cluster_list = faa_homologues/NC003454_f0_alltaxa_algBDBH_e0_.cluster_list
-# cluster_directory = faa_homologues/NC003454_f0_alltaxa_algBDBH_e0_
-
-# runtime: 309 wallclock secs ( 4.27 usr  0.28 sys + 559.54 cusr 11.20 csys = 575.29 CPU)
-# RAM use: 37.4 MB
-~~~~
-
 The output from the program is a list of the sequence IDs that clustered (`faa_homologues/NC003454_f0_alltaxa_algBDBH_e0_.cluster_list`) and a folder with all of the consensus sequences from those clusters (`faa_homologues/NC003454_f0_alltaxa_algBDBH_e0_`). This is great but it isn't really what I wanted. I want a file that has all the shared genes *AND* all the novel genes from each of the species. That way I have a list of ALL the Fusobacterium genes. 
 
 ##OMCL algorithm	
@@ -147,6 +80,10 @@ get_homologues.pl -d faa -t 0 -M
 With these options it created the clusters of homologues genes (paralogs and orthologs) and then added the singletons that didn't have any match.
 
 ~~~~
+# checking input files...
+# NC_003454.faa 1983
+# NC_021281.faa 2107
+# NC_022196.faa 2151
 
 # identifying orthologs between NC_003454.faa and NC_021281.faa (0)
 # 1579 sequences
@@ -286,3 +223,60 @@ for i in NZ*; do cd $i; quicksubmit "cat *.faa >> ../../faa/$i.faa"; cd ..; done
 #rerun get_homologues
 get_homologues.pl -d faa -t 0 -M
 ~~~~
+
+This finished in about 12 hours without using any of the parallel options. That's actually pretty quick because with 30 draft genomes and 3 complete genomes, the program blasts all against all for 1089 total blast files. 
+
+Here are the genome summaries:
+
+~~~~
+# NC_003454.faa 1983
+# NC_021281.faa 2107
+# NC_022196.faa 2151
+# NZ_AABF.faa 2250
+# NZ_AARG.faa 2362
+# NZ_ACDB.faa 2538
+# NZ_ACDC.faa 2354
+# NZ_ACDD.faa 1890
+# NZ_ACDE.faa 2154
+# NZ_ACDF.faa 2418
+# NZ_ACDG.faa 1833
+# NZ_ACDH.faa 3191
+# NZ_ACDS.faa 2334
+# NZ_ACET.faa 1621
+# NZ_ACIE.faa 3008
+# NZ_ACIF.faa 2624
+# NZ_ACJY.faa 2568
+# NZ_ACPU.faa 2131
+# NZ_ACQE.faa 2123
+# NZ_ACUO.faa 2641
+# NZ_ADDB.faa 2423
+# NZ_ADEE.faa 2037
+# NZ_ADGF.faa 2006
+# NZ_ADLZ.faa 3197
+# NZ_ADVK.faa 2126
+# NZ_AFQD.faa 2777
+# NZ_AGAD.faa 2274
+# NZ_AGEH.faa 2307
+# NZ_AGWJ.faa 3755
+# NZ_AJSY.faa 2060
+# NZ_AKXI.faa 1821
+# NZ_ALKK.faa 2173
+# NZ_ALVD.faa 2200
+
+# 33 genomes, 77437 sequences
+~~~~
+
+And the outfile for the number of clusters and runtime:
+
+~~~~
+# number_of_clusters = 15405
+# cluster_list = faa_homologues/NZACET_f0_0taxa_algOMCL_e0_.cluster_list
+# cluster_directory = faa_homologues/NZACET_f0_0taxa_algOMCL_e0_
+
+# runtime: 36979 wallclock secs (1898.38 usr 16.82 sys + 41202.69 cusr 327.50 csys = 43445.39 CPU)
+# RAM use: 1332.7 MB
+~~~~
+
+![Coverage map reads extracted from full database and assembled]({{ site.url }}/images/Genespercluster.png)
+
+Here's a plot showing how the genes clustered together. There are a lot of clusters that only have a single gene, suggesting novel genes or high divergence (so that they didn't blast to eachother). Most of the clusters have fewer than 33 genes (one per taxa), but some have many more which means they are paralogs with multiple copies in the same genome. I checked in
