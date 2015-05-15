@@ -163,41 +163,6 @@ cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_homologues/NC003454_f0_0taxa_
 for f in *.faa; do head -n2 $f | cat >> pan.complete.first.faa; done
 ~~~~
 
-#Create nucleotide pangenome
-
-Run again with the .ffn files from ncbi. These are the same as the .faa but as DNA sequences instead of protein. 
-
-~~~~
-cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn
-
-wget -i ../wget/complete_all_ffn.txt
-
-get_homologues.pl -d ffn -t 0 -M 
-
-~~~~
-
-Outfile:
-
-~~~~
-
-# /mnt/EXT/Schloss-data/amanda/get_homologues/get_homologues-x86_64-20150306/get
-_homologues.pl -i 0 -d ffn -o 0 -e 0 -f 0 -r 0 -t 0 -c 0 -I 0 -m local -n 2 -M 1
- -G 0 -P 0 -C 75 -S 1 -E 1e-05 -F 1.5 -N 0 -B 50 -b 0 -s 0 -D 0 -g 0 -a '0' -x 0
- -R 0 -A 0
-
-# results_directory=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_homologues
-# parameters: MAXEVALUEBLASTSEARCH=0.01 MAXPFAMSEQS=250 BATCHSIZE=100 KEEPSCNDHS
-PS=0
-
-# checking input files...
-
-# 0 genomes, 0 sequences
-
-Illegal division by zero at /mnt/EXT/Schloss-data/amanda/get_homologues/get_homo
-logues-x86_64-20150306/get_homologues.pl line 919.
-~~~~
-
-Hmmm doesn't work. I'll come back to that.
 
 #Add draft genomes
 
@@ -208,7 +173,7 @@ I put the address for all the drafts in a file called wget/draft_fuso.txt
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/draft
 
-wget -i ../wget/draft_fuso.txt
+wget -i ../wget/draft_Fuso.txt
 
 #unzip all the files and put in a folder
 for f in *.tgz; do name=${f:0:7}; mkdir $name; quicksubmit "tar zxf $f -C $name" $quickpara; done
@@ -309,3 +274,51 @@ I'm running the program again with the option -t 1 which will remove singletons:
 ~~~~
 get_homologues.pl -d faa -t 1 -M
 ~~~~
+
+It finished. It worked exactly as I expected. The number of clusters is now 6516 which is in the range I would want. 
+
+~~~~
+# number_of_clusters = 6516
+# cluster_list = faa_homologues/NZACET_f0_1taxa_algOMCL_e0_.cluster_list
+# cluster_directory = faa_homologues/NZACET_f0_1taxa_algOMCL_e0_
+
+# runtime: 42301 wallclock secs (1997.89 usr 16.16 sys + 44823.06 cusr 1782.71 c
+sys = 48619.82 CPU)
+# RAM use: 1332.4 MB
+~~~~
+
+#Singleton analysis
+
+Blast the singletons (genes that cluster individually) against the other clusters to see if they are present there (and incomplete) or if they are in fact novel genes.
+
+
+
+
+#Create nucleotide pangenome
+
+Run again with the .ffn files from ncbi. These are the same as the .faa but as DNA sequences instead of protein. For get_homologues you have to include the protein sequences with the fasta sequences in the same order for it to give you a nucleotide output (I guess it will cluster the protein sequences and then grab the nucleotide sequences later). I discovered through trial and error that the .ffn files have to have the .fna extension even though they are .ffn. And they have to have the same name as the .faa files. If I set this all up perfectly, nucleotide clusters will be produced. 
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn
+
+wget -i ../wget/complete_all_ffn.txt
+wget -i ../wget/draft_ffn.txt
+
+#unzip all the files and put in a folder
+for f in *ffn.tgz; do name=${f:0:7}; mkdir $name; quicksubmit "tar zxf $f -C $name" $quickpara; done
+
+#move the zipped files to the same place
+mkdir zipped
+mv *.tgz zipped
+
+#combine draft files into one per species
+for i in NZ*; do cd $i; quicksubmit "cat *.ffn >> ../../$i.fna"; cd ..; done
+
+#get the matching faa files that I used before
+cp ../faa/NZ*.faa .
+
+#rerun get_homologues
+get_homologues.pl -d ffn -t 1 -M
+~~~~
+
+The test worked, so this should work! Might take a few hours, though. Once it's done, I can start mapping my reads to it!
