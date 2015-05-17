@@ -287,12 +287,6 @@ sys = 48619.82 CPU)
 # RAM use: 1332.4 MB
 ~~~~
 
-#Singleton analysis
-
-Blast the singletons (genes that cluster individually) against the other clusters to see if they are present there (and incomplete) or if they are in fact novel genes.
-
-
-
 
 #Create nucleotide pangenome
 
@@ -321,4 +315,7 @@ cp ../faa/NZ*.faa .
 get_homologues.pl -d ffn -t 1 -M
 ~~~~
 
-The test worked, so this should work! Might take a few hours, though. Once it's done, I can start mapping my reads to it!
+It worked. In the cluster list file are clusters in both protein and nucleotide format (matching names, only difference is ".faa" vs ".fna". The genes are the same, just presented in each format. This is good because now I can run BWA (which only works on nucleotide databases). I moved the nucleotide clusters to their own folder `/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_homologues/NZACET_f0_1taxa_algOMCL_e0_/nucleotide
+`
+
+
