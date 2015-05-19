@@ -35,3 +35,21 @@ ls | sort -n > /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/cluster.names
 
 I wonder if I can use the mothur command make.groups somehow. A group file is just a list of all the sequences and their group name. I could also easily write a script for this, probably a one-liner.
 ~~~~
+
+##Run BWA
+
+~~~~
+bwa index all.t1.fna
+
+#start with one tongue sample
+wget http://downloads.hmpdacc.org/data/Illumina/tongue_dorsum/SRS013502.tar.bz2
+tar jxvf SRS013502
+cd SRS013502
+
+#run bwa. without the -a option this should output only best matches.
+bwa mem -M -t 16 all.t1.fna SRS013502/SRS013502.denovo_duplicates_marked.trimmed.1.fastq SRS013502/SRS013502.denovo_duplicates_marked.trimmed.2.fastq > all.t1.SRS013502.sam
+
+
+
+
+
