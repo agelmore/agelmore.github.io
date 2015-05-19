@@ -32,3 +32,5 @@ makeblastdb -in genes_t1.fna -dbtype nucl -out genes_t1.blast
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/incomplete
 blastn -db ../ffn_homologues/NZACET_f0_1taxa_algOMCL_e0_/nucleotide/genes_t1.blast -query genes_t0.fna -out incomplete.blast.1 -evalue 1e-5 -outfmt 6 -num_threads 16 -max_target_seqs 1
 ~~~~
+
+**2646** of the singletons hit a gene in the clusters with an evalue of less than 1e-5. There were **8889** total singletons. I'm going to try bwa with all the singletons included and see if I get a lot of hits to those genes.
