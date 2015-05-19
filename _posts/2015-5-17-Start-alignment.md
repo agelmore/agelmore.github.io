@@ -48,6 +48,8 @@ cd SRS013502
 
 #run bwa. without the -a option this should output only best matches.
 bwa mem -M -t 16 all.t1.fna SRS013502/SRS013502.denovo_duplicates_marked.trimmed.1.fastq SRS013502/SRS013502.denovo_duplicates_marked.trimmed.2.fastq > all.t1.SRS013502.sam
+~~~~
+
 
 
 
