@@ -8,9 +8,13 @@ comments: true
 I need a pipeline to align reads to the entire set of genes and then assign each read to one of the 6500 clusters.
 
 Outline:
+
 1. combine genes that clustered into single file
+
 2. create index file with gene names and cluster number
+
 3. bwa reads to combined gene file
+
 4. assign reads to cluster using index
 
 
