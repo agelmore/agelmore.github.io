@@ -22,7 +22,7 @@ cat *.fna >> genes_t1.fna
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_t0_homologues/NZACET_f0_0taxa_algOMCL_e0_
 grep -c '>' *.fna > genes_per_cluster.txt
 awk -F : '$2==1 {print $1}' genes_per_cluster.txt > genes_t0_id.txt
-for f in $(cat genes_t0_id.txt); do cat $f > genes_t0.fna; done
+for f in $(cat genes_t0_id.txt); do cat $f >> genes_t0.fna; done
 cp genes_t0.fna /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/incomplete
 
 #index database
