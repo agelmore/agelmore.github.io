@@ -30,10 +30,12 @@ cat *.fna >> /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/all.t1.fna
 ##Create index file
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_homologues/NZACET_f0_1taxa_algOMCL_e0_/nucleotide
+/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_t0_homologues/NZACET_f0_0taxa_algOMCL_e0_/nucleotide
 
-ls | sort -n > /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/cluster.names
 
-I wonder if I can use the mothur command make.groups somehow. A group file is just a list of all the sequences and their group name. I could also easily write a script for this, probably a one-liner.
+#create a "group" file. Every line is a unique sequence and the cluster that it belongs to. I did the same for the t0 clusters
+for f in *1.fna; do cat $f | awk 'NR % 2 ==1' | awk -v var="$f" '{gsub(/>/,"")} {OFS="\t"} {print $1, var}' >> t1.index; done
+
 ~~~~
 
 ##Run BWA
@@ -45,25 +47,28 @@ bwa index all.t1.fna
 wget http://downloads.hmpdacc.org/data/Illumina/tongue_dorsum/SRS013502.tar.bz2
 tar jxvf SRS013502
 cd SRS013502
+cat *.1.fastq *.2.fastq > SRS013502.fastq
 
 #run bwa. without the -a option this should output only best matches.
-bwa mem -M -t 16 all.t1.fna SRS013502/SRS013502.denovo_duplicates_marked.trimmed.1.fastq SRS013502/SRS013502.denovo_duplicates_marked.trimmed.2.fastq > all.t1.SRS013502.sam
+cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t1
+bwa mem -M -t 16 all.t1.fna ../SRS013502/SRS013502.fastq > all.t1.SRS013502.sam
 
 #run again against database including singletons
-bwa mem -M -t 16 all.t0.fna SRS013502/SRS013502.denovo_duplicates_marked.trimmed.1.fastq SRS013502/SRS013502.denovo_duplicates_marked.trimmed.2.fastq > all.t0.SRS013502.sam
-
-
+cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0
+bwa mem -M -t 16 all.t0.fna ../SRS013502/SRS013502.fastq > all.t0.SRS013502.sam
 ~~~~
 
 #Analyze BWA output
 
-Start with the t1 output because it's already done
+Start with the t0 output to see if reads are mapping to the singletons.
 
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0
 
 #sam to bam
-samtools view -Sb all.t1.SRS013502.sam > all.t1.SRS013502.bam
+samtools view -Sb all.t0.SRS013502.sam > all.t0.SRS013502.bam
+
+~~~~
 
 
 ideas to use:
