@@ -24,7 +24,7 @@ mkdir /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa
 
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_homologues/NZACET_f0_1taxa_algOMCL_e0_/nucleotide
 
-cat *.fna >> /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/all.t1.fna
+cat *.fna >> /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.2.fna
 ~~~~
 
 ##Create index file
@@ -34,8 +34,15 @@ cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_homologues/NZACET_f0_1taxa_al
 
 
 #create a "group" file. Every line is a unique sequence and the cluster that it belongs to. I did the same for the t0 clusters
-for f in *1.fna; do cat $f | awk 'NR % 2 ==1' | awk -v var="$f" '{gsub(/>/,"")} {OFS="\t"} {print $1, var}' >> t1.index; done
+for f in *.fna; do cat $f | awk 'NR % 2 ==1' | awk -v var="$f" '{gsub(/>/,"")} {OFS="\t"} {print $1, var}' >> t0.index; done
 
+#looks like this. The gi number specific to the sequence, the ref name of which genome (or draft) it came from, and the cluster number separated by a tab. 
+head t1.index
+gi|254303548|ref|ZP_04970906.1|	10000_ZP_04970906.1.fna
+gi|422338993|ref|ZP_16419953.1|	10000_ZP_04970906.1.fna
+gi|421527171|ref|ZP_15973775.1|	10000_ZP_04970906.1.fna
+gi|254303549|ref|ZP_04970907.1|	10001_ZP_04970907.1.fna
+gi|421527172|ref|ZP_15973776.1|	10001_ZP_04970907.1.fna
 ~~~~
 
 ##Run BWA
@@ -55,7 +62,7 @@ bwa mem -M -t 16 all.t1.fna ../SRS013502/SRS013502.fastq > all.t1.SRS013502.sam
 
 #run again against database including singletons
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0
-bwa mem -M -t 16 all.t0.fna ../SRS013502/SRS013502.fastq > all.t0.SRS013502.sam
+bwa mem -M -t 16 all.t0.fna ../SRS013502/SRS013502.fastq > all.t0.2.SRS013502.sam
 ~~~~
 
 #Analyze BWA output
@@ -65,15 +72,16 @@ Start with the t0 output to see if reads are mapping to the singletons.
 ~~~~
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0
 
-#sam to bam
-samtools view -Sb all.t0.SRS013502.sam > all.t0.SRS013502.bam
+#sam to bam and pull out mapped genes
+samtools view -Sb -F4 all.t0.SRS013502.sam > all.t0.SRS013502.F4.bam
+
+
+
 
 ~~~~
 
 
-ideas to use:
-coverageBed -abam all.t1.SRS013502.bam -b all.t1.fna
-concoct scripts - concoct basically does what I want to do. They map all the reads to the contigs and then generate a table with the coverage per contig. 
-mothur - takes an group file and sequences and generates a shared file
+I think I'll write a python script that uses a dictionary like I used once in a script for Kathy (`/mnt/EXT/Schloss-data/amanda/OPFblast/Keggpathways.total.py').
+ 
 
 
