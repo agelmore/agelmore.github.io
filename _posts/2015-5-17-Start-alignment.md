@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Start aligning to pangenome"
-date:   2015-5-16
+title:  "Align reads to pangenome - updated"
+date:   2015-7-8
 comments: true
 ---
 
@@ -73,15 +73,36 @@ Start with the t0 output to see if reads are mapping to the singletons.
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0
 
 #sam to bam and pull out mapped genes
-samtools view -Sb -F4 all.t0.SRS013502.sam > all.t0.SRS013502.F4.bam
+samtools view -Sb all.t0.SRS013502.sam > all.t0.SRS013502.bam
 
+samtools sort -n all.t0.SRS013502.F4.bam all.t0.SRS013502.F4.sorted
 
+samtools index all.t0.SRS013502.F4.sorted.bam
 
+samtools idxstats all.t0.SRS013502.F4.sorted.bam.bai
+
+samtools sort -n all.t0.SRS013502.sam all.t0.SRS013502.sorted
+
+samtools index all.t0.SRS013502.sorted.bam
+
+samtools idxstats all.t0.SRS013502.F4.sorted.bam.bai
 
 ~~~~
 
 
-I think I'll write a python script that uses a dictionary like I used once in a script for Kathy (`/mnt/EXT/Schloss-data/amanda/OPFblast/Keggpathways.total.py').
- 
+
+Whats the difference between a sam and bam file? Maybe I have them mixed up... I get an error when I try to run idxstats because it sayys the EOF header is missing and it may be a truncated file
+
+##Creating shared file
+
+I wrote a python script which counts the number of reads that map to each cluster in the pangenome. The input files are an index. Right now it only works on test data from my computer, so I might need to alter some things once I see how slow it is on a big data set.
+
+I think this picard tool does basically that pipeline that I couldnt get to work:
+
+`java -jar /mnt/EXT/Schloss-data/amanda/picard/picard-tools-1.119/BamIndexStats.jar all.t0.SRS013502.bam`
+
+The script is in a repository on my personal github [here](https://github.com/agelmore/Pangenome/blob/master/sharedfile.py).
+
+
 
 
