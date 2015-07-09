@@ -95,7 +95,7 @@ Whats the difference between a sam and bam file? Maybe I have them mixed up... I
 
 ##Creating shared file
 
-I wrote a python script which counts the number of reads that map to each cluster in the pangenome. The input files are an index. Right now it only works on test data from my computer, so I might need to alter some things once I see how slow it is on a big data set.
+I wrote a python script which counts the number of reads that map to each cluster in the pangenome. The input files are an index of reads mapping to sequences and an index of which sequences are in each cluster. Right now it only works on test data from my computer, so I might need to alter some things once I see how slow it is on a big data set.
 
 I think this picard tool does basically that pipeline that I couldnt get to work:
 
