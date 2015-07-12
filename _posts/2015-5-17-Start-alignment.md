@@ -94,6 +94,9 @@ samtools view -F4 all.t0.SRS013502.bam > all.t0.SRS013502.mapped.sam
 cut -f1,3 all.t0.SRS013502.mapped.sam > all.t0.SRS013502.mapped.index
 ~~~~
 
+By removing unmapped reads, `427357` out of the original `33908624` remained. This means about `1.3%` of the reads in the sample mapped to fuso sequences. I was getting more than that before, but this is only one sample where I was using a pool of samples before. We expect there to be variation among samples. 
+
+
 This index file contains the reads mapping to reference sequences. Together with the t0.index file containing the reference sequences in each cluster, I can create a script that will count the reads per cluster, or a "shared file".
 
 
@@ -107,6 +110,7 @@ I think this picard tool does basically that pipeline that I couldnt get to work
 
 The script is in a repository on my personal github [here](https://github.com/agelmore/Pangenome/blob/master/sharedfile.py).
 
+Spent a while today trying to get this to work on axiom with my real data using argparse.
 
 
 
