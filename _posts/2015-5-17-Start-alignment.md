@@ -22,9 +22,9 @@ Outline:
 ~~~~
 mkdir /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa
 
-cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_homologues/NZACET_f0_1taxa_algOMCL_e0_/nucleotide
+cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_t0_homologues/NZACET_f0_0taxa_algOMCL_e0_/nucleotide
 
-cat *.fna >> /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.2.fna
+cat *.fna >> /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.fna
 ~~~~
 
 ##Create index file
@@ -65,7 +65,19 @@ cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0
 bwa mem -M -t 16 all.t0.fna ../SRS013502/SRS013502.fastq > all.t0.2.SRS013502.sam
 ~~~~
 
-#Analyze BWA output
+##Run Bowtie2
+
+For some reason the sam file was acting weird with the bwa data so I'm trying with bowtie2 instead since I've used it before.
+
+~~~~
+cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0
+
+bowtie2-build all.t0.fna all.t0.fna
+
+bowtie2 all.t0.fna -q ../SRS013502/SRS013502.fastq -p 16 -S all.t0.SRS013502.sam  
+~~~~
+
+#Analyze alignment output
 
 Start with the t0 output to see if reads are mapping to the singletons.
 
@@ -73,25 +85,17 @@ Start with the t0 output to see if reads are mapping to the singletons.
 cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0
 
 #sam to bam and pull out mapped genes
-samtools view -Sb all.t0.SRS013502.sam > all.t0.SRS013502.bam
+samtools view -bT all.t0.fna all.t0.SRS013502.sam > all.t0.SRS013502.bam
 
-samtools sort -n all.t0.SRS013502.F4.bam all.t0.SRS013502.F4.sorted
+#use the -F4 option. The -F option removes the specified FLAG. The 4 flag is unmapped reads. 
+samtools view -F4 all.t0.SRS013502.bam > all.t0.SRS013502.mapped.sam
 
-samtools index all.t0.SRS013502.F4.sorted.bam
-
-samtools idxstats all.t0.SRS013502.F4.sorted.bam.bai
-
-samtools sort -n all.t0.SRS013502.sam all.t0.SRS013502.sorted
-
-samtools index all.t0.SRS013502.sorted.bam
-
-samtools idxstats all.t0.SRS013502.F4.sorted.bam.bai
-
+#cut out the read name and reference name
+cut -f1,3 all.t0.SRS013502.mapped.sam > all.t0.SRS013502.mapped.index
 ~~~~
 
+This index file contains the reads mapping to reference sequences. Together with the t0.index file containing the reference sequences in each cluster, I can create a script that will count the reads per cluster, or a "shared file".
 
-
-Whats the difference between a sam and bam file? Maybe I have them mixed up... I get an error when I try to run idxstats because it sayys the EOF header is missing and it may be a truncated file
 
 ##Creating shared file
 
