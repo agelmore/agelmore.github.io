@@ -110,7 +110,7 @@ I think this picard tool does basically that pipeline that I couldnt get to work
 
 The script is in a repository on my personal github [here](https://github.com/agelmore/Pangenome/blob/master/sharedfile.py).
 
-Spent a while today trying to get this to work on axiom with my real data using argparse.
+Spent a while today trying to get this to work on axiom with my real data using argparse. I can't figure out how to get it to read files as files and not strings.
 
 
 
