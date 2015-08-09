@@ -32,6 +32,3 @@ Plot x axis is gene length and y axis is read copy number. What did they do in t
 
 
 ##To do
-
-
- 
