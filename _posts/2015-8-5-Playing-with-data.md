@@ -9,29 +9,19 @@ In my previous posts I did pangenome construction, HMP read alignment to pangeno
 
 ##Generate shared file
 
-Here's a summary of what I have done up to this point:
+Here's a summary of what I have done up to this point. See [this post](http://agelmore.github.io/2015/07/08/Start-alignment.html) for the alignment and data organization pipeline. 
 
-#Files:
+#Files
+
+These are the most important files in the analysis.
 
 File | suffix | description | column 1 | column 2 | column 3
 :---------------|:--------:|:--------:|:--------:|:--------:|:--------:
 Cluster index | *.index | genes matched with cluster from pangenome | gene name | cluster name 
 Read index | *.mapped.index | reads matched with gene from sam file | read name | gene name 
-Read index | *.mapped.out | Count of reads and genes in each cluster | cluster name | read count | gene count 
+Shared file | *.mapped.out | Count of reads and genes in each cluster | cluster name | read count | gene count 
 
 
-
-Table of output from pangenome
-
-~~~~
-pipeline with alignment, sam file format, and sharedfile.py script
-
-
-
-#run sharedfile.py. takes about 5 minutes with a single sample
-
-python2.7 sharedfile.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.index  /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/TEST2.out
-~~~~
 
 
 ##Read copy number per cluster
@@ -43,5 +33,5 @@ Plot x axis is gene length and y axis is read copy number. What did they do in t
 
 ##To do
 
-get number of reads in sharedfile to match input sam index
+
  
