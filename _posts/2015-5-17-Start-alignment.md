@@ -102,15 +102,16 @@ This index file contains the reads mapping to reference sequences. Together with
 
 ##Creating shared file
 
-I wrote a python script which counts the number of reads that map to each cluster in the pangenome. The input files are an index of reads mapping to sequences and an index of which sequences are in each cluster. Right now it only works on test data from my computer, so I might need to alter some things once I see how slow it is on a big data set.
-
-I think this picard tool does basically that pipeline that I couldnt get to work:
-
-`java -jar /mnt/EXT/Schloss-data/amanda/picard/picard-tools-1.119/BamIndexStats.jar all.t0.SRS013502.bam`
+I wrote a python script which counts the number of reads that map to each cluster in the pangenome. The input files are an index of reads mapping to sequences and an index of which sequences are in each cluster. 
 
 The script is in a repository on my personal github [here](https://github.com/agelmore/Pangenome/blob/master/sharedfile.py).
 
-Spent a while today trying to get this to work on axiom with my real data using argparse. I can't figure out how to get it to read files as files and not strings.
+The repository is saved on axiom here: /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome
 
+~~~~
+#run sharedfile.py. takes about 5 minutes with a single sample
+
+python2.7 sharedfile.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.index  /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.out
+~~~~
 
 
