@@ -57,10 +57,12 @@ The output file `/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_compare/pangeno
 
 Run mothur:
 ~~~~
+
 rarefaction.shared(shared=pangenome_matrix_t0_manedits.tab, label=0.00)
 ~~~~
 
 Plot in R:
+
 ~~~~
 setwd("~/Documents/Schloss/Fuso/Pangenome/analysis")
 x<- read.delim(file="pangenome_matrix_t0_manedits.shared.rarefaction", header=T)
