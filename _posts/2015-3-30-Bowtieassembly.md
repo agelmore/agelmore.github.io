@@ -104,7 +104,7 @@ python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/khmer/khmerEnv/bin/normalize-by-medi
 
 cd /mnt/EXT/Schloss-data/amanda/Fuso/megahit/megahit
 
-python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/bowtie.fusodb.mapped.cut.normalized.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/megahit
+python ./megahit -m 45e9 -r /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/bowtie.fusodb.mapped.cut.normalized.fastq --cpu-only -l 101 -o /mnt/EXT/Schloss-data/amanda/Fuso/HMP/D1.tongue/reference/bowtie/DN/megahit2
 
 ##Try the assembly without DN too
 

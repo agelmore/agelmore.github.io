@@ -109,9 +109,13 @@ The script is in a repository on my personal github [here](https://github.com/ag
 The repository is saved on axiom here: /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome
 
 ~~~~
-#run sharedfile.py. takes about 5 minutes with a single sample
+#run sharedfile.py. takes about 5 minutes with a single sample. 
+#the inputs 
 
 python2.7 sharedfile.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.index  /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.out
 ~~~~
+
+
+python2.7 sharedfile2.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.index  /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.out2
 
 
