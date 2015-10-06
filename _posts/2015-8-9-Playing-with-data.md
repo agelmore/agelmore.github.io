@@ -90,3 +90,5 @@ rarefaction.shared(shared=pangenome_matrix_t1_manedits.tab, label=0.00)
 Add to R plot:
 
 ![Rarefaction curve - t=1, no singletons]({{ site.url }}/images/rarefaction.t1.png)
+
+This looks more like what we would expect. As we add more genomes to the pangenome, the total number of clusters flattens out because we see repeat genes. This graph makes a case for using the t1 data. 
