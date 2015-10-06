@@ -50,14 +50,14 @@ We are curious to know more about the pangenome. There are so many rare genes, s
 To create this curve, I will use the mothur rarefaction.shared command which only requires a shared file. In this file I will have gene clusters in place of OTUs (columns) and genome names in place of sample names (rows). I will have to reorganize the data in the file `/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_t0_homologues/NZACET_f0_0taxa_algOMCL_e0_.cluster_list` to make this pangenome shared file. I can do this using a script from the get_homologues package.
 
 ~~~~
-compare_clusters.pl -o faa_compare -d ffn_t0_homologues/NZACET_f0_0taxa_algOMCL_e0_ -t 0 -m -T
+compare_clusters.pl -o faa_compare2 -d ffn_t0_homologues/NZACET_f0_0taxa_algOMCL_e0_ -t 0 -m
 ~~~~
 
 The output file `/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/faa_compare/pangenome_matrix_t0.tab` is basically this shared file, but without the "label" and "numOtus" column. These are required for the mothur rarefaction.shared command, so I added these manually.
 
 Run mothur:
-~~~~
 
+~~~~
 rarefaction.shared(shared=pangenome_matrix_t0_manedits.tab, label=0.00)
 ~~~~
 
@@ -73,7 +73,20 @@ plot(x$numsampled,x$X, xlab="Number of genomes", ylab="Number of clusters", main
 
 The line doesn't flatten out which means that each genome is adding a new set of novel genes to the pangenome. This shouldn't be the case. I'm going to try making curves of the pangenome clustered at t=1.
 
+###Rarefaction t=1
 
+~~~~
+compare_clusters.pl -o faa_compare_t1 -d faa_draft_t1/NZACET_f0_1taxa_algOMCL_e0_ -t 0 -m 
+~~~~
 
+Manually edit to add label column and changed file name to `pangenome_matrix_t1_manedits.tab`
 
+Mothur:
 
+~~~~
+rarefaction.shared(shared=pangenome_matrix_t1_manedits.tab, label=0.00)
+~~~~
+
+Add to R plot:
+
+![Rarefaction curve - t=1, no singletons]({{ site.url }}/images/rarefaction.t1.png)
