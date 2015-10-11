@@ -53,9 +53,14 @@ hist(x[x$readcount>1,'readcount'], xlim=c(1,40), breaks=5000,xlab="Gene coverage
 
 ![Histogram of gene abundance]({{ site.url }}/images/freq.normalized.png)
 
+As we hoped to see, the frequency of the different gene clusters are pretty normally distributed. I normalized to gene length and multiplied by read lenth, so the y axis is the single base coverage of Fuso genes in this sample.  I have not yet normalized to single copy core genes, so the center of the distribution (around 17) doesn't mean much. 
+
+*The spike in clusters that are in low abundance may just be sequencing errors or misalignments?*
+
+The clusters that are in high abundance may indicate genes that are present in all Fuso strains, and may be under selective pressures. It would be interesting to look at what those genes are. Next, I will do the same pipeline for other samples to see if the same genes are present at high abundance in different individuals and body sites. 
 
 # 2) Normalize by single copy core genes
 
-
+Use single copy core genes from the CONCOCT pipeline.
 
 
