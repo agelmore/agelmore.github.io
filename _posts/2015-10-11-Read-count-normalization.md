@@ -38,6 +38,24 @@ python2.7 sharedfile2.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.i
 
 ~~~~
 
-It takes a little longer than before because it has to compute the float division in each loop. Oh well, I just won't tell Kathy.
+It takes a little longer than before because it has to compute the float division in each loop. Oh well, I just won't tell Kathy. It works!
+
+And a little plot to look at gene coverage of the normalized data:
+
+~~~~
+setwd("~/Documents/Schloss/Fuso/Pangenome/")
+
+x<- read.delim(file="all.t0.SRS013502.mapped.out3", header=T)
+
+hist(x[x$readcount>1,'readcount'], xlim=c(1,40), breaks=5000,xlab="Gene coverage (per base)", main="Frequency of gene abundance, normalized by gene length")
+
+~~~~
+
+![Histogram of gene abundance]({{ site.url }}/images/freq.normalized.png)
+
+
+# 2) Normalize by single copy core genes
+
+
 
 
