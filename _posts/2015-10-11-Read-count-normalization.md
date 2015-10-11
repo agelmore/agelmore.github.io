@@ -31,9 +31,13 @@ write.table(z, file="all.t0.SRS013502.mapped.lengths.index", quote=F, row.names=
 
 ~~~~
 
-Easy. Now, using this new index file in my sharedfile.py script, I will add (1/seq length) to the count total instead of just a raw count. This will normalize each sequence for its individual sequence length. The total will be normalized for each sequence. I need to make a way to check that my script works.
+Easy. Now, using this new index file in my sharedfile.py script, I will divide the read count of each sequence by its length and multiply by 100. This will normalize each sequence so that the totals are a per base coverage. I actually decided to multiple the total decimal by 100 to save computational time (you can pull out the 100 in addition). I made the changes to the (sharedfile2.py)[https://github.com/agelmore/Pangenome/blob/master/sharedfile2.py] script that are saved on my github page. 
 
+~~~~
+python2.7 sharedfile2.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.lengths.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.SRS013502.mapped.out3
 
+~~~~
 
+It takes a little longer than before because it has to compute the float division in each loop. Oh well, I just won't tell Kathy.
 
 
