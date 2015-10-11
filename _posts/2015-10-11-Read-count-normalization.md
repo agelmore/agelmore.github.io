@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Playing with data from alignment to pangenome"
-date:   2015-8-5
+title:  "Normalizing read counts"
+date:   2015-10-11
 comments: true
 ---
 
