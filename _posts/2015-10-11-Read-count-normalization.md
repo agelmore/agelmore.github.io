@@ -99,7 +99,6 @@ Extract cluster names from COG table using R. Adapted from COGplot.R script.
 tab<- read.delim(file="cogtable_scg.tsv",row.names=1, header=TRUE)
 ecogs <- tab[,3:ncol(tab)]
 maxecogs <- max(ecogs)
-maxecogs <- max(ecogs)
 sumCogs <- rowSums(ecogs)
 ecogs$sum <- sumCogs
 ecogs <- subset(ecogs,ecogs$sum > 25) #only want high copy number clusters
