@@ -91,8 +91,38 @@ This is also a good validation of my input genomes. I had 33 genomes that I used
 *What does this say about the pangenome clusters?* There are 14 clusters with a few copies of the COGs. These are repeats from clusters which have 30-33 copies. The COGs should only be represented on time in every genome, so if they are hitting more than one cluster, there is something wrong with my pangenome. Could this be a misalignment in the CONCOCT pipeline? Errors in the input genomes?
 
 
+###Normalize sample using SCG clusters
 
+Extract cluster names from COG table using R. Adapted from COGplot.R script.
 
+~~~~
+tab<- read.delim(file="cogtable_scg.tsv",row.names=1, header=TRUE)
+ecogs <- tab[,3:ncol(tab)]
+maxecogs <- max(ecogs)
+maxecogs <- max(ecogs)
+sumCogs <- rowSums(ecogs)
+ecogs$sum <- sumCogs
+ecogs <- subset(ecogs,ecogs$sum > 25) #only want high copy number clusters
+ecogs.order <- ecogs[order(ecogs$sum),]
+names <- row.names(ecogs.order)
+write.table(names, file="clusternames", row.names=FALSE, quote=FALSE)
+~~~~
+
+Merge SCG clusters with abundance table to get abundance of SCG clusters.
+
+~~~~
+setwd("~/Documents/Schloss/Fuso/Pangenome/analysis")
+x<- read.delim(file="pangenome_matrix_t0_manedits.shared.rarefaction", header=T)
+z<- read.delim(file="clusternames", header=TRUE)
+colnames(z)<- ("clustername")
+merg<- merge(x,z,by="clustername")
+mean(merg$readcount)
+
+~~~~
+
+`21.05792` is the average abundance of the SCG clusters. I will use this number to normalize this sample. This number will be different for each sample I do, using the average abundance of these clusters.
+
+*Why is there variation in these clusters across the sample? Sequencing error? Alignment error?*
 
 
 
