@@ -61,6 +61,29 @@ The clusters that are in high abundance may indicate genes that are present in a
 
 # 2) Normalize by single copy core genes
 
-Use single copy core genes from the CONCOCT pipeline.
+The CONCOCT software which I used last fall has a pipeline to validate purity of clusters using single copy core genes. The program uses a list of 36 COGs that are present only one time in at least 97% of the genomes on NCBI. I figured that these would be good candidates for normalization as the copy number of these genes should indicate the number of strains in the sample. 
+
+I'm going to try to adapt the scripts from the CONCOCT pipeline to create a table with the number of COGs in my sample. 
+
+~~~~
+#have to change the fasta names to only include gi reference name and not the comments
+awk '{if(NR%2==1){print $1"_"}else{print $1}}' all.t0.faa > all.t0.rename.faa
+
+#alter names so the CONCOCT script works
+sed -i 's/|/_/g' all.t0.rename.faa 
+sed -i 's/|/_/g' t0.index.csv
+
+$CONCOCT/scripts/RPSBLAST.sh -f all.t0.rename.faa -p -c 8 -r 1
+
+python $CONCOCT/scripts/COG_table.py -b all.out -m $CONCOCT/scgs/scg_cogs_min0.97_max1.03_unique_genera.txt -c /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index.csv --cdd_cog_file $CONCOCT/scgs/cdd_to_cog.tsv > cogtable_scg.tsv
+
+Rscript $CONCOCT/scripts/COGPlot.R -s cogtable_scg.tsv -o cogtable_scg.pdf
+~~~~
+
+
+![Pangenome clusters containing COG genes]({{ site.url }}/images/cogtable_scg.png)
+
+
+
 
 
