@@ -63,7 +63,7 @@ The clusters that are in high abundance may indicate genes that are present in a
 
 The CONCOCT software which I used last fall has a pipeline to validate purity of clusters using single copy core genes. The program uses a list of 36 COGs that are present only one time in at least 97% of the genomes on NCBI. I figured that these would be good candidates for normalization as the copy number of these genes should indicate the number of strains in the sample. 
 
-I'm going to try to adapt the scripts from the CONCOCT pipeline to create a table with the number of COGs in my sample. 
+I'm going to try to adapt the scripts from the CONCOCT pipeline to create a table with the number of COGs in my pangenome. 
 
 ~~~~
 #have to change the fasta names to only include gi reference name and not the comments
@@ -81,7 +81,16 @@ Rscript $CONCOCT/scripts/COGPlot.R -s cogtable_scg.tsv -o cogtable_scg.pdf
 ~~~~
 
 
-![Pangenome clusters containing COG genes]({{ site.url }}/images/cogtable_scg.png)
+![Pangenome clusters containing single copy core genes]({{ site.url }}/images/cogtable_scg.png)
+
+
+Awesome!!! It looks like there are 35 clusters that have 30 or more copies of different single copy core genes. There is only one gene (COG0504 - CTP synthase (UTP-ammonia lyase)) that is not represented in >30 copies. **I can use this information for normalization.** The clusters that contain single copy core genes should be present in the sample one time for every strain. If I divide the abundance of all genes by the abundance of these clusters, I will get an idea of the frequency of rare gene abundance in different samples. *Hopefully, these clusters are present at an even abundance in the sample*. 
+
+This is also a good validation of my input genomes. I had 33 genomes that I used to create the pangenome, so clusters with ~33 copies of the single copy genes are represented in the majority of my input genomes. This suggests that even the draft genomes are complete without many repeat genes. 
+
+*What does this say about the pangenome clusters?* There are 14 clusters with a few copies of the COGs. These are repeats from clusters which have 30-33 copies. The COGs should only be represented on time in every genome, so if they are hitting more than one cluster, there is something wrong with my pangenome. Could this be a misalignment in the CONCOCT pipeline? Errors in the input genomes?
+
+
 
 
 
