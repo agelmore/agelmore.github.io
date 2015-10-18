@@ -43,6 +43,7 @@ cat *.1.fastq *.2.fastq > SRS013705.fastq
 ##Bowtie2
 
 ~~~~
+cd ..
 mkdir bowtie; cd bowtie
 
 bowtie2-build ../panfiles/all.t0.fna all.t0.fna
@@ -55,10 +56,11 @@ bowtie2 all.t0.fna -q ../data/SRS013705/SRS013705.fastq -p 16 -S all.t0.SRS01370
 **Put summary of shared file here**
 
 ~~~~
+cd ..
 mkdir shared; cd shared
 
 #sam to bam and pull out mapped genes
-samtools view -bT ../panfiles/all.t0.fna all.t0.SRS013705.sam > all.t0.SRS013705.bam
+samtools view -bT ../panfiles/all.t0.fna ../bowtie/all.t0.SRS013705.sam > all.t0.SRS013705.bam
 
 #use the -F4 option. The -F option removes the specified FLAG. The 4 flag is unmapped reads. 
 samtools view -F4 all.t0.SRS013705.bam > all.t0.SRS013705.mapped.sam
@@ -73,11 +75,11 @@ cut -f1,3 all.t0.SRS013705.mapped.sam > all.t0.SRS013705.mapped.index
 samtools faidx ../panfiles/all.t0.fna  
 
 #cut out the two columns that contain reference sequence name (same as in the sam file) and sequence length
-cut -f1,2 all.t0.fna.fai > all.t0.fna.cut12.fai
+cut -f1,2 ../panfiles/all.t0.fna.fai > all.t0.fna.lengths
 
 #Using R to merge files
 
-x<- read.delim(file="all.t0.fna.cut12.fai", header=F)
+x<- read.delim(file="all.t0.fna.lengths", header=F)
 y<- read.delim(file="all.t0.SRS013705.mapped.index", header=F)
 colnames(x)<- c("seq","LN")
 colnames(y)<- c("read","seq")
@@ -89,10 +91,31 @@ write.table(z, file="all.t0.SRS013705.mapped.lengths.index", quote=F, row.names=
 Run shared file script from sample2 folder:
 
 ~~~~
-mkdir output
-python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome/sharedfile2.py panfiles/t0.index shared/all.t0.SRS013705.mapped.lengths.index output/all.t0.SRS013705.shared
+cd ..
+mkdir output; cd output
+python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome/sharedfile2.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/panfiles/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/shared/all.t0.SRS013705.mapped.lengths.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/output/all.t0.SRS013705.shared
 
 ~~~~
+
+**Is there a way to call this script without the long directories?**
+
+##Look at distribution
+
+**R**
+
+~~~~
+cd output
+png('abundance.SRS013705.png')
+x<- read.delim(file="all.t0.SRS013705.shared", header=T)
+hist(x[x$readcount>1,'readcount'], xlim=c(1,40), breaks=5000,xlab="Gene coverage (per base)", main="Frequency of gene abundance, normalized by gene length, SRS013705", file ="abundance.SRS013705.png')
+dev.off()
+
+~~~~
+
+
+![Histogram of gene abundance SRS013705]({{ site.url }}/images/abundance.SRS013705.png)
+
+
 
 
 
