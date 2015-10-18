@@ -7,6 +7,8 @@ comments: true
 
 I now have a pipeline to create a gene abundance profile to the Fuso pangenome in one sample. I would like to make this more streamlined so I can do it in many samples in various body sites and compare.
 
+#Summary of pipeline with sample2
+
 ##Files
 
 What files do I need that will be the same for all samples?
