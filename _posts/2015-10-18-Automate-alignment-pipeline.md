@@ -117,7 +117,7 @@ write.table(z, file="all.t0.SRS013705.mapped.lengths.index", quote=F, row.names=
 
 ~~~~
 
-Run [shared file script]((https://github.com/agelmore/Pangenome/blob/master/sharedfile.py) from sample2 folder:
+Run [shared file script](https://github.com/agelmore/Pangenome/blob/master/sharedfile.py) from sample2 folder:
 
 ~~~~
 cd ..
