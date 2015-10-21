@@ -143,6 +143,8 @@ dev.off()
 
 ![Histogram of gene abundance SRS013502]({{ site.url }}/images/cogtable_scg.png)
 
+
+
 ![Histogram of gene abundance SRS013705]({{ site.url }}/images/abundance.SRS013705.png)
 
 
