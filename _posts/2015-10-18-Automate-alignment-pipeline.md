@@ -56,7 +56,7 @@ index=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index
 
 #download sample
 wget http://downloads.hmpdacc.org/data/Illumina/tongue_dorsum/SRS013818.tar.bz2 -P $f/data
-tar jxvf $f/data/SRS013818.tar.bz2
+tar jxvf $f/data/SRS013818.tar.bz2 -C $f/data
 cat $f/data/SRS013818/*.1.fastq $f/data/SRS013818/*.2.fastq > $f/data/SRS013818/SRS013818.fastq
 
 #run bowtie
@@ -86,7 +86,7 @@ samtools faidx $allfna
   
 
 #cut out the two columns that contain reference sequence name (same as in the sam file) and sequence length
-cut -f1,2 $allfna.fai > all.t0.fna.lengths
+cut -f1,2 $allfna.fai > $f/shared/all.t0.fna.lengths
 
 ~~~~
 
