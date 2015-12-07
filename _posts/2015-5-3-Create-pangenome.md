@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Creating a pangenome"
-date:   2015-5-3
+title:  "Creating a pangenome - updated"
+date:   2015-11-29
 comments: true
 ---
 
@@ -317,5 +317,59 @@ get_homologues.pl -d ffn -t 1 -M
 
 It worked. In the cluster list file are clusters in both protein and nucleotide format (matching names, only difference is ".faa" vs ".fna". The genes are the same, just presented in each format. This is good because now I can run BWA (which only works on nucleotide databases). I moved the nucleotide clusters to their own folder `/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/ffn_homologues/NZACET_f0_1taxa_algOMCL_e0_/nucleotide
 `
+
+#Do it again with different t
+
+Started Nov 29, 2015 at 3pm
+
+~~~~
+get_homologues.pl -d ffn -t 1 -M
+mv ffn_homologues ffn_t1
+get_homologues.pl -d ffn -t 2 -M
+mv ffn_homologues ffn_t2
+get_homologues.pl -d ffn -t 3 -M
+mv ffn_homologues ffn_t3
+get_homologues.pl -d ffn -t 4 -M
+mv ffn_homologues ffn_t4
+get_homologues.pl -d ffn -t 5 -M
+mv ffn_homologues ffn_t5
+get_homologues.pl -d ffn -t 6 -M
+mv ffn_homologues ffn_t6
+get_homologues.pl -d ffn -t 7 -M
+mv ffn_homologues ffn_t7
+get_homologues.pl -d ffn -t 8 -M
+mv ffn_homologues ffn_t8
+get_homologues.pl -d ffn -t 9 -M
+mv ffn_homologues ffn_t9
+get_homologues.pl -d ffn -t 10 -M
+mv ffn_homologues ffn_t10
+get_homologues.pl -d ffn -t 15 -M
+mv ffn_homologues ffn_t15
+get_homologues.pl -d ffn -t 20 -M
+mv ffn_homologues ffn_t20
+get_homologues.pl -d ffn -t 25 -M
+mv ffn_homologues ffn_t25
+get_homologues.pl -d ffn -t 30 -M
+mv ffn_homologues ffn_t30
+get_homologues.pl -d ffn -t 33 -M
+mv ffn_homologues ffn_t33
+~~~~
+
+I added them all to quicksubmit individually. Probably will take a while. When they're done, I will make a rarefaction curve and SCG analysis for each clustering cutoff to help me decide which is the best to use. 
+
+Better way to do it:
+
+~~~~
+for f in {3,4,5,6,7,8,9,10,15,20,25,30,33}; do cp -r ffn ffn_t_$f; quicksubmit "get_homologues.pl -d ffn_t_$f -t $f -M; rm -r ffn_t_$f" $quickpara; done
+~~~~
+
+##Rarefaction curves
+
+~~~~
+for f in {1,2,3,4,5,6,7,8,9,10,15,20,25,30,33}; do quicksubmit "compare_clusters.pl -o rarefaction_t$f -d ffn_t_"$f"_homologues/*_ -t 0 -m; rm rarefaction_t"$f"/*faa" $quickpara; done
+
+~~~~
+
+I need to figure out how to turn the output tab file into a shared file for mothur to use.
 
 

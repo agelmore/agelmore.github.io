@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Automating alignment pipeline"
-date:   2015-10-18
+title:  "Automating alignment pipeline - sample 3 updates"
+date:   2015-11-28
 comments: true
 ---
 
@@ -44,76 +44,60 @@ All genes file: `/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.fna`
 Cluster index file: `/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index`
 #Index file of pangenome with sequence name in first column and cluster name in second column
 
-Create a new directory for the new sample
+Clump commands into single sh file. Create a new directory for the new sample. Make a variable for location and pangenome files. Download sample and combine into single file. Run Bowtie.
 
 ~~~~
-cd /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/
-mkdir sample2; cd sample2
-mkdir panfiles; cd panfiles
-cp /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.fna .
-cp /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index .
-~~~~
+#!/bin/sh
+
+f='/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample3'
+allfna=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/all.t0.fna
+index=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/bwa/t0/t0.index
 
 
-##Download sample
+#download sample
+wget http://downloads.hmpdacc.org/data/Illumina/tongue_dorsum/SRS013818.tar.bz2 -P $f/data
+tar jxvf $f/data/SRS013818.tar.bz2
+cat $f/data/SRS013818/*.1.fastq $f/data/SRS013818/*.2.fastq > $f/data/SRS013818/SRS013818.fastq
 
-~~~~
-#Download sample
-mkdir data; cd data
-wget http://downloads.hmpdacc.org/data/Illumina/tongue_dorsum/SRS013705.tar.bz2
-tar jxvf SRS013705.tar.bz2
-cd SRS013705
-cat *.1.fastq *.2.fastq > SRS013705.fastq
-~~~~
+#run bowtie
+mkdir $f/bowtie
+bowtie2-build $allfna $f/bowtie/all.t0.fna
+bowtie2 $f/bowtie/all.t0.fna -q $f/data/SRS013818/SRS013818.fastq -p 16 -S $f/bowtie/all.t0.SRS013818.sam 
 
-**Can I make this into a bash script that inputs sample name?**
+#Create read abundance profile
 
-##Bowtie2 alignment
-
-Align reads to complete gene database from all 33 genomes.
-
-~~~~
 cd ..
-mkdir bowtie; cd bowtie
-
-bowtie2-build ../panfiles/all.t0.fna all.t0.fna
-
-bowtie2 all.t0.fna -q ../data/SRS013705/SRS013705.fastq -p 16 -S all.t0.SRS013705.sam 
-~~~~
-
-##Create read abundance profile
-
-
-~~~~
-cd ..
-mkdir shared; cd shared
+mkdir $f/shared
 
 #sam to bam 
-samtools view -bT ../panfiles/all.t0.fna ../bowtie/all.t0.SRS013705.sam > all.t0.SRS013705.bam
+samtools view -bT allfna $f/bowtie/all.t0.SRS013818.sam > $f/shared/all.t0.SRS013818.bam
 
 #use the -F4 option to pull out mapped reads. The -F option removes the specified FLAG. The 4 flag is unmapped reads. 
-samtools view -F4 all.t0.SRS013705.bam > all.t0.SRS013705.mapped.sam
+samtools view -F4 $f/shared/all.t0.SRS013818.bam > $f/shared/all.t0.SRS013818.mapped.sam
 
 #remove bam file to save space
-rm all.t0.SRS013705.bam
+rm $f/shared/all.t0.SRS013818.bam
 
 #cut out the read name and reference name to create index of mapped reads
-cut -f1,3 all.t0.SRS013705.mapped.sam > all.t0.SRS013705.mapped.index
+cut -f1,3 $f/shared/all.t0.SRS013818.mapped.sam > $f/shared/all.t0.SRS013818.mapped.index
 
 #use the faidx command to get sequence lengths from the reference file (to use for normalization)
-samtools faidx ../panfiles/all.t0.fna  
+samtools faidx $allfna
+  
 
 #cut out the two columns that contain reference sequence name (same as in the sam file) and sequence length
-cut -f1,2 ../panfiles/all.t0.fna.fai > all.t0.fna.lengths
+cut -f1,2 $allfna.fai > all.t0.fna.lengths
+
+~~~~
 
 #Using R to merge gene lengths with mapped reads
 
 x<- read.delim(file="all.t0.fna.lengths", header=F)
-y<- read.delim(file="all.t0.SRS013705.mapped.index", header=F)
+y<- read.delim(file="all.t0.SRS013818.mapped.index", header=F)
 colnames(x)<- c("seq","LN")
 colnames(y)<- c("read","seq")
 z<- merge(x,y,by="seq")
-write.table(z, file="all.t0.SRS013705.mapped.lengths.index", quote=F, row.names=F, col.names=F, sep="\t")
+write.table(z, file="all.t0.SRS013818.mapped.lengths.index", quote=F, row.names=F, col.names=F, sep="\t")
 
 ~~~~
 
@@ -122,7 +106,7 @@ Run [shared file script](https://github.com/agelmore/Pangenome/blob/master/share
 ~~~~
 cd ..
 mkdir output; cd output
-python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome/sharedfile2.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/panfiles/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/shared/all.t0.SRS013705.mapped.lengths.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/output/all.t0.SRS013705.shared
+python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome/sharedfile2.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/panfiles/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/shared/all.t0.SRS013818.mapped.lengths.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/output/all.t0.SRS013818.shared
 
 ~~~~
 
@@ -134,9 +118,9 @@ python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome/sharedfile2.py /
 
 ~~~~
 cd output
-png('abundance.SRS013705.png')
-x<- read.delim(file="all.t0.SRS013705.shared", header=T)
-hist(x[x$readcount>1,'readcount'], xlim=c(1,100), breaks=5000,xlab="Gene coverage (per base)", main="Frequency of gene abundance, normalized by gene length, SRS013705", file ="abundance.SRS013705.png")
+png('abundance.SRS013818.png')
+x<- read.delim(file="all.t0.SRS013818.shared", header=T)
+hist(x[x$readcount>1,'readcount'], xlim=c(1,100), breaks=5000,xlab="Gene coverage (per base)", main="Frequency of gene abundance, normalized by gene length, SRS013818", file ="abundance.SRS013818.png")
 dev.off()
 
 ~~~~
