@@ -96,6 +96,12 @@ Rscript $f/sample3.R
 mkdir $f/output
 python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome/sharedfile2.py $index $f/shared/all.t0.SRS013818.mapped.lengths.index $f/output/all.t0.SRS013818.shared
 
+
+#Run sample3.plot.R script
+
+Rscript $f/sample3.plot.R
+
+
 ~~~~
 
 ##sample3.R
@@ -112,7 +118,7 @@ write.table(z, file="shared/all.t0.SRS013818.mapped.lengths.index", quote=F, row
 
 ##Look at distribution
 
-**R**
+##sample3.plot.R
 
 ~~~~
 png('output/abundance.SRS013818.png')
@@ -132,7 +138,7 @@ dev.off()
 ![Histogram of gene abundance SRS013818]({{ site.url }}/images/abundance.SRS013818.png)
 
 
-
+Now that I have this all in one sh file and two R scripts, I can change the sample that I input (sed the SRS name) and I can change the index file I use to create the pangenome clusters. Next I want to try a single sample mapped against multiple index files.
 
 
 
