@@ -66,7 +66,6 @@ bowtie2 $f/bowtie/all.t0.fna -q $f/data/SRS013818/SRS013818.fastq -p 16 -S $f/bo
 
 #Create read abundance profile
 
-cd ..
 mkdir $f/shared
 
 #sam to bam 
@@ -88,39 +87,37 @@ samtools faidx $allfna
 #cut out the two columns that contain reference sequence name (same as in the sam file) and sequence length
 cut -f1,2 $allfna.fai > $f/shared/all.t0.fna.lengths
 
+#Using R to merge gene lengths with mapped reads
+Rscript $f/sample3.R
+
+
+#Run [shared file script](https://github.com/agelmore/Pangenome/blob/master/sharedfile.py) from sample2 folder:
+
+mkdir $f/output
+python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome/sharedfile2.py $index $f/shared/all.t0.SRS013818.mapped.lengths.index $f/output/all.t0.SRS013818.shared
+
 ~~~~
 
-#Using R to merge gene lengths with mapped reads
+##sample3.R
 
-x<- read.delim(file="all.t0.fna.lengths", header=F)
-y<- read.delim(file="all.t0.SRS013818.mapped.index", header=F)
+~~~~
+x<- read.delim(file="shared/all.t0.fna.lengths", header=F)
+y<- read.delim(file="shared/all.t0.SRS013818.mapped.index", header=F)
 colnames(x)<- c("seq","LN")
 colnames(y)<- c("read","seq")
 z<- merge(x,y,by="seq")
-write.table(z, file="all.t0.SRS013818.mapped.lengths.index", quote=F, row.names=F, col.names=F, sep="\t")
-
+write.table(z, file="shared/all.t0.SRS013818.mapped.lengths.index", quote=F, row.names=F, col.names=F, sep="\t")
 ~~~~
 
-Run [shared file script](https://github.com/agelmore/Pangenome/blob/master/sharedfile.py) from sample2 folder:
-
-~~~~
-cd ..
-mkdir output; cd output
-python2.7 /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/Pangenome/sharedfile2.py /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/panfiles/t0.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/shared/all.t0.SRS013818.mapped.lengths.index /mnt/EXT/Schloss-data/amanda/Fuso/pangenome/sample2/output/all.t0.SRS013818.shared
-
-~~~~
-
-**Is there a way to call this script without the long directories?**
 
 ##Look at distribution
 
 **R**
 
 ~~~~
-cd output
-png('abundance.SRS013818.png')
-x<- read.delim(file="all.t0.SRS013818.shared", header=T)
-hist(x[x$readcount>1,'readcount'], xlim=c(1,100), breaks=5000,xlab="Gene coverage (per base)", main="Frequency of gene abundance, normalized by gene length, SRS013818", file ="abundance.SRS013818.png")
+png('output/abundance.SRS013818.png')
+x<- read.table(file="output/all.t0.SRS013818.shared", header=T)
+hist(x[x$readcount>1,'readcount'], xlim=c(1,100), breaks=5000,xlab="Gene coverage (per base)", main="Frequency of gene abundance, normalized by gene length, SRS013818", file ="output/abundance.SRS013818.png")
 dev.off()
 
 ~~~~
@@ -131,6 +128,8 @@ dev.off()
 
 ![Histogram of gene abundance SRS013705]({{ site.url }}/images/abundance.SRS013705.png)
 
+
+![Histogram of gene abundance SRS013818]({{ site.url }}/images/abundance.SRS013818.png)
 
 
 
