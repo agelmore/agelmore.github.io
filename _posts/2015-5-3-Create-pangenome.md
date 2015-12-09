@@ -320,7 +320,7 @@ It worked. In the cluster list file are clusters in both protein and nucleotide 
 
 #Do it again with different t
 
-Started Nov 29, 2015 at 3pm
+**Started Nov 29, 2015 at 3pm**
 
 ~~~~
 get_homologues.pl -d ffn -t 1 -M
@@ -371,5 +371,45 @@ for f in {1,2,3,4,5,6,7,8,9,10,15,20,25,30,33}; do quicksubmit "compare_clusters
 ~~~~
 
 I need to figure out how to turn the output tab file into a shared file for mothur to use.
+
+
+##Make index files for vart
+
+##Combine genes into single file
+~~~~
+for i in {1,2,3,4,5,6,7,8,9,10,15,20,25,30,33}; do f=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/vart; cd $f/ffn_t_"$i"_homologues; cd *_; quicksubmit "cat *.fna >> $f/index/all.t"$i".fna" $quickpara; done
+~~~~
+
+Number of fasta per file **why are they different?**
+all.t10.fna:52867
+all.t15.fna:47987
+all.t1.fna:68548
+all.t20.fna:44023
+all.t25.fna:37166
+all.t2.fna:1091648
+all.t30.fna:29042
+all.t33.fna:9869
+all.t3.fna:64897
+all.t4.fna:61409
+all.t5.fna:58674
+all.t6.fna:57243
+all.t7.fna:55785
+all.t8.fna:54735
+all.t9.fna:53739
+
+
+##Create index file
+~~~~
+
+
+#create a "group" file. Every line is a unique sequence and the cluster that it belongs to. I did the same for the t0 clusters
+dir=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/vart
+
+Doesn't work quicksubmit for some reason:
+
+for f in *.fna; do cat $f | awk 'NR % 2 ==1' | awk -v var=$f '{gsub(/>/,"")} {OFS="\t"} {print $1, var}' >> $dir/index/t2.index; done
+
+~~~~
+
 
 

@@ -140,6 +140,8 @@ dev.off()
 
 Now that I have this all in one sh file and two R scripts, I can change the sample that I input (sed the SRS name) and I can change the index file I use to create the pangenome clusters. Next I want to try a single sample mapped against multiple index files.
 
+Also redo 13502 - why does that one look so nice and the others don't?
+
 
 
 
