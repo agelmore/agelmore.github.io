@@ -322,46 +322,14 @@ It worked. In the cluster list file are clusters in both protein and nucleotide 
 
 **Started Nov 29, 2015 at 3pm**
 
-~~~~
-get_homologues.pl -d ffn -t 1 -M
-mv ffn_homologues ffn_t1
-get_homologues.pl -d ffn -t 2 -M
-mv ffn_homologues ffn_t2
-get_homologues.pl -d ffn -t 3 -M
-mv ffn_homologues ffn_t3
-get_homologues.pl -d ffn -t 4 -M
-mv ffn_homologues ffn_t4
-get_homologues.pl -d ffn -t 5 -M
-mv ffn_homologues ffn_t5
-get_homologues.pl -d ffn -t 6 -M
-mv ffn_homologues ffn_t6
-get_homologues.pl -d ffn -t 7 -M
-mv ffn_homologues ffn_t7
-get_homologues.pl -d ffn -t 8 -M
-mv ffn_homologues ffn_t8
-get_homologues.pl -d ffn -t 9 -M
-mv ffn_homologues ffn_t9
-get_homologues.pl -d ffn -t 10 -M
-mv ffn_homologues ffn_t10
-get_homologues.pl -d ffn -t 15 -M
-mv ffn_homologues ffn_t15
-get_homologues.pl -d ffn -t 20 -M
-mv ffn_homologues ffn_t20
-get_homologues.pl -d ffn -t 25 -M
-mv ffn_homologues ffn_t25
-get_homologues.pl -d ffn -t 30 -M
-mv ffn_homologues ffn_t30
-get_homologues.pl -d ffn -t 33 -M
-mv ffn_homologues ffn_t33
-~~~~
 
-I added them all to quicksubmit individually. Probably will take a while. When they're done, I will make a rarefaction curve and SCG analysis for each clustering cutoff to help me decide which is the best to use. 
-
-Better way to do it:
+Run get_homologues with different t cutoff. This way I will be able to choose which pangenome is the best. As I increase t I through away more rare (or incomplete genes), but I also get a cleaner dataset to work with. 
 
 ~~~~
-for f in {3,4,5,6,7,8,9,10,15,20,25,30,33}; do cp -r ffn ffn_t_$f; quicksubmit "get_homologues.pl -d ffn_t_$f -t $f -M; rm -r ffn_t_$f" $quickpara; done
+for f in {1,2,3,4,5,6,7,8,9,10,15,20,25,30,33}; do cp -r ffn ffn_t_$f; quicksubmit "get_homologues.pl -d ffn_t_$f -t $f -M; rm -r ffn_t_$f" $quickpara; done
 ~~~~
+
+I will make a rarefaction curve and SCG analysis for each clustering cutoff to help me decide which is the best to use. 
 
 ##Rarefaction curves
 
@@ -380,7 +348,9 @@ I need to figure out how to turn the output tab file into a shared file for moth
 for i in {1,2,3,4,5,6,7,8,9,10,15,20,25,30,33}; do f=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/vart; cd $f/ffn_t_"$i"_homologues; cd *_; quicksubmit "cat *.fna >> $f/index/all.t"$i".fna" $quickpara; done
 ~~~~
 
-Number of fasta per file **why are they different?**
+Number of genes per file. As t increases, the number of genes that were used to make the pangenome goes down, because if they weren't present in the set number of genomes, those genes were discarded.
+
+
 all.t10.fna:52867
 all.t15.fna:47987
 all.t1.fna:68548
@@ -398,16 +368,16 @@ all.t8.fna:54735
 all.t9.fna:53739
 
 
-##Create index file
+##Create index file for each t
+
 ~~~~
+#create a "group" file. Every line is a unique sequence and the cluster that it belongs to. I need this for when I'm doing my alignment.
 
-
-#create a "group" file. Every line is a unique sequence and the cluster that it belongs to. I did the same for the t0 clusters
 dir=/mnt/EXT/Schloss-data/amanda/Fuso/pangenome/vart
 
 Doesn't work quicksubmit for some reason:
 
-for f in *.fna; do cat $f | awk 'NR % 2 ==1' | awk -v var=$f '{gsub(/>/,"")} {OFS="\t"} {print $1, var}' >> $dir/index/t2.index; done
+for f in *.fna; do cat $f | awk 'NR % 2 ==1' | awk -v var=$f '{gsub(/>/,"")} {OFS="\t"} {print $1, var}' >> $dir/index/t"$a".index; done
 
 ~~~~
 
