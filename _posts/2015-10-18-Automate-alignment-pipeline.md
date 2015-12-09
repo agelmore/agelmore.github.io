@@ -142,6 +142,22 @@ Now that I have this all in one sh file and two R scripts, I can change the samp
 
 Also redo 13502 - why does that one look so nice and the others don't?
 
+##Map to different t
+
+12/9/15
+
+Now I can run the same sample against different pangenomes just by changing the index files at the beginning! I started the pipeline running against all the pangenomes I made with sample SRS013818. Time for dinner and hopefully I'll have 16 new plots in the morning!
+
+~~~~
+a=
+cd ../t"$a"
+sed -i s/'t1'/'t"$a"'/g SRS*
+mv SRS013818.t1.R SRS013818.t"$a".R
+mv SRS013818.t1.sh SRS013818.t"$a".sh
+mv SRS013818.t1.plot.R SRS013818.t"$a".plot.R
+quicksubmit "sh SRS013818.t"$a".sh" $quickpara --jobname 13818.t"$a"
+~~~~
+
 
 
 
