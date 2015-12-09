@@ -350,7 +350,7 @@ for i in {1,2,3,4,5,6,7,8,9,10,15,20,25,30,33}; do f=/mnt/EXT/Schloss-data/amand
 
 Number of genes per file. As t increases, the number of genes that were used to make the pangenome goes down, because if they weren't present in the set number of genomes, those genes were discarded.
 
-
+~~~~
 all.t10.fna:52867
 all.t15.fna:47987
 all.t1.fna:68548
@@ -366,7 +366,7 @@ all.t6.fna:57243
 all.t7.fna:55785
 all.t8.fna:54735
 all.t9.fna:53739
-
+~~~~
 
 ##Create index file for each t
 
